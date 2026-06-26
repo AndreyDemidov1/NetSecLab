@@ -1,0 +1,75 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="NetSecLab.App.App"
+             RequestedThemeVariant="Default">
+    <Application.Styles>
+        <FluentTheme />
+        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
+
+        <Style Selector="Window">
+            <Setter Property="FontFamily" Value="Segoe UI" />
+        </Style>
+
+        <Style Selector="TextBox">
+            <Setter Property="Background" Value="#0F172A" />
+            <Setter Property="Foreground" Value="#F8FAFC" />
+            <Setter Property="BorderBrush" Value="#334155" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="MinHeight" Value="36" />
+            <Setter Property="Padding" Value="10,6" />
+        </Style>
+
+        <Style Selector="ComboBox">
+            <Setter Property="Background" Value="#0F172A" />
+            <Setter Property="Foreground" Value="#F8FAFC" />
+            <Setter Property="BorderBrush" Value="#334155" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="MinHeight" Value="36" />
+            <Setter Property="Padding" Value="10,6" />
+        </Style>
+
+        <Style Selector="Button">
+            <Setter Property="MinHeight" Value="40" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="CornerRadius" Value="8" />
+        </Style>
+
+        <Style Selector="DataGrid">
+            <Setter Property="Background" Value="#111827" />
+            <Setter Property="Foreground" Value="#F8FAFC" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="RowBackground" Value="#172033" />
+            <Setter Property="HorizontalGridLinesBrush" Value="#334155" />
+            <Setter Property="VerticalGridLinesBrush" Value="#263449" />
+        </Style>
+
+        <Style Selector="DataGridColumnHeader">
+            <Setter Property="Background" Value="#0F172A" />
+            <Setter Property="Foreground" Value="#E5E7EB" />
+            <Setter Property="BorderBrush" Value="#334155" />
+            <Setter Property="BorderThickness" Value="0,0,1,1" />
+            <Setter Property="Padding" Value="10,8" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <Style Selector="DataGridCell">
+            <Setter Property="Foreground" Value="#F8FAFC" />
+            <Setter Property="BorderBrush" Value="#263449" />
+            <Setter Property="BorderThickness" Value="0,0,1,0" />
+        </Style>
+
+		<Style Selector="CheckBox:disabled TextBlock">
+			<Setter Property="Foreground" Value="#7A7A7A" />
+		</Style>
+
+		<Style Selector="ComboBox:disabled TextBlock">
+			<Setter Property="Foreground" Value="#7A7A7A" />
+		</Style>
+
+		<!--<Style Selector="ComboBox:disabled /template/ PathIcon#DropDownGlyph">
+			<Setter Property="Foreground" Value="#7A7A7A" />
+		</Style>-->
+    </Application.Styles>
+</Application>

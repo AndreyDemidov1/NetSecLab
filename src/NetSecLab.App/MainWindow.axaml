@@ -1,0 +1,297 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="NetSecLab.App.MainWindow"
+        Width="1610"
+        Height="760"
+        MinWidth="1250"
+        MinHeight="700"
+        Title="NetSecLab">
+    <Grid RowDefinitions="Auto,*" Background="#111827">
+        <Border Grid.Row="0" Padding="24,18" Background="#0F172A">
+            <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="NetSecLab"
+                               Foreground="White"
+                               FontSize="28"
+                               FontWeight="Bold" />
+                    <TextBlock Text="Интерактивный тренажёр по анализу сетевых атак и защите"
+                               Foreground="#CBD5E1"
+                               FontSize="14" />
+                </StackPanel>
+
+                <Border Grid.Column="1"
+                        Background="#172033"
+                        BorderBrush="#334155"
+                        BorderThickness="1"
+                        CornerRadius="10"
+                        Padding="14,8"
+                        VerticalAlignment="Center">
+                    <TextBlock Text="Логическая симуляция"
+                               Foreground="#CBD5E1"
+                               FontSize="13" />
+                </Border>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1"
+              ColumnDefinitions="360,*"
+              Margin="20"
+              ColumnSpacing="20">
+            <Border Grid.Column="0"
+                    Background="#1F2937"
+                    CornerRadius="16"
+                    Padding="0"
+                    ClipToBounds="True">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Spacing="14" Margin="18">
+                        <StackPanel Spacing="4">
+                            <TextBlock Text="Генератор атак"
+                                       Foreground="White"
+                                       FontSize="20"
+                                       FontWeight="SemiBold" />
+                            <TextBlock Text="Настройка и запуск логической генерации трафика"
+                                       Foreground="#94A3B8"
+                                       FontSize="13"
+                                       TextWrapping="Wrap" />
+                        </StackPanel>
+
+                        <StackPanel Spacing="10">
+                            <TextBlock Text="Тип атаки" Foreground="#CBD5E1" />
+                            <ComboBox ItemsSource="{Binding AttackTypes}"
+                                      SelectedItem="{Binding SelectedAttackType}"
+                                      IsEnabled="{Binding AttackConfigurationEnabled}"
+                                      HorizontalAlignment="Stretch">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding DisplayName}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+                            <TextBlock Text="Целевой IP" Foreground="#CBD5E1" />
+                            <TextBox Text="{Binding TargetIp, Mode=TwoWay}"
+                                     IsEnabled="{Binding AttackConfigurationEnabled}" />
+
+                            <TextBlock Text="Целевой порт" Foreground="#CBD5E1" />
+                            <TextBox Text="{Binding TargetPortText, Mode=TwoWay}"
+                                     IsEnabled="{Binding AttackConfigurationEnabled}" />
+
+                            <TextBlock Text="Интенсивность, пакетов/сек" Foreground="#CBD5E1" />
+                            <TextBox Text="{Binding IntensityText, Mode=TwoWay}"
+                                     IsEnabled="{Binding AttackConfigurationEnabled}" />
+
+                            <CheckBox Content="Добавлять фоновый трафик"
+                                      IsChecked="{Binding IncludeBackgroundTraffic}"
+                                      IsEnabled="{Binding AttackConfigurationEnabled}"
+                                      Foreground="#E5E7EB" />
+                        </StackPanel>
+
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,4,0,0">
+                            <Button Grid.Column="0"
+                                    Content="Запустить"
+                                    Command="{Binding StartAttackCommand}"
+                                    Background="#16A34A"
+                                    Foreground="White"
+                                    FontWeight="SemiBold"
+                                    HorizontalAlignment="Stretch" />
+                            <Button Grid.Column="1"
+                                    Content="Остановить"
+                                    Command="{Binding StopAttackCommand}"
+                                    Background="#DC2626"
+                                    Foreground="White"
+                                    FontWeight="SemiBold"
+                                    HorizontalAlignment="Stretch" />
+                        </Grid>
+
+                        <Border Height="1" Background="#334155" />
+
+                        <StackPanel Spacing="8">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Защитные механизмы"
+                                           Foreground="White"
+                                           FontSize="18"
+                                           FontWeight="SemiBold" />
+                                <TextBlock Text="Модуль анализирует логические пакеты и применяет выбранные правила"
+                                           Foreground="#94A3B8"
+                                           FontSize="12"
+                                           TextWrapping="Wrap" />
+                            </StackPanel>
+
+                            <CheckBox Content="Включить защиту"
+                                      IsChecked="{Binding ProtectionEnabled}"
+                                      IsEnabled="{Binding DefenseConfigurationEnabled}"
+                                      Foreground="#E5E7EB" />
+
+                            <StackPanel Spacing="8"
+                                        IsEnabled="{Binding DefenseOptionsEnabled}">
+                                <CheckBox Content="SYN cookies"
+                                          IsChecked="{Binding SynCookiesEnabled}"
+                                          Foreground="#E5E7EB" />
+
+                                <CheckBox Content="Rate limiting"
+                                          IsChecked="{Binding RateLimitEnabled}"
+                                          Foreground="#E5E7EB" />
+
+                                <TextBlock Text="Лимит однотипных пакетов/сек" Foreground="#CBD5E1" />
+                                <TextBox Text="{Binding RateLimitText, Mode=TwoWay}"
+										 IsEnabled="{Binding RateLimitInputEnabled}" />
+
+                                <CheckBox Content="Поведенческий фильтр"
+                                          IsChecked="{Binding BehaviorFilterEnabled}"
+                                          Foreground="#E5E7EB" />
+                            </StackPanel>
+
+                            <Border Background="#0F172A"
+                                    BorderBrush="#334155"
+                                    BorderThickness="1"
+                                    CornerRadius="12"
+                                    Padding="12"
+                                    Margin="0,4,0,0">
+                                <StackPanel Spacing="6">
+                                    <TextBlock Text="Состояние защиты"
+                                               Foreground="#94A3B8"
+                                               FontSize="12" />
+                                    <TextBlock Text="{Binding DefenseStatusText}"
+                                               Foreground="#E5E7EB"
+                                               TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                        <Button Content="Очистить журнал"
+                                Command="{Binding ClearPacketsCommand}"
+                                Background="#334155"
+                                Foreground="White"
+                                FontWeight="SemiBold"
+                                HorizontalAlignment="Stretch" />
+
+                        <Border Background="#0F172A"
+                                BorderBrush="#334155"
+                                BorderThickness="1"
+                                CornerRadius="12"
+                                Padding="12"
+                                Margin="0,4,0,0">
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="Сообщение"
+                                           Foreground="#94A3B8"
+                                           FontSize="12" />
+                                <TextBlock Text="{Binding StatusText}"
+                                           Foreground="#E5E7EB"
+                                           TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <Grid Grid.Column="1" RowDefinitions="Auto,*" RowSpacing="14">
+                <Border Grid.Row="0"
+                        Background="#1F2937"
+                        CornerRadius="16"
+                        Padding="16">
+                    <Grid ColumnDefinitions="*,*,*,*,*" ColumnSpacing="14">
+                        <Border Grid.Column="0" Background="#0F172A" CornerRadius="12" Padding="14">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Состояние" Foreground="#94A3B8" FontSize="12" />
+                                <TextBlock Text="{Binding RunStateText}"
+                                           Foreground="White"
+                                           FontSize="18"
+                                           FontWeight="SemiBold"
+                                           TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="1" Background="#0F172A" CornerRadius="12" Padding="14">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Получено пакетов" Foreground="#94A3B8" FontSize="12" />
+                                <TextBlock Text="{Binding GeneratedPacketsText}"
+                                           Foreground="White"
+                                           FontSize="18"
+                                           FontWeight="SemiBold" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="2" Background="#0F172A" CornerRadius="12" Padding="14">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Пропущено" Foreground="#94A3B8" FontSize="12" />
+                                <TextBlock Text="{Binding AllowedPacketsText}"
+                                           Foreground="White"
+                                           FontSize="18"
+                                           FontWeight="SemiBold" />
+                            </StackPanel>
+                        </Border>
+
+						<Border Grid.Column="3" Background="#0F172A" CornerRadius="12" Padding="14">
+							<StackPanel Spacing="4">
+								<TextBlock Text="Защищено" Foreground="#94A3B8" FontSize="12" />
+								<TextBlock Text="{Binding MitigatedPacketsText}"
+										   Foreground="White"
+										   FontSize="18"
+										   FontWeight="SemiBold" />
+							</StackPanel>
+						</Border>
+
+                        <Border Grid.Column="4" Background="#0F172A" CornerRadius="12" Padding="14">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Заблокировано" Foreground="#94A3B8" FontSize="12" />
+                                <TextBlock Text="{Binding BlockedPacketsText}"
+                                           Foreground="White"
+                                           FontSize="18"
+                                           FontWeight="SemiBold" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="1"
+                        Background="#1F2937"
+                        CornerRadius="16"
+                        Padding="14"
+                        ClipToBounds="True">
+                    <Grid RowDefinitions="Auto,*" RowSpacing="10">
+                        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                            <StackPanel Grid.Column="0" Spacing="2">
+                                <TextBlock Text="Журнал логических пакетов"
+                                           Foreground="White"
+                                           FontSize="18"
+                                           FontWeight="SemiBold" />
+                                <TextBlock Text="Пакеты проходят через модуль защитных механизмов перед отображением"
+                                           Foreground="#94A3B8"
+                                           FontSize="12" />
+                            </StackPanel>
+                            <TextBlock Grid.Column="1"
+                                       Text="{Binding CurrentRateText}"
+                                       Foreground="#CBD5E1"
+                                       VerticalAlignment="Center" />
+                        </Grid>
+
+                        <DataGrid Grid.Row="1"
+                                  ItemsSource="{Binding Packets}"
+                                  AutoGenerateColumns="False"
+                                  IsReadOnly="True"
+                                  CanUserResizeColumns="True"
+                                  GridLinesVisibility="Horizontal"
+                                  HeadersVisibility="Column"
+                                  HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Stretch"
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Время" Binding="{Binding Time}" Width="1*" MinWidth="110" />
+                                <DataGridTextColumn Header="Источник" Binding="{Binding Source}" Width="2*" MinWidth="170" />
+                                <DataGridTextColumn Header="Назначение" Binding="{Binding Destination}" Width="2*" MinWidth="155" />
+                                <DataGridTextColumn Header="Протокол" Binding="{Binding Protocol}" Width="1*" MinWidth="110" />
+                                <DataGridTextColumn Header="Признак" Binding="{Binding Flags}" Width="1*" MinWidth="125" />
+                                <DataGridTextColumn Header="Длина" Binding="{Binding Length}" Width="1*" MinWidth="90" />
+                                <DataGridTextColumn Header="Тип пакета" Binding="{Binding Kind}" Width="1*" MinWidth="120" />
+                                <DataGridTextColumn Header="Решение" Binding="{Binding Decision}" Width="1*" MinWidth="125" />
+                                <DataGridTextColumn Header="Правило" Binding="{Binding DefenseRule}" Width="2*" MinWidth="155" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
