@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>12</LangVersion>
+    <AvaloniaUseCompiledBindingsByDefault>false</AvaloniaUseCompiledBindingsByDefault>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.3.8" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.8" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.8" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.3.8" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetSecLab.Core\NetSecLab.Core.csproj" />
+    <ProjectReference Include="..\NetSecLab.Infrastructure\NetSecLab.Infrastructure.csproj" />
+    <ProjectReference Include="..\NetSecLab.Modules.Attacks\NetSecLab.Modules.Attacks.csproj" />
+    <ProjectReference Include="..\NetSecLab.Modules.Defense\NetSecLab.Modules.Defense.csproj" />
+  </ItemGroup>
+</Project>
