@@ -137,22 +137,6 @@
                                                FontSize="12"
                                                TextWrapping="Wrap" />
                                 </StackPanel>
-
-                                <Border Background="#111827"
-                                        BorderBrush="#334155"
-                                        BorderThickness="1"
-                                        CornerRadius="10"
-                                        Padding="10">
-                                    <StackPanel Spacing="5">
-                                        <TextBlock Text="Условия"
-                                                   Foreground="#94A3B8"
-                                                   FontSize="12" />
-                                        <TextBlock Text="{Binding ScenarioVerificationText}"
-                                                   Foreground="#CBD5E1"
-                                                   FontSize="12"
-                                                   TextWrapping="Wrap" />
-                                    </StackPanel>
-                                </Border>
                             </StackPanel>
                         </Border>
 

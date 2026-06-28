@@ -98,7 +98,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         _scenarioGoalText = scenarioService.IsAvailable
             ? "Выберите сценарий для проверки действий пользователя."
             : "Подключите модуль сценариев.";
-        _scenarioVerificationText = "После запуска здесь будут показаны критерии проверки.";
+        _scenarioVerificationText = string.Empty;
 
         AttackTypes = new ObservableCollection<AttackTypeOption>
         {
@@ -521,15 +521,9 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         ResetScenarioAttemptState();
         SetScenarioPacketBaselines();
 
-        AttackTypeOption? attackType = AttackTypes.FirstOrDefault(option => option.Value == scenario.AttackType);
-        if (attackType is not null)
-        {
-            SelectedAttackType = attackType;
-        }
-
         ScenarioGoalText = scenario.GoalText;
         ScenarioVerificationText = scenario.VerificationText;
-        ScenarioStatusText = "Сценарий запущен. Выполните условия и запустите генерацию атаки.";
+        ScenarioStatusText = "Сценарий запущен. Выберите нужный тип атаки и запустите генерацию.";
         ScenarioScoreText = "Оценка: 0/100";
         ScenarioBreakdownText = "Реакция 0/15 • Выбор 0/35 • Эффективность 0/35 • Адаптивность 0/15";
         ScenarioReactionText = "Реакция: атака ещё не запущена.";
@@ -943,7 +937,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         if (!ScenarioModuleAvailable)
         {
             ScenarioGoalText = "Модуль сценариев недоступен.";
-            ScenarioVerificationText = "Подключите модуль сценариев для оценки действий пользователя.";
+            ScenarioVerificationText = string.Empty;
             ScenarioStatusText = "Модуль сценариев недоступен.";
             return;
         }
@@ -956,7 +950,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         if (SelectedScenario is null)
         {
             ScenarioGoalText = "Сценарий не выбран.";
-            ScenarioVerificationText = "Выберите сценарий из списка.";
+            ScenarioVerificationText = string.Empty;
             ScenarioStatusText = "Сценарий не выбран.";
             return;
         }
