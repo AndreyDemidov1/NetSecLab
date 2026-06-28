@@ -7,7 +7,9 @@ public sealed class ScenarioOption
     public ScenarioOption(TrainingScenario scenario)
     {
         Id = scenario.Id;
-        DisplayName = scenario.Title;
+        DisplayName = string.IsNullOrWhiteSpace(scenario.ShortTitle)
+            ? scenario.Title
+            : scenario.ShortTitle;
         GoalText = scenario.GoalText;
         VerificationText = scenario.VerificationText;
     }

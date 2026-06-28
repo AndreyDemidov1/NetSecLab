@@ -13,8 +13,11 @@ public sealed class ScenarioEvaluationInput
     public bool BehaviorFilterEnabled { get; init; }
     public bool BlacklistEnabled { get; init; }
     public bool WhitelistEnabled { get; init; }
+    public int BlacklistedIpCount { get; init; }
+    public int WhitelistedIpCount { get; init; }
+    public int EnabledDefenseMechanismCount { get; init; }
     public DateTime? AttackStartedAt { get; init; }
     public DateTime? FirstCorrectDefenseEnabledAt { get; init; }
-    public int DefenseConfigurationChanges { get; init; }
-    public bool AdditionalDefenseUsed { get; init; }
+    public bool CorrectDefenseWasEnabledBeforeAttack { get; init; }
+    public int DefenseConfigurationChangesAfterAttack { get; init; }
 }

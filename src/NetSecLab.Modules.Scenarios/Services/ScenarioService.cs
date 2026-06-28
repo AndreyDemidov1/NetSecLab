@@ -5,6 +5,11 @@ namespace NetSecLab.Modules.Scenarios.Services;
 
 internal sealed class ScenarioService : IScenarioService
 {
+    private const int ReactionMaxScore = 15;
+    private const int ChoiceMaxScore = 35;
+    private const int EfficiencyMaxScore = 35;
+    private const int AdaptivityMaxScore = 15;
+
     private readonly List<TrainingScenario> _scenarios;
     private TrainingScenario? _currentScenario;
 
@@ -14,44 +19,65 @@ internal sealed class ScenarioService : IScenarioService
         {
             new()
             {
-                Id = "syn-flood-syncookies",
-                Title = "Обнаружить SYN-flood и включить SYN cookies",
-                GoalText = "Запустить SYN-flood, распознать поток SYN-пакетов и нейтрализовать его механизмом SYN cookies.",
-                VerificationText = "Проверяется выбор атаки, включение SYN cookies, скорость реакции и процент нейтрализованных пакетов.",
+                Id = "syn-flood-combo",
+                ShortTitle = "SYN-flood",
+                Title = "SYN-flood: SYN cookies + rate limiting",
+                GoalText = "Сдержать SYN-flood комбинацией SYN cookies и ограничения частоты однотипных пакетов.",
+                VerificationText = "Условия: SYN-flood, общая защита, SYN cookies, rate limiting, статистика по пакету и целевая нейтрализация.",
                 AttackType = AttackType.SynFlood,
-                RequiredDefense = ScenarioDefenseKind.SynCookies,
-                RequiredDefenseName = "SYN cookies",
-                MinimumPackets = 50,
-                TargetEfficiencyPercent = 70,
-                ExcellentReactionSeconds = 5,
-                AcceptableReactionSeconds = 20
-            },
-            new()
-            {
-                Id = "udp-flood-ratelimit",
-                Title = "Остановить UDP-флуд с помощью rate limiting",
-                GoalText = "Запустить UDP-flood и ограничить однотипный поток пакетов с помощью rate limiting.",
-                VerificationText = "Проверяется выбор UDP-flood, активный rate limiting, скорость реакции и снижение проходящего потока.",
-                AttackType = AttackType.UdpFlood,
-                RequiredDefense = ScenarioDefenseKind.RateLimit,
-                RequiredDefenseName = "Rate limiting",
-                MinimumPackets = 50,
-                TargetEfficiencyPercent = 60,
-                ExcellentReactionSeconds = 7,
+                RequiredDefenses = new[] { ScenarioDefenseKind.SynCookies, ScenarioDefenseKind.RateLimit },
+                RequiredDefenseName = "SYN cookies + Rate limiting",
+                MinimumPackets = 80,
+                TargetEfficiencyPercent = 75,
+                ExcellentReactionSeconds = 8,
                 AcceptableReactionSeconds = 25
             },
             new()
             {
-                Id = "slowloris-behavior-filter",
-                Title = "Выявить Slowloris поведенческим анализом",
-                GoalText = "Запустить HTTP Slowloris и применить поведенческий фильтр к медленным частичным HTTP-запросам.",
-                VerificationText = "Проверяется выбор Slowloris, включение поведенческого фильтра, реакция и эффективность блокировки.",
+                Id = "udp-flood-ratelimit-blacklist",
+                ShortTitle = "UDP-flood",
+                Title = "UDP-flood: rate limiting + blacklist",
+                GoalText = "Ограничить UDP-flood через rate limiting и вручную добавить подозрительный источник в чёрный список.",
+                VerificationText = "Условия: UDP-flood, общая защита, rate limiting, включённый blacklist и хотя бы один IP в чёрном списке.",
+                AttackType = AttackType.UdpFlood,
+                RequiredDefenses = new[] { ScenarioDefenseKind.RateLimit, ScenarioDefenseKind.Blacklist },
+                RequiredDefenseName = "Rate limiting + Blacklist",
+                RequiresBlacklistEntry = true,
+                MinimumPackets = 80,
+                TargetEfficiencyPercent = 65,
+                ExcellentReactionSeconds = 10,
+                AcceptableReactionSeconds = 30
+            },
+            new()
+            {
+                Id = "slowloris-behavior-whitelist",
+                ShortTitle = "Slowloris",
+                Title = "Slowloris: filter + whitelist",
+                GoalText = "Выявить медленную HTTP-атаку поведенческим фильтром и усилить режимом доверенных IP.",
+                VerificationText = "Условия: HTTP Slowloris, общая защита, поведенческий фильтр, включённый whitelist и хотя бы один доверенный IP.",
                 AttackType = AttackType.HttpSlowloris,
-                RequiredDefense = ScenarioDefenseKind.BehaviorFilter,
-                RequiredDefenseName = "Поведенческий фильтр",
-                MinimumPackets = 30,
+                RequiredDefenses = new[] { ScenarioDefenseKind.BehaviorFilter, ScenarioDefenseKind.Whitelist },
+                RequiredDefenseName = "Поведенческий фильтр + Whitelist",
+                RequiresWhitelistEntry = true,
+                MinimumPackets = 50,
                 TargetEfficiencyPercent = 80,
-                ExcellentReactionSeconds = 8,
+                ExcellentReactionSeconds = 12,
+                AcceptableReactionSeconds = 35
+            },
+            new()
+            {
+                Id = "icmp-flood-whitelist",
+                ShortTitle = "ICMP-flood",
+                Title = "ICMP-flood: whitelist",
+                GoalText = "Ограничить ICMP-flood режимом белого списка, пропуская только доверенные источники.",
+                VerificationText = "Условия: ICMP-flood, общая защита, включённый whitelist и хотя бы один IP в белом списке.",
+                AttackType = AttackType.IcmpFlood,
+                RequiredDefenses = new[] { ScenarioDefenseKind.Whitelist },
+                RequiredDefenseName = "Whitelist",
+                RequiresWhitelistEntry = true,
+                MinimumPackets = 60,
+                TargetEfficiencyPercent = 70,
+                ExcellentReactionSeconds = 10,
                 AcceptableReactionSeconds = 30
             }
         };
@@ -92,22 +118,28 @@ internal sealed class ScenarioService : IScenarioService
                 CalculateEfficiency(input),
                 "Сценарий не запущен.",
                 "Выберите сценарий и нажмите \"Начать\".",
-                "Реакция не зафиксирована.");
+                "Реакция: атака ещё не запущена.");
         }
 
         double efficiency = CalculateEfficiency(input);
         bool attackMatches = input.AttackType == _currentScenario.AttackType;
-        bool requiredDefenseEnabled = IsRequiredDefenseEnabled(input, _currentScenario.RequiredDefense);
+        bool requiredDefensesEnabled = AreRequiredDefensesEnabled(input, _currentScenario);
+        bool accessListRequirementsMet = AreAccessListRequirementsMet(input, _currentScenario);
+        bool defenseChoiceReady = requiredDefensesEnabled && accessListRequirementsMet;
 
-        int choiceScore = CalculateChoiceScore(input, attackMatches, requiredDefenseEnabled);
-        int reactionScore = CalculateReactionScore(input);
+        int choiceScore = CalculateChoiceScore(input, attackMatches, requiredDefensesEnabled, accessListRequirementsMet);
+        int reactionScore = CalculateReactionScore(input, defenseChoiceReady);
         int efficiencyScore = CalculateEfficiencyScore(efficiency);
-        int adaptivityScore = CalculateAdaptivityScore(input, requiredDefenseEnabled);
+        int adaptivityScore = CalculateAdaptivityScore(input, _currentScenario, defenseChoiceReady);
         int totalScore = Math.Clamp(choiceScore + reactionScore + efficiencyScore + adaptivityScore, 0, 100);
 
         bool minimumTrafficReached = input.ReceivedPackets >= _currentScenario.MinimumPackets;
         bool targetEfficiencyReached = efficiency >= _currentScenario.TargetEfficiencyPercent;
-        bool completed = attackMatches && input.ProtectionEnabled && requiredDefenseEnabled && minimumTrafficReached && targetEfficiencyReached;
+        bool completed = attackMatches &&
+                         input.ProtectionEnabled &&
+                         defenseChoiceReady &&
+                         minimumTrafficReached &&
+                         targetEfficiencyReached;
 
         if (completed)
         {
@@ -115,12 +147,12 @@ internal sealed class ScenarioService : IScenarioService
         }
 
         string statusText = CreateStatusText(
+            input,
             attackMatches,
-            input.ProtectionEnabled,
-            requiredDefenseEnabled,
+            requiredDefensesEnabled,
+            accessListRequirementsMet,
             minimumTrafficReached,
-            targetEfficiencyReached,
-            efficiency);
+            targetEfficiencyReached);
 
         return CreateResult(
             Status,
@@ -136,16 +168,16 @@ internal sealed class ScenarioService : IScenarioService
     }
 
     private string CreateStatusText(
+        ScenarioEvaluationInput input,
         bool attackMatches,
-        bool protectionEnabled,
-        bool requiredDefenseEnabled,
+        bool requiredDefensesEnabled,
+        bool accessListRequirementsMet,
         bool minimumTrafficReached,
-        bool targetEfficiencyReached,
-        double efficiency)
+        bool targetEfficiencyReached)
     {
         if (Status == ScenarioStatus.Completed)
         {
-            return "Сценарий пройден: атака распознана, защита выбрана корректно, поток нейтрализован.";
+            return "Сценарий пройден: атака распознана, защита подобрана и поток нейтрализован.";
         }
 
         if (!attackMatches)
@@ -153,24 +185,34 @@ internal sealed class ScenarioService : IScenarioService
             return "Ожидается атака: " + FormatAttackType(_currentScenario!.AttackType) + ".";
         }
 
-        if (!protectionEnabled)
+        if (!input.ProtectionEnabled)
         {
-            return "Атака выбрана верно. Теперь включите общий переключатель защиты.";
+            return "Атака выбрана верно. Включите общий переключатель защиты.";
         }
 
-        if (!requiredDefenseEnabled)
+        if (!requiredDefensesEnabled)
         {
-            return "Защита включена, но для сценария нужен механизм: " + _currentScenario!.RequiredDefenseName + ".";
+            return "Включите механизмы: " + CreateMissingDefenseText(input, _currentScenario!) + ".";
+        }
+
+        if (!accessListRequirementsMet)
+        {
+            return CreateAccessListRequirementText(input, _currentScenario!);
+        }
+
+        if (input.CorrectDefenseWasEnabledBeforeAttack)
+        {
+            return "Защита выбрана, но реакция не засчитана: механизм был включён до начала атаки.";
         }
 
         if (!minimumTrafficReached)
         {
-            return "Защита выбрана верно. Идёт сбор статистики по пакетам сценария.";
+            return "Защита выбрана верно. Идёт накопление статистики по сценарию.";
         }
 
         if (!targetEfficiencyReached)
         {
-            return "Защита выбрана верно, но эффективности пока недостаточно: " + efficiency.ToString("0.0") + "%";
+            return "Условия выбраны верно, но поток ещё недостаточно нейтрализован.";
         }
 
         return "Сценарий выполняется.";
@@ -205,31 +247,43 @@ internal sealed class ScenarioService : IScenarioService
     private int CalculateChoiceScore(
         ScenarioEvaluationInput input,
         bool attackMatches,
-        bool requiredDefenseEnabled)
+        bool requiredDefensesEnabled,
+        bool accessListRequirementsMet)
     {
         int score = 0;
 
         if (attackMatches)
         {
-            score += 10;
+            score += 8;
         }
 
         if (input.ProtectionEnabled)
         {
+            score += 7;
+        }
+
+        if (_currentScenario is not null && _currentScenario.RequiredDefenses.Count > 0)
+        {
+            int enabledRequiredCount = CountEnabledRequiredDefenses(input, _currentScenario.RequiredDefenses);
+            score += (int)Math.Round(enabledRequiredCount * 15.0 / _currentScenario.RequiredDefenses.Count);
+        }
+
+        if (requiredDefensesEnabled && accessListRequirementsMet)
+        {
             score += 5;
         }
 
-        if (requiredDefenseEnabled)
-        {
-            score += 15;
-        }
-
-        return Math.Clamp(score, 0, 30);
+        return Math.Clamp(score, 0, ChoiceMaxScore);
     }
 
-    private int CalculateReactionScore(ScenarioEvaluationInput input)
+    private int CalculateReactionScore(
+        ScenarioEvaluationInput input,
+        bool defenseChoiceReady)
     {
-        if (input.AttackStartedAt is null || input.FirstCorrectDefenseEnabledAt is null)
+        if (!defenseChoiceReady ||
+            input.CorrectDefenseWasEnabledBeforeAttack ||
+            input.AttackStartedAt is null ||
+            input.FirstCorrectDefenseEnabledAt is null)
         {
             return 0;
         }
@@ -238,62 +292,78 @@ internal sealed class ScenarioService : IScenarioService
 
         if (seconds <= _currentScenario!.ExcellentReactionSeconds)
         {
-            return 20;
+            return ReactionMaxScore;
         }
 
         if (seconds >= _currentScenario.AcceptableReactionSeconds)
         {
-            return 5;
+            return 4;
         }
 
         double range = _currentScenario.AcceptableReactionSeconds - _currentScenario.ExcellentReactionSeconds;
         double penaltyPart = (seconds - _currentScenario.ExcellentReactionSeconds) / Math.Max(1, range);
 
-        return Math.Clamp(20 - (int)Math.Round(penaltyPart * 15), 5, 20);
+        return Math.Clamp(ReactionMaxScore - (int)Math.Round(penaltyPart * 11), 4, ReactionMaxScore);
     }
 
     private int CalculateEfficiencyScore(double efficiency)
     {
         int target = Math.Max(1, _currentScenario!.TargetEfficiencyPercent);
-        return Math.Clamp((int)Math.Round(efficiency * 35 / target), 0, 35);
+        return Math.Clamp((int)Math.Round(efficiency * EfficiencyMaxScore / target), 0, EfficiencyMaxScore);
     }
 
-    private static int CalculateAdaptivityScore(
+    private int CalculateAdaptivityScore(
         ScenarioEvaluationInput input,
-        bool requiredDefenseEnabled)
+        TrainingScenario scenario,
+        bool defenseChoiceReady)
     {
-        if (!requiredDefenseEnabled)
+        if (!defenseChoiceReady)
         {
             return 0;
         }
 
         int score = 0;
 
-        if (input.DefenseConfigurationChanges > 0)
+        if (scenario.RequiredDefenses.Count > 1)
         {
-            score += Math.Min(10, input.DefenseConfigurationChanges * 4);
+            score += 6;
         }
 
-        if (input.AdditionalDefenseUsed)
+        if (scenario.RequiresBlacklistEntry && input.BlacklistedIpCount > 0)
         {
-            score += 5;
+            score += 4;
         }
 
-        return Math.Clamp(score, 0, 15);
+        if (scenario.RequiresWhitelistEntry && input.WhitelistedIpCount > 0)
+        {
+            score += 4;
+        }
+
+        if (input.EnabledDefenseMechanismCount > scenario.RequiredDefenses.Count)
+        {
+            score += 3;
+        }
+
+        if (input.DefenseConfigurationChangesAfterAttack > 0)
+        {
+            score += Math.Min(4, input.DefenseConfigurationChangesAfterAttack * 2);
+        }
+
+        return Math.Clamp(score, 0, AdaptivityMaxScore);
     }
 
     private string CreateCriteriaText()
     {
         if (_currentScenario is null)
         {
-            return "Критерии сценария не выбраны.";
+            return "Условия сценария не выбраны.";
         }
 
-        return "Критерии: " +
-               FormatAttackType(_currentScenario.AttackType) + ", " +
-               _currentScenario.RequiredDefenseName + ", минимум " +
-               _currentScenario.MinimumPackets + " пакетов, эффективность от " +
-               _currentScenario.TargetEfficiencyPercent + "%.";
+        return "Условия: " +
+               FormatAttackType(_currentScenario.AttackType) + " • " +
+               _currentScenario.RequiredDefenseName + " • от " +
+               _currentScenario.MinimumPackets + " пакетов • цель " +
+               _currentScenario.TargetEfficiencyPercent + "%";
     }
 
     private static string CreateScoreBreakdownText(
@@ -302,10 +372,10 @@ internal sealed class ScenarioService : IScenarioService
         int efficiencyScore,
         int adaptivityScore)
     {
-        return "Реакция " + reactionScore + "/20 • " +
-               "Выбор " + choiceScore + "/30 • " +
-               "Эффективность " + efficiencyScore + "/35 • " +
-               "Адаптивность " + adaptivityScore + "/15";
+        return "Реакция " + reactionScore + "/" + ReactionMaxScore + " • " +
+               "Выбор " + choiceScore + "/" + ChoiceMaxScore + " • " +
+               "Эффективность " + efficiencyScore + "/" + EfficiencyMaxScore + " • " +
+               "Адаптивность " + adaptivityScore + "/" + AdaptivityMaxScore;
     }
 
     private static string CreateReactionTimeText(ScenarioEvaluationInput input)
@@ -313,6 +383,11 @@ internal sealed class ScenarioService : IScenarioService
         if (input.AttackStartedAt is null)
         {
             return "Реакция: атака ещё не запущена.";
+        }
+
+        if (input.CorrectDefenseWasEnabledBeforeAttack)
+        {
+            return "Реакция: не засчитана, защита была включена заранее.";
         }
 
         if (input.FirstCorrectDefenseEnabledAt is null)
@@ -324,7 +399,38 @@ internal sealed class ScenarioService : IScenarioService
         return "Реакция: " + Math.Max(0, seconds).ToString("0.0") + " сек.";
     }
 
-    private bool IsRequiredDefenseEnabled(
+    private static bool AreRequiredDefensesEnabled(
+        ScenarioEvaluationInput input,
+        TrainingScenario scenario)
+    {
+        return scenario.RequiredDefenses.All(defense => IsDefenseEnabled(input, defense));
+    }
+
+    private static int CountEnabledRequiredDefenses(
+        ScenarioEvaluationInput input,
+        IReadOnlyList<ScenarioDefenseKind> requiredDefenses)
+    {
+        return requiredDefenses.Count(defense => IsDefenseEnabled(input, defense));
+    }
+
+    private static bool AreAccessListRequirementsMet(
+        ScenarioEvaluationInput input,
+        TrainingScenario scenario)
+    {
+        if (scenario.RequiresBlacklistEntry && input.BlacklistedIpCount == 0)
+        {
+            return false;
+        }
+
+        if (scenario.RequiresWhitelistEntry && input.WhitelistedIpCount == 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private static bool IsDefenseEnabled(
         ScenarioEvaluationInput input,
         ScenarioDefenseKind defenseKind)
     {
@@ -337,6 +443,37 @@ internal sealed class ScenarioService : IScenarioService
             ScenarioDefenseKind.Whitelist => input.WhitelistEnabled,
             _ => false
         };
+    }
+
+    private static string CreateMissingDefenseText(
+        ScenarioEvaluationInput input,
+        TrainingScenario scenario)
+    {
+        string[] missing = scenario.RequiredDefenses
+            .Where(defense => !IsDefenseEnabled(input, defense))
+            .Select(FormatDefenseKind)
+            .ToArray();
+
+        return missing.Length == 0
+            ? scenario.RequiredDefenseName
+            : string.Join(", ", missing);
+    }
+
+    private static string CreateAccessListRequirementText(
+        ScenarioEvaluationInput input,
+        TrainingScenario scenario)
+    {
+        if (scenario.RequiresBlacklistEntry && input.BlacklistedIpCount == 0)
+        {
+            return "Blacklist включён. Добавьте хотя бы один IP-адрес из журнала в чёрный список.";
+        }
+
+        if (scenario.RequiresWhitelistEntry && input.WhitelistedIpCount == 0)
+        {
+            return "Whitelist включён. Добавьте хотя бы один доверенный IP-адрес в белый список.";
+        }
+
+        return "Заполните список доступа для выбранного сценария.";
     }
 
     private static double CalculateEfficiency(ScenarioEvaluationInput input)
@@ -359,6 +496,19 @@ internal sealed class ScenarioService : IScenarioService
             AttackType.IcmpFlood => "ICMP-flood",
             AttackType.HttpSlowloris => "HTTP Slowloris",
             _ => attackType.ToString()
+        };
+    }
+
+    private static string FormatDefenseKind(ScenarioDefenseKind defenseKind)
+    {
+        return defenseKind switch
+        {
+            ScenarioDefenseKind.SynCookies => "SYN cookies",
+            ScenarioDefenseKind.RateLimit => "Rate limiting",
+            ScenarioDefenseKind.BehaviorFilter => "Поведенческий фильтр",
+            ScenarioDefenseKind.Blacklist => "Blacklist",
+            ScenarioDefenseKind.Whitelist => "Whitelist",
+            _ => defenseKind.ToString()
         };
     }
 }

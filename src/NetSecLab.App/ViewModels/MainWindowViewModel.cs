@@ -47,11 +47,12 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     private string _scenarioVerificationText;
     private string _scenarioStatusText;
     private string _scenarioScoreText = "Оценка: 0/100";
-    private string _scenarioBreakdownText = "Реакция 0/20 • Выбор 0/30 • Эффективность 0/35 • Адаптивность 0/15";
+    private string _scenarioBreakdownText = "Реакция 0/15 • Выбор 0/35 • Эффективность 0/35 • Адаптивность 0/15";
     private string _scenarioReactionText = "Реакция: атака ещё не запущена.";
     private DateTime? _attackStartedAt;
     private DateTime? _firstCorrectDefenseEnabledAt;
-    private int _scenarioDefenseConfigurationChanges;
+    private bool _correctDefenseWasActiveAtAttackStart;
+    private int _scenarioDefenseConfigurationChangesAfterAttack;
     private int _receivedPackets;
     private int _allowedPackets;
     private int _mitigatedPackets;
@@ -511,7 +512,8 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         _activeScenario = scenario;
         _attackStartedAt = null;
         _firstCorrectDefenseEnabledAt = null;
-        _scenarioDefenseConfigurationChanges = 0;
+        _correctDefenseWasActiveAtAttackStart = false;
+        _scenarioDefenseConfigurationChangesAfterAttack = 0;
 
         AttackTypeOption? attackType = AttackTypes.FirstOrDefault(option => option.Value == scenario.AttackType);
         if (attackType is not null)
@@ -523,7 +525,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         ScenarioVerificationText = scenario.VerificationText;
         ScenarioStatusText = "Сценарий запущен. Выполните условия и запустите генерацию атаки.";
         ScenarioScoreText = "Оценка: 0/100";
-        ScenarioBreakdownText = "Реакция 0/20 • Выбор 0/30 • Эффективность 0/35 • Адаптивность 0/15";
+        ScenarioBreakdownText = "Реакция 0/15 • Выбор 0/35 • Эффективность 0/35 • Адаптивность 0/15";
         ScenarioReactionText = "Реакция: атака ещё не запущена.";
         StatusText = "Учебный сценарий запущен: " + scenario.Title;
         UpdateScenarioState();
@@ -536,10 +538,11 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         _activeScenario = null;
         _attackStartedAt = null;
         _firstCorrectDefenseEnabledAt = null;
-        _scenarioDefenseConfigurationChanges = 0;
+        _correctDefenseWasActiveAtAttackStart = false;
+        _scenarioDefenseConfigurationChangesAfterAttack = 0;
         ScenarioStatusText = "Сценарий сброшен.";
         ScenarioScoreText = "Оценка: 0/100";
-        ScenarioBreakdownText = "Реакция 0/20 • Выбор 0/30 • Эффективность 0/35 • Адаптивность 0/15";
+        ScenarioBreakdownText = "Реакция 0/15 • Выбор 0/35 • Эффективность 0/35 • Адаптивность 0/15";
         ScenarioReactionText = "Реакция: атака ещё не запущена.";
         UpdateSelectedScenarioDetails();
         UpdateCommandStates();
@@ -611,6 +614,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
 
         _defenseService.Settings.BlacklistedIps.Add(ip);
         _defenseService.Settings.WhitelistedIps.Remove(ip);
+        RecordScenarioDefenseChange();
         BlacklistIpText = ip;
         UpdateIpListSummaryTexts();
         UpdateDefenseStatusText();
@@ -627,6 +631,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         }
 
         _defenseService.Settings.BlacklistedIps.Remove(ip);
+        RecordScenarioDefenseChange();
         BlacklistIpText = ip;
         UpdateIpListSummaryTexts();
         UpdateDefenseStatusText();
@@ -637,6 +642,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     private void ClearBlacklistIps()
     {
         _defenseService.Settings.BlacklistedIps.Clear();
+        RecordScenarioDefenseChange();
         UpdateIpListSummaryTexts();
         UpdateDefenseStatusText();
         StatusText = "Чёрный список очищен.";
@@ -653,6 +659,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
 
         _defenseService.Settings.WhitelistedIps.Add(ip);
         _defenseService.Settings.BlacklistedIps.Remove(ip);
+        RecordScenarioDefenseChange();
         WhitelistIpText = ip;
         UpdateIpListSummaryTexts();
         UpdateDefenseStatusText();
@@ -669,6 +676,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         }
 
         _defenseService.Settings.WhitelistedIps.Remove(ip);
+        RecordScenarioDefenseChange();
         WhitelistIpText = ip;
         UpdateIpListSummaryTexts();
         UpdateDefenseStatusText();
@@ -679,6 +687,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     private void ClearWhitelistIps()
     {
         _defenseService.Settings.WhitelistedIps.Clear();
+        RecordScenarioDefenseChange();
         UpdateIpListSummaryTexts();
         UpdateDefenseStatusText();
         StatusText = "Белый список очищен.";
@@ -881,7 +890,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             if (_scenarioService.Status == ScenarioStatus.InProgress && _attackStartedAt is null)
             {
                 _attackStartedAt = DateTime.Now;
-                TryRecordCorrectDefenseTime();
+                _correctDefenseWasActiveAtAttackStart = IsScenarioDefenseReady();
             }
 
             RunStateText = "Атака выполняется";
@@ -952,7 +961,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         ScenarioVerificationText = SelectedScenario.VerificationText;
         ScenarioStatusText = "Сценарий не запущен. Нажмите \"Начать\", чтобы включить проверку.";
         ScenarioScoreText = "Оценка: 0/100";
-        ScenarioBreakdownText = "Реакция 0/20 • Выбор 0/30 • Эффективность 0/35 • Адаптивность 0/15";
+        ScenarioBreakdownText = "Реакция 0/15 • Выбор 0/35 • Эффективность 0/35 • Адаптивность 0/15";
         ScenarioReactionText = "Реакция: атака ещё не запущена.";
     }
 
@@ -996,8 +1005,11 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             WhitelistEnabled = WhitelistEnabled,
             AttackStartedAt = _attackStartedAt,
             FirstCorrectDefenseEnabledAt = _firstCorrectDefenseEnabledAt,
-            DefenseConfigurationChanges = _scenarioDefenseConfigurationChanges,
-            AdditionalDefenseUsed = CountEnabledDefenseMechanisms() > 1
+            BlacklistedIpCount = _defenseService.Settings.BlacklistedIps.Count,
+            WhitelistedIpCount = _defenseService.Settings.WhitelistedIps.Count,
+            EnabledDefenseMechanismCount = CountEnabledDefenseMechanisms(),
+            CorrectDefenseWasEnabledBeforeAttack = _correctDefenseWasActiveAtAttackStart,
+            DefenseConfigurationChangesAfterAttack = _scenarioDefenseConfigurationChangesAfterAttack
         };
     }
 
@@ -1007,8 +1019,8 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             _scenarioService.Status != ScenarioStatus.InProgress ||
             _attackStartedAt is null ||
             _firstCorrectDefenseEnabledAt is not null ||
-            !ProtectionEnabled ||
-            !IsRequiredDefenseActive(_activeScenario.RequiredDefense))
+            _correctDefenseWasActiveAtAttackStart ||
+            !IsScenarioDefenseReady())
         {
             return;
         }
@@ -1023,11 +1035,40 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             return;
         }
 
-        _scenarioDefenseConfigurationChanges++;
+        if (_attackStartedAt is not null)
+        {
+            _scenarioDefenseConfigurationChangesAfterAttack++;
+        }
+
         TryRecordCorrectDefenseTime();
     }
 
-    private bool IsRequiredDefenseActive(ScenarioDefenseKind requiredDefense)
+    private bool IsScenarioDefenseReady()
+    {
+        if (_activeScenario is null || !ProtectionEnabled)
+        {
+            return false;
+        }
+
+        if (!_activeScenario.RequiredDefenses.All(IsDefenseActive))
+        {
+            return false;
+        }
+
+        if (_activeScenario.RequiresBlacklistEntry && _defenseService.Settings.BlacklistedIps.Count == 0)
+        {
+            return false;
+        }
+
+        if (_activeScenario.RequiresWhitelistEntry && _defenseService.Settings.WhitelistedIps.Count == 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool IsDefenseActive(ScenarioDefenseKind requiredDefense)
     {
         return requiredDefense switch
         {
