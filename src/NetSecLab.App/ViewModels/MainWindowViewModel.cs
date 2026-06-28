@@ -32,6 +32,8 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     private string _mitigatedPacketsText = "0";
     private string _blockedPacketsText = "0";
     private string _currentRateText = "0 пакетов/сек";
+    private string _neutralizedPacketsText = "0";
+    private string _defenseEfficiencyText = "0.0%";
     private string _defenseStatusText;
     private int _receivedPackets;
     private int _allowedPackets;
@@ -266,6 +268,18 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         private set => SetProperty(ref _blockedPacketsText, value);
     }
 
+    public string NeutralizedPacketsText
+    {
+        get => _neutralizedPacketsText;
+        private set => SetProperty(ref _neutralizedPacketsText, value);
+    }
+
+    public string DefenseEfficiencyText
+    {
+        get => _defenseEfficiencyText;
+        private set => SetProperty(ref _defenseEfficiencyText, value);
+    }
+
     public string CurrentRateText
     {
         get => _currentRateText;
@@ -431,10 +445,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
                     break;
             }
 
-            GeneratedPacketsText = _receivedPackets.ToString();
-            AllowedPacketsText = _allowedPackets.ToString();
-            MitigatedPacketsText = _mitigatedPackets.ToString();
-            BlockedPacketsText = _blockedPackets.ToString();
+            UpdatePacketCounterTexts();
 
             while (Packets.Count > _settings.MaxPacketsInUi)
             {
@@ -443,6 +454,26 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
 
             UpdateCommandStates();
         });
+    }
+
+    private void UpdatePacketCounterTexts()
+    {
+        int neutralizedPackets = _mitigatedPackets + _blockedPackets;
+
+        GeneratedPacketsText = _receivedPackets.ToString();
+        AllowedPacketsText = _allowedPackets.ToString();
+        MitigatedPacketsText = _mitigatedPackets.ToString();
+        BlockedPacketsText = _blockedPackets.ToString();
+        NeutralizedPacketsText = neutralizedPackets.ToString();
+
+        if (_receivedPackets == 0)
+        {
+            DefenseEfficiencyText = "0.0%";
+            return;
+        }
+
+        double efficiency = neutralizedPackets * 100.0 / _receivedPackets;
+        DefenseEfficiencyText = efficiency.ToString("0.0") + "%";
     }
 
     private void OnAttackStarted(AttackStartedEvent eventData)
@@ -490,10 +521,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         _mitigatedPackets = 0;
         _blockedPackets = 0;
 
-        GeneratedPacketsText = "0";
-        AllowedPacketsText = "0";
-        MitigatedPacketsText = "0";
-        BlockedPacketsText = "0";
+        UpdatePacketCounterTexts();
     }
 
     private void UpdateDefenseStatusText()
