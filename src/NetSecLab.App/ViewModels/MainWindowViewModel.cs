@@ -24,6 +24,8 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     private string _targetPortText;
     private string _intensityText;
     private string _rateLimitText;
+    private string _blacklistIpText = "203.0.113.10";
+    private string _whitelistIpText = "192.168.1.2";
     private bool _includeBackgroundTraffic = true;
     private string _statusText;
     private string _runStateText;
@@ -34,6 +36,8 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     private string _currentRateText = "0 пакетов/сек";
     private string _neutralizedPacketsText = "0";
     private string _defenseEfficiencyText = "0.0%";
+    private string _blacklistSummaryText = "Пусто";
+    private string _whitelistSummaryText = "Пусто";
     private string _defenseStatusText;
     private int _receivedPackets;
     private int _allowedPackets;
@@ -61,6 +65,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             ? "Готово к запуску генератора атак."
             : "Генератор атак недоступен. Подключите функциональный модуль генерации трафика.";
         _runStateText = attackService.IsAvailable ? "Остановлено" : "Недоступно";
+        UpdateIpListSummaryTexts();
         _defenseStatusText = CreateDefenseStatusText();
 
         AttackTypes = new ObservableCollection<AttackTypeOption>
@@ -77,6 +82,10 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         StartAttackCommand = new RelayCommand(StartAttack, () => AttackModuleAvailable && !_attackService.IsRunning);
         StopAttackCommand = new RelayCommand(StopAttack, () => AttackModuleAvailable && _attackService.IsRunning);
         ClearPacketsCommand = new RelayCommand(ClearPackets, () => AttackModuleAvailable && Packets.Count > 0);
+        AddBlacklistIpCommand = new RelayCommand(AddBlacklistIp, () => DefenseOptionsEnabled && !string.IsNullOrWhiteSpace(BlacklistIpText));
+        RemoveBlacklistIpCommand = new RelayCommand(RemoveBlacklistIp, () => DefenseOptionsEnabled && !string.IsNullOrWhiteSpace(BlacklistIpText));
+        AddWhitelistIpCommand = new RelayCommand(AddWhitelistIp, () => DefenseOptionsEnabled && !string.IsNullOrWhiteSpace(WhitelistIpText));
+        RemoveWhitelistIpCommand = new RelayCommand(RemoveWhitelistIp, () => DefenseOptionsEnabled && !string.IsNullOrWhiteSpace(WhitelistIpText));
 
         _subscriptions.Add(eventBus.Subscribe<PacketGeneratedEvent>(OnPacketGenerated));
         _subscriptions.Add(eventBus.Subscribe<AttackStartedEvent>(OnAttackStarted));
@@ -89,6 +98,10 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     public ICommand StartAttackCommand { get; }
     public ICommand StopAttackCommand { get; }
     public ICommand ClearPacketsCommand { get; }
+    public ICommand AddBlacklistIpCommand { get; }
+    public ICommand RemoveBlacklistIpCommand { get; }
+    public ICommand AddWhitelistIpCommand { get; }
+    public ICommand RemoveWhitelistIpCommand { get; }
 
     public bool AttackModuleAvailable => _attackService.IsAvailable;
     public bool DefenseModuleAvailable => _defenseService.IsAvailable;
@@ -142,6 +155,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             OnPropertyChanged(nameof(DefenseOptionsEnabled));
             OnPropertyChanged(nameof(RateLimitInputEnabled));
             UpdateDefenseStatusText();
+            UpdateCommandStates();
         }
     }
 
@@ -192,6 +206,74 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             OnPropertyChanged();
             UpdateDefenseStatusText();
         }
+    }
+
+    public bool BlacklistEnabled
+    {
+        get => _defenseService.Settings.BlacklistEnabled;
+        set
+        {
+            if (_defenseService.Settings.BlacklistEnabled == value)
+            {
+                return;
+            }
+
+            _defenseService.Settings.BlacklistEnabled = value;
+            OnPropertyChanged();
+            UpdateDefenseStatusText();
+        }
+    }
+
+    public bool WhitelistEnabled
+    {
+        get => _defenseService.Settings.WhitelistEnabled;
+        set
+        {
+            if (_defenseService.Settings.WhitelistEnabled == value)
+            {
+                return;
+            }
+
+            _defenseService.Settings.WhitelistEnabled = value;
+            OnPropertyChanged();
+            UpdateDefenseStatusText();
+        }
+    }
+
+    public string BlacklistIpText
+    {
+        get => _blacklistIpText;
+        set
+        {
+            if (SetProperty(ref _blacklistIpText, value))
+            {
+                UpdateCommandStates();
+            }
+        }
+    }
+
+    public string WhitelistIpText
+    {
+        get => _whitelistIpText;
+        set
+        {
+            if (SetProperty(ref _whitelistIpText, value))
+            {
+                UpdateCommandStates();
+            }
+        }
+    }
+
+    public string BlacklistSummaryText
+    {
+        get => _blacklistSummaryText;
+        private set => SetProperty(ref _blacklistSummaryText, value);
+    }
+
+    public string WhitelistSummaryText
+    {
+        get => _whitelistSummaryText;
+        private set => SetProperty(ref _whitelistSummaryText, value);
     }
 
     public string RateLimitText
@@ -341,6 +423,72 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         UpdateCommandStates();
     }
 
+    private void AddBlacklistIp()
+    {
+        if (!TryNormalizeIp(BlacklistIpText, out string ip))
+        {
+            StatusText = "Введите корректный IPv4 для чёрного списка.";
+            return;
+        }
+
+        _defenseService.Settings.BlacklistedIps.Add(ip);
+        _defenseService.Settings.WhitelistedIps.Remove(ip);
+        BlacklistIpText = ip;
+        UpdateIpListSummaryTexts();
+        UpdateDefenseStatusText();
+        StatusText = "IP " + ip + " добавлен в чёрный список.";
+        UpdateCommandStates();
+    }
+
+    private void RemoveBlacklistIp()
+    {
+        if (!TryNormalizeIp(BlacklistIpText, out string ip))
+        {
+            StatusText = "Введите корректный IPv4 для удаления из чёрного списка.";
+            return;
+        }
+
+        _defenseService.Settings.BlacklistedIps.Remove(ip);
+        BlacklistIpText = ip;
+        UpdateIpListSummaryTexts();
+        UpdateDefenseStatusText();
+        StatusText = "IP " + ip + " удалён из чёрного списка.";
+        UpdateCommandStates();
+    }
+
+    private void AddWhitelistIp()
+    {
+        if (!TryNormalizeIp(WhitelistIpText, out string ip))
+        {
+            StatusText = "Введите корректный IPv4 для белого списка.";
+            return;
+        }
+
+        _defenseService.Settings.WhitelistedIps.Add(ip);
+        _defenseService.Settings.BlacklistedIps.Remove(ip);
+        WhitelistIpText = ip;
+        UpdateIpListSummaryTexts();
+        UpdateDefenseStatusText();
+        StatusText = "IP " + ip + " добавлен в белый список.";
+        UpdateCommandStates();
+    }
+
+    private void RemoveWhitelistIp()
+    {
+        if (!TryNormalizeIp(WhitelistIpText, out string ip))
+        {
+            StatusText = "Введите корректный IPv4 для удаления из белого списка.";
+            return;
+        }
+
+        _defenseService.Settings.WhitelistedIps.Remove(ip);
+        WhitelistIpText = ip;
+        UpdateIpListSummaryTexts();
+        UpdateDefenseStatusText();
+        StatusText = "IP " + ip + " удалён из белого списка.";
+        UpdateCommandStates();
+    }
+
     private bool TryReadTargetPort(out int targetPort)
     {
         if (!int.TryParse(TargetPortText, out targetPort) || targetPort <= 0 || targetPort > 65535)
@@ -404,6 +552,20 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             || bytes[0] == 127
             || bytes[0] == 192 && bytes[1] == 168
             || bytes[0] == 172 && bytes[1] >= 16 && bytes[1] <= 31;
+    }
+
+    private static bool TryNormalizeIp(string value, out string normalizedIp)
+    {
+        normalizedIp = string.Empty;
+
+        if (!IPAddress.TryParse(value?.Trim(), out IPAddress? address) ||
+            address.AddressFamily != AddressFamily.InterNetwork)
+        {
+            return false;
+        }
+
+        normalizedIp = address.ToString();
+        return true;
     }
 
     private void StopAttack()
@@ -544,7 +706,24 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         return "Активны: " +
                "SYN cookies — " + OnOff(SynCookiesEnabled) + ", " +
                "rate limiting — " + OnOff(RateLimitEnabled) + ", " +
+               "blacklist — " + OnOff(BlacklistEnabled) + " (" + _defenseService.Settings.BlacklistedIps.Count + "), " +
+               "whitelist — " + OnOff(WhitelistEnabled) + " (" + _defenseService.Settings.WhitelistedIps.Count + "), " +
                "поведенческий фильтр — " + OnOff(BehaviorFilterEnabled) + ".";
+    }
+
+    private void UpdateIpListSummaryTexts()
+    {
+        BlacklistSummaryText = CreateIpListSummary(_defenseService.Settings.BlacklistedIps);
+        WhitelistSummaryText = CreateIpListSummary(_defenseService.Settings.WhitelistedIps);
+    }
+
+    private static string CreateIpListSummary(IEnumerable<string> ips)
+    {
+        string[] values = ips.OrderBy(ip => ip).ToArray();
+
+        return values.Length == 0
+            ? "Пусто"
+            : string.Join(", ", values);
     }
 
     private void UpdateCommandStates()
@@ -567,6 +746,26 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         if (ClearPacketsCommand is RelayCommand clearCommand)
         {
             clearCommand.RaiseCanExecuteChanged();
+        }
+
+        if (AddBlacklistIpCommand is RelayCommand addBlacklistCommand)
+        {
+            addBlacklistCommand.RaiseCanExecuteChanged();
+        }
+
+        if (RemoveBlacklistIpCommand is RelayCommand removeBlacklistCommand)
+        {
+            removeBlacklistCommand.RaiseCanExecuteChanged();
+        }
+
+        if (AddWhitelistIpCommand is RelayCommand addWhitelistCommand)
+        {
+            addWhitelistCommand.RaiseCanExecuteChanged();
+        }
+
+        if (RemoveWhitelistIpCommand is RelayCommand removeWhitelistCommand)
+        {
+            removeWhitelistCommand.RaiseCanExecuteChanged();
         }
     }
 

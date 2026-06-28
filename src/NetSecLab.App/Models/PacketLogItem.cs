@@ -45,6 +45,18 @@ public sealed class PacketLogItem
             return "-";
         }
 
+        if (reason.Contains("чёрном списке", StringComparison.OrdinalIgnoreCase)
+            || reason.Contains("blacklist", StringComparison.OrdinalIgnoreCase))
+        {
+            return "Blacklist";
+        }
+
+        if (reason.Contains("белом списке", StringComparison.OrdinalIgnoreCase)
+            || reason.Contains("whitelist", StringComparison.OrdinalIgnoreCase))
+        {
+            return "Whitelist";
+        }
+
         if (reason.Contains("Rate", StringComparison.OrdinalIgnoreCase)
             || reason.Contains("лимит", StringComparison.OrdinalIgnoreCase))
         {

@@ -135,7 +135,53 @@
 
                                 <TextBlock Text="Лимит однотипных пакетов/сек" Foreground="#CBD5E1" />
                                 <TextBox Text="{Binding RateLimitText, Mode=TwoWay}"
-										 IsEnabled="{Binding RateLimitInputEnabled}" />
+                                         IsEnabled="{Binding RateLimitInputEnabled}" />
+
+                                <CheckBox Content="Чёрный список (blacklist)"
+                                          IsChecked="{Binding BlacklistEnabled}"
+                                          Foreground="#E5E7EB" />
+
+                                <Grid ColumnDefinitions="*,74,64" ColumnSpacing="6">
+                                    <TextBox Grid.Column="0"
+                                             Text="{Binding BlacklistIpText, Mode=TwoWay}"
+                                             Watermark="IP-адрес" />
+                                    <Button Grid.Column="1"
+                                            Content="Добавить"
+                                            Command="{Binding AddBlacklistIpCommand}"
+                                            Padding="8,4" />
+                                    <Button Grid.Column="2"
+                                            Content="Убрать"
+                                            Command="{Binding RemoveBlacklistIpCommand}"
+                                            Padding="8,4" />
+                                </Grid>
+
+                                <TextBlock Text="{Binding BlacklistSummaryText}"
+                                           Foreground="#94A3B8"
+                                           FontSize="12"
+                                           TextWrapping="Wrap" />
+
+                                <CheckBox Content="Белый список (whitelist)"
+                                          IsChecked="{Binding WhitelistEnabled}"
+                                          Foreground="#E5E7EB" />
+
+                                <Grid ColumnDefinitions="*,74,64" ColumnSpacing="6">
+                                    <TextBox Grid.Column="0"
+                                             Text="{Binding WhitelistIpText, Mode=TwoWay}"
+                                             Watermark="IP-адрес" />
+                                    <Button Grid.Column="1"
+                                            Content="Добавить"
+                                            Command="{Binding AddWhitelistIpCommand}"
+                                            Padding="8,4" />
+                                    <Button Grid.Column="2"
+                                            Content="Убрать"
+                                            Command="{Binding RemoveWhitelistIpCommand}"
+                                            Padding="8,4" />
+                                </Grid>
+
+                                <TextBlock Text="{Binding WhitelistSummaryText}"
+                                           Foreground="#94A3B8"
+                                           FontSize="12"
+                                           TextWrapping="Wrap" />
 
                                 <CheckBox Content="Поведенческий фильтр"
                                           IsChecked="{Binding BehaviorFilterEnabled}"
