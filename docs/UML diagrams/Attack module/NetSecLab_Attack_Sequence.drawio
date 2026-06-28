@@ -1,0 +1,183 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT">
+  <diagram name="Диаграмма последовательности" id="attack-sequence-simplified">
+    <mxGraphModel dx="1414" dy="785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="user" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" value="Пользователь" vertex="1">
+          <mxGeometry height="760" width="110" x="40" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ui" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" value="Интерфейс NetSecLab" vertex="1">
+          <mxGeometry height="760" width="110" x="240" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="act_ui" parent="ui" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" value="" vertex="1">
+          <mxGeometry height="610" width="10" x="50" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ctrl" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" value="Контроллер атаки" vertex="1">
+          <mxGeometry height="760" width="110" x="435" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="act_ctrl" parent="ctrl" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" value="" vertex="1">
+          <mxGeometry height="580" width="10" x="50" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="gen" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" value="Генератор атак" vertex="1">
+          <mxGeometry height="760" width="110" x="596" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="act_gen" parent="gen" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" value="" vertex="1">
+          <mxGeometry height="520" width="10" x="50" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="engine" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" value="Стохастическое ядро" vertex="1">
+          <mxGeometry height="760" width="110" x="860" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="act_engine" parent="engine" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" value="" vertex="1">
+          <mxGeometry height="340" width="10" x="50" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="vis" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" value="Журнал и визуализация" vertex="1">
+          <mxGeometry height="760" width="110" x="1060" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="act_vis" parent="vis" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" value="" vertex="1">
+          <mxGeometry height="250" width="10" x="50" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="m1" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeColor=#000000;" target="act_ui" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="95" y="140" as="sourcePoint" />
+            <mxPoint x="235" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m1_label" parent="1" style="text;align=center;fontStyle=0;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fillColor=default;fontSize=11;" value="Выбрать тип и параметры атаки()" vertex="1">
+          <mxGeometry height="24" width="180" x="100" y="111" as="geometry" />
+        </mxCell>
+        <mxCell id="m2" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeColor=#000000;" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="300" y="193" as="sourcePoint" />
+            <mxPoint x="485" y="193" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_label" parent="1" style="text;align=center;fontStyle=0;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fillColor=default;fontSize=11;" value="Передать параметры()" vertex="1">
+          <mxGeometry height="24" width="170" x="310" y="161" as="geometry" />
+        </mxCell>
+        <mxCell id="m3" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;verticalAlign=bottom;endArrow=block;endFill=1;strokeColor=#000000;fontSize=12;" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <Array as="points">
+              <mxPoint x="565" y="240" />
+              <mxPoint x="565" y="272" />
+            </Array>
+            <mxPoint x="495" y="240" as="sourcePoint" />
+            <mxPoint x="495" y="272" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3_label" parent="1" style="text;align=center;fontStyle=0;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fillColor=default;fontSize=11;" value="Проверить параметры()" vertex="1">
+          <mxGeometry height="24" width="135.5" x="504.5" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="m4" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeColor=#000000;" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <Array as="points">
+              <mxPoint x="580" y="289" />
+            </Array>
+            <mxPoint x="495" y="289" as="sourcePoint" />
+            <mxPoint x="646" y="289" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4_label" parent="1" style="text;align=center;fontStyle=0;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fillColor=default;fontSize=11;" value="Запустить генерацию()" vertex="1">
+          <mxGeometry height="24" width="127.5" x="504.5" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="m5" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeColor=#000000;" target="act_engine" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="656" y="330" as="sourcePoint" />
+            <mxPoint x="851" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5_label" parent="1" style="text;align=center;fontStyle=0;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fillColor=default;fontSize=11;" value="Запросить интенсивность и шум()" vertex="1">
+          <mxGeometry height="24" width="170" x="670" y="301" as="geometry" />
+        </mxCell>
+        <mxCell id="m6" edge="1" parent="1" source="act_engine" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeColor=#000000;dashed=1;" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="851" y="370" as="sourcePoint" />
+            <mxPoint x="656" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m6_label" parent="1" style="text;align=center;fontStyle=0;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fillColor=default;fontSize=11;" value="Вернуть параметры потока()" vertex="1">
+          <mxGeometry height="24" width="170" x="666" y="341" as="geometry" />
+        </mxCell>
+        <mxCell id="m7" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;verticalAlign=bottom;endArrow=block;endFill=1;strokeColor=#000000;fontSize=12;" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <Array as="points">
+              <mxPoint x="746" y="420" />
+              <mxPoint x="746" y="452" />
+            </Array>
+            <mxPoint x="656" y="420" as="sourcePoint" />
+            <mxPoint x="656" y="452" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m7_label" parent="1" style="text;align=center;fontStyle=0;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fillColor=default;fontSize=11;" value="Сформировать атакующий логический пакет()" vertex="1">
+          <mxGeometry height="24" width="210" x="676" y="391" as="geometry" />
+        </mxCell>
+        <mxCell id="m8" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeColor=#000000;" target="act_engine" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="656" y="505" as="sourcePoint" />
+            <mxPoint x="871" y="505" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m8_label" parent="1" style="text;align=center;fontStyle=0;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fillColor=default;fontSize=11;" value="Передать пакет в модель симуляции()" vertex="1">
+          <mxGeometry height="24" width="170" x="678" y="476" as="geometry" />
+        </mxCell>
+        <mxCell id="m9" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeColor=#000000;" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="920" y="559" as="sourcePoint" />
+            <mxPoint x="1110" y="559" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m9_label" parent="1" style="text;align=center;fontStyle=0;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fillColor=default;fontSize=11;" value="Опубликовать событие пакета()" vertex="1">
+          <mxGeometry height="24" width="170" x="930" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="m10" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeColor=#000000;dashed=1;" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="1110" y="599" as="sourcePoint" />
+            <mxPoint x="495" y="599" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m10_label" parent="1" style="text;align=center;fontStyle=0;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fillColor=default;fontSize=11;" value="Обновить таблицу и график()" vertex="1">
+          <mxGeometry height="24" width="170" x="690" y="571" as="geometry" />
+        </mxCell>
+        <mxCell id="m11" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeColor=#000000;" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="95" y="640" as="sourcePoint" />
+            <mxPoint x="290" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m11_label" parent="1" style="text;align=center;fontStyle=0;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fillColor=default;fontSize=11;" value="Остановить атаку()" vertex="1">
+          <mxGeometry height="24" width="120" x="130" y="611" as="geometry" />
+        </mxCell>
+        <mxCell id="m12" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeColor=#000000;" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="300.5" y="685" as="sourcePoint" />
+            <mxPoint x="485.5" y="685" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m12_label" parent="1" style="text;align=center;fontStyle=0;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fillColor=default;fontSize=11;" value="Передать команду остановки()" vertex="1">
+          <mxGeometry height="24" width="170" x="305" y="658" as="geometry" />
+        </mxCell>
+        <mxCell id="m13" edge="1" parent="1" source="act_ctrl" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeColor=#000000;" target="act_gen" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <Array as="points">
+              <mxPoint x="550" y="740" />
+            </Array>
+            <mxPoint x="490" y="735" as="sourcePoint" />
+            <mxPoint x="630" y="735" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m13_label" parent="1" style="text;align=center;fontStyle=0;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fillColor=default;fontSize=11;" value="Остановить генерацию()" vertex="1">
+          <mxGeometry height="24" width="123.75" x="508.25" y="709" as="geometry" />
+        </mxCell>
+        <mxCell id="m14" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeColor=#000000;" value="">
+          <mxGeometry relative="1" width="80" as="geometry">
+            <mxPoint x="656" y="773" as="sourcePoint" />
+            <mxPoint x="1110" y="773" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m14_label" parent="1" style="text;align=center;fontStyle=0;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;fillColor=default;fontSize=11;" value="Зафиксировать завершение()" vertex="1">
+          <mxGeometry height="24" width="170" x="706" y="746" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
