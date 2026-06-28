@@ -26,6 +26,22 @@ internal sealed class DefenseService : IDefenseService
             return Allow(packet, "—", "Защита отключена.");
         }
 
+        if (Settings.BlacklistEnabled && IsBlacklisted(packet))
+        {
+            return Block(
+                packet,
+                "Blacklist",
+                "IP источника находится в чёрном списке.");
+        }
+
+        if (Settings.WhitelistEnabled && IsRejectedByWhitelist(packet))
+        {
+            return Block(
+                packet,
+                "Whitelist",
+                "IP источника отсутствует в белом списке.");
+        }
+
         if (Settings.BehaviorFilterEnabled && IsSlowlorisLikePacket(packet))
         {
             return Block(
@@ -60,6 +76,23 @@ internal sealed class DefenseService : IDefenseService
             _rateCounters.Clear();
             _synWindowStartedAt = DateTime.Now;
             _synPacketsInWindow = 0;
+        }
+    }
+
+    private bool IsBlacklisted(LogicalPacket packet)
+    {
+        lock (_syncRoot)
+        {
+            return Settings.BlacklistedIps.Contains(packet.SourceIp);
+        }
+    }
+
+    private bool IsRejectedByWhitelist(LogicalPacket packet)
+    {
+        lock (_syncRoot)
+        {
+            return Settings.WhitelistedIps.Count > 0 &&
+                   !Settings.WhitelistedIps.Contains(packet.SourceIp);
         }
     }
 

@@ -104,6 +104,29 @@
                                     HorizontalAlignment="Stretch" />
                         </Grid>
 
+                        <Button Content="Очистить журнал"
+                                Command="{Binding ClearPacketsCommand}"
+                                Background="#334155"
+                                Foreground="White"
+                                FontWeight="SemiBold"
+                                HorizontalAlignment="Stretch" />
+
+                        <Border Background="#0F172A"
+                                BorderBrush="#334155"
+                                BorderThickness="1"
+                                CornerRadius="12"
+                                Padding="12"
+                                Margin="0,4,0,0">
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="Сообщение"
+                                           Foreground="#94A3B8"
+                                           FontSize="12" />
+                                <TextBlock Text="{Binding StatusText}"
+                                           Foreground="#E5E7EB"
+                                           TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
+
                         <Border Height="1" Background="#334155" />
 
                         <StackPanel Spacing="8">
@@ -135,7 +158,97 @@
 
                                 <TextBlock Text="Лимит однотипных пакетов/сек" Foreground="#CBD5E1" />
                                 <TextBox Text="{Binding RateLimitText, Mode=TwoWay}"
-										 IsEnabled="{Binding RateLimitInputEnabled}" />
+                                         IsEnabled="{Binding RateLimitInputEnabled}" />
+
+                                <CheckBox Content="Чёрный список (blacklist)"
+                                          IsChecked="{Binding BlacklistEnabled}"
+                                          Foreground="#E5E7EB" />
+
+                                <StackPanel Spacing="6"
+                                            IsEnabled="{Binding BlacklistControlsEnabled}">
+                                    <TextBox Text="{Binding BlacklistIpText, Mode=TwoWay}"
+                                             Watermark="IP-адрес" />
+
+                                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="6">
+                                        <Button Grid.Column="0"
+                                                Content="Добавить"
+                                                Command="{Binding AddBlacklistIpCommand}"
+                                                IsEnabled="{Binding CanAddBlacklistIp}"
+                                                Background="{Binding BlacklistAddButtonBackground}"
+                                                Foreground="White"
+                                                FontWeight="SemiBold"
+                                                HorizontalAlignment="Stretch"
+                                                Padding="8,4" />
+                                        <Button Grid.Column="1"
+                                                Content="Убрать"
+                                                Command="{Binding RemoveBlacklistIpCommand}"
+                                                IsEnabled="{Binding CanRemoveBlacklistIp}"
+                                                Background="{Binding BlacklistRemoveButtonBackground}"
+                                                Foreground="White"
+                                                FontWeight="SemiBold"
+                                                HorizontalAlignment="Stretch"
+                                                Padding="8,4" />
+                                        <Button Grid.Column="2"
+                                                Content="Убрать все"
+                                                Command="{Binding ClearBlacklistIpsCommand}"
+                                                IsEnabled="{Binding CanClearBlacklistIps}"
+                                                Background="{Binding BlacklistClearButtonBackground}"
+                                                Foreground="White"
+                                                FontWeight="SemiBold"
+                                                HorizontalAlignment="Stretch"
+                                                Padding="8,4" />
+                                    </Grid>
+                                </StackPanel>
+
+                                <TextBlock Text="{Binding BlacklistSummaryText}"
+                                           Foreground="#94A3B8"
+                                           FontSize="12"
+                                           TextWrapping="Wrap" />
+
+                                <CheckBox Content="Белый список (whitelist)"
+                                          IsChecked="{Binding WhitelistEnabled}"
+                                          Foreground="#E5E7EB" />
+
+                                <StackPanel Spacing="6"
+                                            IsEnabled="{Binding WhitelistControlsEnabled}">
+                                    <TextBox Text="{Binding WhitelistIpText, Mode=TwoWay}"
+                                             Watermark="IP-адрес" />
+
+                                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="6">
+                                        <Button Grid.Column="0"
+                                                Content="Добавить"
+                                                Command="{Binding AddWhitelistIpCommand}"
+                                                IsEnabled="{Binding CanAddWhitelistIp}"
+                                                Background="{Binding WhitelistAddButtonBackground}"
+                                                Foreground="White"
+                                                FontWeight="SemiBold"
+                                                HorizontalAlignment="Stretch"
+                                                Padding="8,4" />
+                                        <Button Grid.Column="1"
+                                                Content="Убрать"
+                                                Command="{Binding RemoveWhitelistIpCommand}"
+                                                IsEnabled="{Binding CanRemoveWhitelistIp}"
+                                                Background="{Binding WhitelistRemoveButtonBackground}"
+                                                Foreground="White"
+                                                FontWeight="SemiBold"
+                                                HorizontalAlignment="Stretch"
+                                                Padding="8,4" />
+                                        <Button Grid.Column="2"
+                                                Content="Убрать все"
+                                                Command="{Binding ClearWhitelistIpsCommand}"
+                                                IsEnabled="{Binding CanClearWhitelistIps}"
+                                                Background="{Binding WhitelistClearButtonBackground}"
+                                                Foreground="White"
+                                                FontWeight="SemiBold"
+                                                HorizontalAlignment="Stretch"
+                                                Padding="8,4" />
+                                    </Grid>
+                                </StackPanel>
+
+                                <TextBlock Text="{Binding WhitelistSummaryText}"
+                                           Foreground="#94A3B8"
+                                           FontSize="12"
+                                           TextWrapping="Wrap" />
 
                                 <CheckBox Content="Поведенческий фильтр"
                                           IsChecked="{Binding BehaviorFilterEnabled}"
@@ -159,28 +272,6 @@
                             </Border>
                         </StackPanel>
 
-                        <Button Content="Очистить журнал"
-                                Command="{Binding ClearPacketsCommand}"
-                                Background="#334155"
-                                Foreground="White"
-                                FontWeight="SemiBold"
-                                HorizontalAlignment="Stretch" />
-
-                        <Border Background="#0F172A"
-                                BorderBrush="#334155"
-                                BorderThickness="1"
-                                CornerRadius="12"
-                                Padding="12"
-                                Margin="0,4,0,0">
-                            <StackPanel Spacing="6">
-                                <TextBlock Text="Сообщение"
-                                           Foreground="#94A3B8"
-                                           FontSize="12" />
-                                <TextBlock Text="{Binding StatusText}"
-                                           Foreground="#E5E7EB"
-                                           TextWrapping="Wrap" />
-                            </StackPanel>
-                        </Border>
                     </StackPanel>
                 </ScrollViewer>
             </Border>
