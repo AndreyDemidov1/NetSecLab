@@ -1,0 +1,141 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT" compressed="false">
+  <diagram id="netseclab-defense-activity" name="Страница-1">
+    <mxGraphModel dx="1571" dy="872" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1280" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="lane_user" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;strokeColor=#000000;fillColor=#ffffff;fontSize=14;" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b&gt;Пользователь&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="780" width="220" x="20" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_ui" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;strokeColor=#000000;fillColor=#ffffff;fontSize=14;" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b&gt;Интерфейс / консоль&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="780" width="260" x="240" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_def" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;strokeColor=#000000;fillColor=#ffffff;fontSize=14;" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b&gt;Менеджер защиты&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="780" width="280" x="500" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_core" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;strokeColor=#000000;fillColor=#ffffff;fontSize=14;" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b&gt;Стохастическое ядро&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="780" width="220" x="780" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_log" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;strokeColor=#000000;fillColor=#ffffff;fontSize=14;" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b&gt;Журнал и визуализация&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="780" width="250" x="1000" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="a_start" parent="1" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#ff0000;" value="" vertex="1">
+          <mxGeometry height="28" width="28" x="110" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="a_select" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;strokeColor=#ff0000;fillColor=#ffffc0;fontSize=13;align=center;verticalAlign=middle;" value="Выбрать механизм защиты" vertex="1">
+          <mxGeometry height="55" width="150" x="49" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="a_input" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;strokeColor=#ff0000;fillColor=#ffffc0;fontSize=13;align=center;verticalAlign=middle;" value="Ввести команду или изменить переключатель" vertex="1">
+          <mxGeometry height="65" width="180" x="280" y="165" as="geometry" />
+        </mxCell>
+        <mxCell id="a_send" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;strokeColor=#ff0000;fillColor=#ffffc0;fontSize=13;align=center;verticalAlign=middle;" value="Передать параметры защиты" vertex="1">
+          <mxGeometry height="55" width="170" x="285" y="285" as="geometry" />
+        </mxCell>
+        <mxCell id="a_dec1" parent="1" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#ff0000;fillColor=#ffffc0;fontSize=12;align=center;verticalAlign=middle;" value="" vertex="1">
+          <mxGeometry height="70" width="105" x="585" y="277.5" as="geometry" />
+        </mxCell>
+        <mxCell id="a_error" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;strokeColor=#ff0000;fillColor=#ffffc0;fontSize=13;align=center;verticalAlign=middle;" value="Показать ошибку команды" vertex="1">
+          <mxGeometry height="55" width="160" x="295" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="a_type" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;strokeColor=#ff0000;fillColor=#ffffc0;fontSize=13;align=center;verticalAlign=middle;" value="Определить тип&lt;div&gt;механизма&lt;/div&gt;" vertex="1">
+          <mxGeometry height="55" width="170" x="555" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="a_apply" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;strokeColor=#ff0000;fillColor=#ffffc0;fontSize=13;align=center;verticalAlign=middle;" value="Применить параметры защиты" vertex="1">
+          <mxGeometry height="55" width="170" x="555" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="a_calc" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;strokeColor=#ff0000;fillColor=#ffffc0;fontSize=13;align=center;verticalAlign=middle;" value="Рассчитать&lt;div&gt;эффективность защиты&lt;/div&gt;" vertex="1">
+          <mxGeometry height="65" width="170" x="800" y="495" as="geometry" />
+        </mxCell>
+        <mxCell id="a_update" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;strokeColor=#ff0000;fillColor=#ffffc0;fontSize=13;align=center;verticalAlign=middle;" value="Обновить журнал,&lt;div&gt;графики&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;и статусы&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="65" width="190" x="1030" y="495" as="geometry" />
+        </mxCell>
+        <mxCell id="a_dec2" parent="1" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#ff0000;fillColor=#ffffc0;fontSize=12;align=center;verticalAlign=middle;" value="" vertex="1">
+          <mxGeometry height="70" width="105" x="588" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="a_stop" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;strokeColor=#ff0000;fillColor=#ffffc0;fontSize=13;align=center;verticalAlign=middle;" value="Отключить механизм или выполнить сброс" vertex="1">
+          <mxGeometry height="60" width="190" x="545" y="735" as="geometry" />
+        </mxCell>
+        <mxCell id="a_end" parent="1" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#ff0000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="625" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="ae1" edge="1" parent="1" source="a_start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#ff0000;fontSize=13;" target="a_select" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ae2" edge="1" parent="1" source="a_select" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#ff0000;fontSize=13;" target="a_input" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ae3" edge="1" parent="1" source="a_input" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#ff0000;fontSize=13;" target="a_send" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ae4" edge="1" parent="1" source="a_send" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#ff0000;fontSize=13;" target="a_dec1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ae5" edge="1" parent="1" source="a_dec1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#ff0000;fontSize=13;" target="a_error" value="ошибка">
+          <mxGeometry relative="1" x="-0.3842" y="-20" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="638" y="370" />
+              <mxPoint x="375" y="370" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ae6" edge="1" parent="1" source="a_error" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#ff0000;fontSize=13;" target="a_input" value="">
+          <mxGeometry relative="1" x="-0.4496" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="260" y="437.5" />
+              <mxPoint x="260" y="197.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ae7" edge="1" parent="1" source="a_dec1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#ff0000;fontSize=13;" target="a_type" value="команда&lt;div&gt;корректна&lt;/div&gt;">
+          <mxGeometry relative="1" x="-0.9992" y="-47" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="760" y="313" />
+              <mxPoint x="760" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ae8" edge="1" parent="1" source="a_type" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#ff0000;fontSize=13;" target="a_apply" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ae9" edge="1" parent="1" source="a_apply" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#ff0000;fontSize=13;" target="a_calc" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ae10" edge="1" parent="1" source="a_calc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#ff0000;fontSize=13;" target="a_update" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ae11" edge="1" parent="1" source="a_update" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#ff0000;fontSize=13;" target="a_dec2" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1130" y="635" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ae12" edge="1" parent="1" source="a_dec2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#ff0000;fontSize=13;" target="a_apply" value="продолжить защиту">
+          <mxGeometry relative="1" x="-1" y="-59" as="geometry">
+            <mxPoint x="22" y="4" as="offset" />
+            <Array as="points">
+              <mxPoint x="530" y="635" />
+              <mxPoint x="530" y="527.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ae13" edge="1" parent="1" source="a_dec2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#ff0000;fontSize=13;" target="a_stop" value="остановка / сброс">
+          <mxGeometry relative="1" x="0.0098" y="-70" as="geometry">
+            <mxPoint y="-3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ae14" edge="1" parent="1" source="a_stop" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#ff0000;fontSize=13;" target="a_end" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="640" y="750" />
+              <mxPoint x="1120" y="750" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
