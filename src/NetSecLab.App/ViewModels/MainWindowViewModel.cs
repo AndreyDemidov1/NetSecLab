@@ -53,6 +53,10 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     private DateTime? _firstCorrectDefenseEnabledAt;
     private bool _correctDefenseWasActiveAtAttackStart;
     private int _scenarioDefenseConfigurationChangesAfterAttack;
+    private int _scenarioReceivedPacketsBaseline;
+    private int _scenarioAllowedPacketsBaseline;
+    private int _scenarioMitigatedPacketsBaseline;
+    private int _scenarioBlockedPacketsBaseline;
     private int _receivedPackets;
     private int _allowedPackets;
     private int _mitigatedPackets;
@@ -508,12 +512,14 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             return;
         }
 
+        Packets.Clear();
+        ResetPacketCounters();
+        _defenseService.Reset();
+
         TrainingScenario scenario = _scenarioService.Start(SelectedScenario.Id);
         _activeScenario = scenario;
-        _attackStartedAt = null;
-        _firstCorrectDefenseEnabledAt = null;
-        _correctDefenseWasActiveAtAttackStart = false;
-        _scenarioDefenseConfigurationChangesAfterAttack = 0;
+        ResetScenarioAttemptState();
+        SetScenarioPacketBaselines();
 
         AttackTypeOption? attackType = AttackTypes.FirstOrDefault(option => option.Value == scenario.AttackType);
         if (attackType is not null)
@@ -536,10 +542,8 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     {
         _scenarioService.Reset();
         _activeScenario = null;
-        _attackStartedAt = null;
-        _firstCorrectDefenseEnabledAt = null;
-        _correctDefenseWasActiveAtAttackStart = false;
-        _scenarioDefenseConfigurationChangesAfterAttack = 0;
+        ResetScenarioAttemptState();
+        SetScenarioPacketBaselines();
         ScenarioStatusText = "Сценарий сброшен.";
         ScenarioScoreText = "Оценка: 0/100";
         ScenarioBreakdownText = "Реакция 0/15 • Выбор 0/35 • Эффективность 0/35 • Адаптивность 0/15";
@@ -993,10 +997,10 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         return new ScenarioEvaluationInput
         {
             AttackType = SelectedAttackType.Value,
-            ReceivedPackets = _receivedPackets,
-            AllowedPackets = _allowedPackets,
-            MitigatedPackets = _mitigatedPackets,
-            BlockedPackets = _blockedPackets,
+            ReceivedPackets = Math.Max(0, _receivedPackets - _scenarioReceivedPacketsBaseline),
+            AllowedPackets = Math.Max(0, _allowedPackets - _scenarioAllowedPacketsBaseline),
+            MitigatedPackets = Math.Max(0, _mitigatedPackets - _scenarioMitigatedPacketsBaseline),
+            BlockedPackets = Math.Max(0, _blockedPackets - _scenarioBlockedPacketsBaseline),
             ProtectionEnabled = ProtectionEnabled,
             SynCookiesEnabled = SynCookiesEnabled,
             RateLimitEnabled = RateLimitEnabled,
@@ -1011,6 +1015,22 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             CorrectDefenseWasEnabledBeforeAttack = _correctDefenseWasActiveAtAttackStart,
             DefenseConfigurationChangesAfterAttack = _scenarioDefenseConfigurationChangesAfterAttack
         };
+    }
+
+    private void ResetScenarioAttemptState()
+    {
+        _attackStartedAt = null;
+        _firstCorrectDefenseEnabledAt = null;
+        _correctDefenseWasActiveAtAttackStart = false;
+        _scenarioDefenseConfigurationChangesAfterAttack = 0;
+    }
+
+    private void SetScenarioPacketBaselines()
+    {
+        _scenarioReceivedPacketsBaseline = _receivedPackets;
+        _scenarioAllowedPacketsBaseline = _allowedPackets;
+        _scenarioMitigatedPacketsBaseline = _mitigatedPackets;
+        _scenarioBlockedPacketsBaseline = _blockedPackets;
     }
 
     private void TryRecordCorrectDefenseTime()

@@ -101,6 +101,7 @@ internal sealed class ScenarioService : IScenarioService
 
     public void Reset()
     {
+        _currentScenario = null;
         Status = ScenarioStatus.NotStarted;
     }
 
@@ -138,6 +139,9 @@ internal sealed class ScenarioService : IScenarioService
         bool completed = attackMatches &&
                          input.ProtectionEnabled &&
                          defenseChoiceReady &&
+                         input.AttackStartedAt is not null &&
+                         input.FirstCorrectDefenseEnabledAt is not null &&
+                         !input.CorrectDefenseWasEnabledBeforeAttack &&
                          minimumTrafficReached &&
                          targetEfficiencyReached;
 
@@ -198,6 +202,12 @@ internal sealed class ScenarioService : IScenarioService
         if (!accessListRequirementsMet)
         {
             return CreateAccessListRequirementText(input, _currentScenario!);
+        }
+
+        int extraDefenseCount = Math.Max(0, input.EnabledDefenseMechanismCount - _currentScenario!.RequiredDefenses.Count);
+        if (extraDefenseCount > 0 && !minimumTrafficReached)
+        {
+            return "Подходящая защита выбрана, но включены лишние механизмы: балл за выбор будет снижен.";
         }
 
         if (input.CorrectDefenseWasEnabledBeforeAttack)
@@ -273,6 +283,12 @@ internal sealed class ScenarioService : IScenarioService
             score += 5;
         }
 
+        if (_currentScenario is not null)
+        {
+            int extraDefenseCount = Math.Max(0, input.EnabledDefenseMechanismCount - _currentScenario.RequiredDefenses.Count);
+            score -= extraDefenseCount * 6;
+        }
+
         return Math.Clamp(score, 0, ChoiceMaxScore);
     }
 
@@ -337,11 +353,6 @@ internal sealed class ScenarioService : IScenarioService
         if (scenario.RequiresWhitelistEntry && input.WhitelistedIpCount > 0)
         {
             score += 4;
-        }
-
-        if (input.EnabledDefenseMechanismCount > scenario.RequiredDefenses.Count)
-        {
-            score += 3;
         }
 
         if (input.DefenseConfigurationChangesAfterAttack > 0)
