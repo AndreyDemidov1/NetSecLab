@@ -56,7 +56,7 @@
                                                Foreground="White"
                                                FontSize="20"
                                                FontWeight="SemiBold" />
-                                    <TextBlock Text="Выберите задачу, запустите атаку и получите оценку действий"
+                                    <TextBlock Text="Сначала выберите задачу, затем настройте атаку и защиту"
                                                Foreground="#94A3B8"
                                                FontSize="12"
                                                TextWrapping="Wrap" />
@@ -68,7 +68,8 @@
                                           HorizontalAlignment="Stretch">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding DisplayName}" />
+                                            <TextBlock Text="{Binding DisplayName}"
+                                                       TextTrimming="CharacterEllipsis" />
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
@@ -79,7 +80,7 @@
                                         CornerRadius="10"
                                         Padding="10">
                                     <StackPanel Spacing="5">
-                                        <TextBlock Text="Цель"
+                                        <TextBlock Text="Задача"
                                                    Foreground="#94A3B8"
                                                    FontSize="12" />
                                         <TextBlock Text="{Binding ScenarioGoalText}"
@@ -113,7 +114,7 @@
                                         CornerRadius="10"
                                         Padding="10">
                                     <StackPanel Spacing="5">
-                                        <TextBlock Text="Статус проверки"
+                                        <TextBlock Text="Прогресс"
                                                    Foreground="#94A3B8"
                                                    FontSize="12" />
                                         <TextBlock Text="{Binding ScenarioStatusText}"
@@ -122,22 +123,36 @@
                                     </StackPanel>
                                 </Border>
 
-                                <TextBlock Text="{Binding ScenarioScoreText}"
-                                           Foreground="White"
-                                           FontSize="16"
-                                           FontWeight="SemiBold" />
-                                <TextBlock Text="{Binding ScenarioBreakdownText}"
-                                           Foreground="#CBD5E1"
-                                           FontSize="12"
-                                           TextWrapping="Wrap" />
-                                <TextBlock Text="{Binding ScenarioReactionText}"
-                                           Foreground="#94A3B8"
-                                           FontSize="12"
-                                           TextWrapping="Wrap" />
-                                <TextBlock Text="{Binding ScenarioVerificationText}"
-                                           Foreground="#94A3B8"
-                                           FontSize="12"
-                                           TextWrapping="Wrap" />
+                                <StackPanel Spacing="4">
+                                    <TextBlock Text="{Binding ScenarioScoreText}"
+                                               Foreground="White"
+                                               FontSize="16"
+                                               FontWeight="SemiBold" />
+                                    <TextBlock Text="{Binding ScenarioBreakdownText}"
+                                               Foreground="#CBD5E1"
+                                               FontSize="12"
+                                               TextWrapping="Wrap" />
+                                    <TextBlock Text="{Binding ScenarioReactionText}"
+                                               Foreground="#94A3B8"
+                                               FontSize="12"
+                                               TextWrapping="Wrap" />
+                                </StackPanel>
+
+                                <Border Background="#111827"
+                                        BorderBrush="#334155"
+                                        BorderThickness="1"
+                                        CornerRadius="10"
+                                        Padding="10">
+                                    <StackPanel Spacing="5">
+                                        <TextBlock Text="Условия"
+                                                   Foreground="#94A3B8"
+                                                   FontSize="12" />
+                                        <TextBlock Text="{Binding ScenarioVerificationText}"
+                                                   Foreground="#CBD5E1"
+                                                   FontSize="12"
+                                                   TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Border>
                             </StackPanel>
                         </Border>
 
