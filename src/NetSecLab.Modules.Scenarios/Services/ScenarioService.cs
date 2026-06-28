@@ -165,7 +165,7 @@ internal sealed class ScenarioService : IScenarioService
 
         if (!minimumTrafficReached)
         {
-            return "Защита выбрана верно. Идёт сбор статистики по пактам сценария.";
+            return "Защита выбрана верно. Идёт сбор статистики по пакетам сценария.";
         }
 
         if (!targetEfficiencyReached)
