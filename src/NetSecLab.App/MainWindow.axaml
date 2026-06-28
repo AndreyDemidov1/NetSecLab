@@ -104,6 +104,29 @@
                                     HorizontalAlignment="Stretch" />
                         </Grid>
 
+                        <Button Content="Очистить журнал"
+                                Command="{Binding ClearPacketsCommand}"
+                                Background="#334155"
+                                Foreground="White"
+                                FontWeight="SemiBold"
+                                HorizontalAlignment="Stretch" />
+
+                        <Border Background="#0F172A"
+                                BorderBrush="#334155"
+                                BorderThickness="1"
+                                CornerRadius="12"
+                                Padding="12"
+                                Margin="0,4,0,0">
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="Сообщение"
+                                           Foreground="#94A3B8"
+                                           FontSize="12" />
+                                <TextBlock Text="{Binding StatusText}"
+                                           Foreground="#E5E7EB"
+                                           TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
+
                         <Border Height="1" Background="#334155" />
 
                         <StackPanel Spacing="8">
@@ -154,6 +177,7 @@
                                                 Background="{Binding BlacklistAddButtonBackground}"
                                                 Foreground="White"
                                                 FontWeight="SemiBold"
+                                                HorizontalAlignment="Stretch"
                                                 Padding="8,4" />
                                         <Button Grid.Column="1"
                                                 Content="Убрать"
@@ -162,6 +186,7 @@
                                                 Background="{Binding BlacklistRemoveButtonBackground}"
                                                 Foreground="White"
                                                 FontWeight="SemiBold"
+                                                HorizontalAlignment="Stretch"
                                                 Padding="8,4" />
                                         <Button Grid.Column="2"
                                                 Content="Убрать все"
@@ -170,6 +195,7 @@
                                                 Background="{Binding BlacklistClearButtonBackground}"
                                                 Foreground="White"
                                                 FontWeight="SemiBold"
+                                                HorizontalAlignment="Stretch"
                                                 Padding="8,4" />
                                     </Grid>
                                 </StackPanel>
@@ -196,6 +222,7 @@
                                                 Background="{Binding WhitelistAddButtonBackground}"
                                                 Foreground="White"
                                                 FontWeight="SemiBold"
+                                                HorizontalAlignment="Stretch"
                                                 Padding="8,4" />
                                         <Button Grid.Column="1"
                                                 Content="Убрать"
@@ -204,6 +231,7 @@
                                                 Background="{Binding WhitelistRemoveButtonBackground}"
                                                 Foreground="White"
                                                 FontWeight="SemiBold"
+                                                HorizontalAlignment="Stretch"
                                                 Padding="8,4" />
                                         <Button Grid.Column="2"
                                                 Content="Убрать все"
@@ -212,6 +240,7 @@
                                                 Background="{Binding WhitelistClearButtonBackground}"
                                                 Foreground="White"
                                                 FontWeight="SemiBold"
+                                                HorizontalAlignment="Stretch"
                                                 Padding="8,4" />
                                     </Grid>
                                 </StackPanel>
@@ -243,28 +272,6 @@
                             </Border>
                         </StackPanel>
 
-                        <Button Content="Очистить журнал"
-                                Command="{Binding ClearPacketsCommand}"
-                                Background="#334155"
-                                Foreground="White"
-                                FontWeight="SemiBold"
-                                HorizontalAlignment="Stretch" />
-
-                        <Border Background="#0F172A"
-                                BorderBrush="#334155"
-                                BorderThickness="1"
-                                CornerRadius="12"
-                                Padding="12"
-                                Margin="0,4,0,0">
-                            <StackPanel Spacing="6">
-                                <TextBlock Text="Сообщение"
-                                           Foreground="#94A3B8"
-                                           FontSize="12" />
-                                <TextBlock Text="{Binding StatusText}"
-                                           Foreground="#E5E7EB"
-                                           TextWrapping="Wrap" />
-                            </StackPanel>
-                        </Border>
                     </StackPanel>
                 </ScrollViewer>
             </Border>

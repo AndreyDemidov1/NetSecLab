@@ -51,6 +51,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
 
     private static readonly IBrush EnabledAddButtonBrush = Brush.Parse("#16A34A");
     private static readonly IBrush EnabledRemoveButtonBrush = Brush.Parse("#DC2626");
+    private static readonly IBrush EnabledClearButtonBrush = Brush.Parse("#D97706");
     private static readonly IBrush DisabledActionButtonBrush = Brush.Parse("#334155");
 
     public MainWindowViewModel(
@@ -128,10 +129,10 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     public bool CanClearWhitelistIps => WhitelistControlsEnabled && _defenseService.Settings.WhitelistedIps.Count > 0;
     public IBrush BlacklistAddButtonBackground => CanAddBlacklistIp ? EnabledAddButtonBrush : DisabledActionButtonBrush;
     public IBrush BlacklistRemoveButtonBackground => CanRemoveBlacklistIp ? EnabledRemoveButtonBrush : DisabledActionButtonBrush;
-    public IBrush BlacklistClearButtonBackground => CanClearBlacklistIps ? EnabledRemoveButtonBrush : DisabledActionButtonBrush;
+    public IBrush BlacklistClearButtonBackground => CanClearBlacklistIps ? EnabledClearButtonBrush : DisabledActionButtonBrush;
     public IBrush WhitelistAddButtonBackground => CanAddWhitelistIp ? EnabledAddButtonBrush : DisabledActionButtonBrush;
     public IBrush WhitelistRemoveButtonBackground => CanRemoveWhitelistIp ? EnabledRemoveButtonBrush : DisabledActionButtonBrush;
-    public IBrush WhitelistClearButtonBackground => CanClearWhitelistIps ? EnabledRemoveButtonBrush : DisabledActionButtonBrush;
+    public IBrush WhitelistClearButtonBackground => CanClearWhitelistIps ? EnabledClearButtonBrush : DisabledActionButtonBrush;
 
     public AttackTypeOption SelectedAttackType
     {
@@ -628,16 +629,18 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     {
         byte[] bytes = address.GetAddressBytes();
 
-        return bytes[0] == 10
-            || bytes[0] == 127
-            || bytes[0] == 192 && bytes[1] == 168
-            || bytes[0] == 172 && bytes[1] >= 16 && bytes[1] <= 31
-            || bytes[0] == 203 && bytes[1] == 0 && bytes[2] == 113;
+        bool lastOctetCanBeGenerated = bytes[3] >= 2 && bytes[3] <= 239;
+
+        return lastOctetCanBeGenerated &&
+               (bytes[0] == 10
+                || bytes[0] == 192 && bytes[1] == 168 && bytes[2] == 1
+                || bytes[0] == 172 && bytes[1] == 16 && bytes[2] <= 31
+                || bytes[0] == 203 && bytes[1] == 0 && bytes[2] == 113);
     }
 
     private static string CreateAccessListIpErrorText()
     {
-        return "Для списков доступа используйте IPv4 из диапазонов симуляции: 127.x.x.x, 10.x.x.x, 172.16-31.x.x, 192.168.x.x или 203.0.113.x.";
+        return "Для списков доступа используйте IPv4, которые могут быть источниками пакетов в симуляции: 192.168.1.2-239, 10.x.x.2-239, 172.16.0-31.2-239 или 203.0.113.2-239.";
     }
 
     private void StopAttack()
