@@ -1,0 +1,168 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT" compressed="false">
+  <diagram name="Страница-1" id="netseclab-attack-communication-fixed">
+    <mxGraphModel dx="2514" dy="785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="780" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="user" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;" value=":Пользователь" vertex="1">
+          <mxGeometry height="60" width="150" x="-70" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="panel" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;" value=":Панель&lt;br&gt;управления атакой" vertex="1">
+          <mxGeometry height="70" width="190" x="270" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="controller" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;" value=":Контроллер&lt;br&gt;атаки" vertex="1">
+          <mxGeometry height="70" width="180" x="690" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="generator" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;" value=":Генератор&lt;br&gt;атак" vertex="1">
+          <mxGeometry height="70" width="180" x="690" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="core" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;" value=":Стохастическое&lt;br&gt;ядро" vertex="1">
+          <mxGeometry height="70" width="190" x="250" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="packet" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;" value=":Модель&lt;br&gt;пакета" vertex="1">
+          <mxGeometry height="70" width="170" x="1140" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="bus" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;" value=":Шина&lt;br&gt;событий" vertex="1">
+          <mxGeometry height="70" width="180" x="690" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="victim" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;" value=":Виртуальный&lt;br&gt;узел-жертва" vertex="1">
+          <mxGeometry height="70" width="190" x="300" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="journal" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;" value=":Журнал&lt;br&gt;и визуализация" vertex="1">
+          <mxGeometry height="70" width="170" x="1030" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="edge1" edge="1" parent="1" source="user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=14;strokeColor=#000000;" target="panel" value="1: Выбрать тип&lt;br&gt;и параметры атаки">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="150" y="115" />
+              <mxPoint x="150" y="115" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge2" edge="1" parent="1" source="panel" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=14;strokeColor=#000000;" target="controller" value="2: Передать параметры">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="580" y="100" />
+              <mxPoint x="580" y="100" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge3" edge="1" parent="1" source="controller" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=14;strokeColor=#000000;" target="generator" value="3: Запустить&lt;div&gt;генерацию&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="730" y="200" />
+              <mxPoint x="730" y="200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge4" edge="1" parent="1" source="generator" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=14;strokeColor=#000000;" target="core" value="4: Запросить&lt;br&gt;интенсивность и шум">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="570" y="260" />
+              <mxPoint x="570" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge5" edge="1" parent="1" source="core" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=14;strokeColor=#000000;dashed=1;" target="generator" value="5: Вернуть параметры&lt;br&gt;потока">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="570" y="310" />
+              <mxPoint x="570" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge6" edge="1" parent="1" source="generator" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=14;strokeColor=#000000;" target="packet" value="6: Сформировать пакет&lt;br&gt;по шаблону">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="990" y="260" />
+              <mxPoint x="990" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge7" edge="1" parent="1" source="packet" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=14;strokeColor=#000000;dashed=1;" target="generator" value="7: Готовый&lt;br&gt;логический пакет">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1010" y="310" />
+              <mxPoint x="1010" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge8" edge="1" parent="1" source="generator" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=14;strokeColor=#000000;" target="bus" value="8: Опубликовать&lt;br&gt;событие пакета">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="710" y="400" />
+              <mxPoint x="710" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge9" edge="1" parent="1" source="bus" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=14;strokeColor=#000000;" target="victim" value="9: Передать пакет&lt;br&gt;в модель жертвы">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="590" y="490" />
+              <mxPoint x="590" y="490" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge10" edge="1" parent="1" source="bus" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=14;strokeColor=#000000;" target="journal" value="11: Обновить&lt;br&gt;журнал и график">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="900" y="505" />
+              <mxPoint x="900" y="505" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge11" edge="1" parent="1" source="user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=14;strokeColor=#000000;" target="panel" value="12: Остановить атаку">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint y="190" />
+              <mxPoint x="320" y="190" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge12" edge="1" parent="1" source="panel" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=14;strokeColor=#000000;" target="controller" value="13: Передать команду&lt;br&gt;остановки">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="560" y="140" />
+              <mxPoint x="560" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge13" edge="1" parent="1" source="controller" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=14;strokeColor=#000000;" target="generator" value="14: Остановить&lt;br&gt;генерацию">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="840" y="200" />
+              <mxPoint x="840" y="200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge14" edge="1" parent="1" source="generator" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=14;strokeColor=#000000;" target="bus" value="15: Опубликовать&lt;br&gt;событие остановки">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="850" y="400" />
+              <mxPoint x="850" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge15" edge="1" parent="1" source="bus" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=14;strokeColor=#000000;" target="journal" value="16: Зафиксировать&lt;br&gt;завершение">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="810" y="580" />
+              <mxPoint x="1120" y="580" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ro6SFKAvI5zOzg9K9qgH-1" edge="1" parent="1" source="victim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=14;strokeColor=#000000;dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="bus" value="10: Вернуть статус пакета&lt;div&gt;и нагрузку&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="395" y="580" />
+              <mxPoint x="740" y="580" />
+            </Array>
+            <mxPoint x="490" y="530" as="sourcePoint" />
+            <mxPoint x="700" y="530" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
