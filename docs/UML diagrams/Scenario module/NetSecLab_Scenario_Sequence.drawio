@@ -1,0 +1,178 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT" compressed="false">
+  <diagram id="netseclab-scenario-sequence-fixed" name="Страница-1">
+    <mxGraphModel dx="1047" dy="581" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1540" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p_user" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;" value="Пользователь" vertex="1">
+          <mxGeometry height="790" width="130" x="35" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="au1" parent="p_user" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&amp;quot;curved&amp;quot;:0,&amp;quot;rounded&amp;quot;:0};fillColor=#ffffff;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="700" width="10" x="60" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p_ui" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;" value="Интерфейс" vertex="1">
+          <mxGeometry height="790" width="130" x="205" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="aui1" parent="p_ui" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&amp;quot;curved&amp;quot;:0,&amp;quot;rounded&amp;quot;:0};fillColor=#ffffff;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="700" width="10" x="60" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p_mgr" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;" value="Менеджер&#xa;сценариев" vertex="1">
+          <mxGeometry height="790" width="130" x="385" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="am1" parent="p_mgr" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&amp;quot;curved&amp;quot;:0,&amp;quot;rounded&amp;quot;:0};fillColor=#ffffff;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="660" width="10" x="60" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p_db" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;" value="Хранилище&#xa;данных" vertex="1">
+          <mxGeometry height="790" width="130" x="565" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="adb1" parent="p_db" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&amp;quot;curved&amp;quot;:0,&amp;quot;rounded&amp;quot;:0};fillColor=#ffffff;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="70" width="10" x="60" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="p_attack" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;" value="Генератор&#xa;атак" vertex="1">
+          <mxGeometry height="790" width="130" x="745" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="aat1" parent="p_attack" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&amp;quot;curved&amp;quot;:0,&amp;quot;rounded&amp;quot;:0};fillColor=#ffffff;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="45" width="10" x="60" y="316" as="geometry" />
+        </mxCell>
+        <mxCell id="p_def" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;" value="Модуль&#xa;защиты" vertex="1">
+          <mxGeometry height="790" width="130" x="925" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="adef1" parent="p_def" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&amp;quot;curved&amp;quot;:0,&amp;quot;rounded&amp;quot;:0};fillColor=#ffffff;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="45" width="10" x="60" y="369" as="geometry" />
+        </mxCell>
+        <mxCell id="p_eval" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;" value="Оценщик&#xa;результатов" vertex="1">
+          <mxGeometry height="790" width="130" x="1105" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ae1" parent="p_eval" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&amp;quot;curved&amp;quot;:0,&amp;quot;rounded&amp;quot;:0};fillColor=#ffffff;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="150" width="10" x="60" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="p_report" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;" value="Журнал&#xa;и отчёт" vertex="1">
+          <mxGeometry height="790" width="130" x="1285" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ar1" parent="p_report" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&amp;quot;curved&amp;quot;:0,&amp;quot;rounded&amp;quot;:0};fillColor=#ffffff;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="90" width="10" x="60" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="s1" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="1: Выбрать сценарий()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="105" y="140" as="sourcePoint" />
+            <mxPoint x="265" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s2" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="2: Передать выбор&lt;div&gt;сценария()&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="275" y="171" as="sourcePoint" />
+            <mxPoint x="444.9999999999999" y="171" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s3" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="3: Загрузить условия&lt;div&gt;и критерии()&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="205" as="sourcePoint" />
+            <mxPoint x="625" y="205" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s4" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;dashPattern=6 6;endSize=8;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="4: Вернуть сценарий()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="625" y="245" as="sourcePoint" />
+            <mxPoint x="455" y="245" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s6" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="6: Начать выполнение&lt;div&gt;сценария()&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="105" y="327" as="sourcePoint" />
+            <mxPoint x="265" y="327" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s7" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="7: Запустить сценарий()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="275" y="369.0000000000001" as="sourcePoint" />
+            <mxPoint x="445" y="369.0000000000001" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s8" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="8: Запустить атаку по сценарию()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="398" as="sourcePoint" />
+            <mxPoint x="805" y="398" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s9" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="10: Подготовить механизмы защиты()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="450" as="sourcePoint" />
+            <mxPoint x="985" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s10" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="12: Передать действия&lt;div&gt;пользователя()&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="275" y="500.0000000000001" as="sourcePoint" />
+            <mxPoint x="445" y="500.0000000000001" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s11" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="13: Оценить действия и метрики()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="540" as="sourcePoint" />
+            <mxPoint x="1165" y="540" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s12" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;dashPattern=6 6;endSize=8;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="14: Вернуть промежуточный результат()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1165" y="580" as="sourcePoint" />
+            <mxPoint x="455" y="580" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s13" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="15: Рассчитать итоговую оценку()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="625" as="sourcePoint" />
+            <mxPoint x="1165" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s14" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;dashPattern=6 6;endSize=8;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="16: Вернуть итоговую оценку()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1165" y="665" as="sourcePoint" />
+            <mxPoint x="455" y="665" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s15" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="17: Сформировать отчёт()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="455" y="710" as="sourcePoint" />
+            <mxPoint x="1345" y="710" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s16" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;dashPattern=6 6;endSize=8;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="18: Вернуть отчёт()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1345" y="750" as="sourcePoint" />
+            <mxPoint x="455" y="750" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F1yT06qpPZJIwV7jC7Yg-2" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;dashPattern=6 6;endSize=8;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="19: Передать результат&lt;div&gt;сценария()&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="445" y="787" as="sourcePoint" />
+            <mxPoint x="275" y="787" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F1yT06qpPZJIwV7jC7Yg-3" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;dashPattern=6 6;endSize=8;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="20: Показать оценку&lt;div&gt;и рекомендации()&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="265" y="816" as="sourcePoint" />
+            <mxPoint x="105" y="816" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F1yT06qpPZJIwV7jC7Yg-5" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;dashPattern=6 6;endSize=8;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="5: Показать условия&lt;div&gt;и критерии()&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="445" y="289" as="sourcePoint" />
+            <mxPoint x="275" y="289" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H_6frSG1UfS_MHdeA3WH-1" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;dashPattern=6 6;endSize=8;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="9: Вернуть статус атаки&lt;span style=&quot;background-color: light-dark(#ffffff, var(--ge-dark-color, #121212)); color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;()&lt;/span&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="805" y="421.5" as="sourcePoint" />
+            <mxPoint x="455" y="421.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H_6frSG1UfS_MHdeA3WH-2" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;dashPattern=6 6;endSize=8;curved=0;rounded=0;fontSize=11;strokeColor=#000000;" value="11: Вернуть статус защиты&lt;span style=&quot;background-color: light-dark(#ffffff, var(--ge-dark-color, #121212)); color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;()&lt;/span&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="985" y="473.5" as="sourcePoint" />
+            <mxPoint x="455" y="473.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

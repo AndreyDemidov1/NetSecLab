@@ -1,0 +1,99 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT" compressed="false">
+  <diagram id="netseclab-scenario-state" name="Страница-1">
+    <mxGraphModel dx="1414" dy="785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1180" pageHeight="860" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="start" parent="1" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#ff0000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="785" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="wait" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;fontColor=#000000;collapsible=0;rounded=1;arcSize=30;strokeColor=#ff0000;fillColor=#ffffc0;swimlaneFillColor=#ffffc0;dropTarget=0;fontSize=14;" value="Ожидание выбора сценария" vertex="1">
+          <mxGeometry height="86" width="270" x="665" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="wait_text" parent="wait" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;fontColor=#000000;fontSize=12;" value="entry / показать список сценариев&lt;div&gt;do / ожидать выбор пользователя&lt;/div&gt;" vertex="1">
+          <mxGeometry height="56" width="270" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="load" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;fontColor=#000000;collapsible=0;rounded=1;arcSize=30;strokeColor=#ff0000;fillColor=#ffffc0;swimlaneFillColor=#ffffc0;dropTarget=0;fontSize=14;" value="Подготовка сценария" vertex="1">
+          <mxGeometry height="86" width="270" x="665" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="load_text" parent="load" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;fontColor=#000000;fontSize=12;" value="do / загружать условия и критерии" vertex="1">
+          <mxGeometry height="56" width="270" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="run" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;fontColor=#000000;collapsible=0;rounded=1;arcSize=30;strokeColor=#ff0000;fillColor=#ffffc0;swimlaneFillColor=#ffffc0;dropTarget=0;fontSize=14;" value="Сценарий запущен" vertex="1">
+          <mxGeometry height="86" width="270" x="665" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="run_text" parent="run" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;fontColor=#000000;fontSize=12;" value="do / отслеживать действия пользователя и метрики" vertex="1">
+          <mxGeometry height="56" width="270" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="eval" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;fontColor=#000000;collapsible=0;rounded=1;arcSize=30;strokeColor=#ff0000;fillColor=#ffffc0;swimlaneFillColor=#ffffc0;dropTarget=0;fontSize=14;" value="Оценивание результата" vertex="1">
+          <mxGeometry height="86" width="270" x="665" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="eval_text" parent="eval" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;fontColor=#000000;fontSize=12;" value="do / рассчитывать итоговую оценку" vertex="1">
+          <mxGeometry height="56" width="270" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="done" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;fontColor=#000000;collapsible=0;rounded=1;arcSize=30;strokeColor=#ff0000;fillColor=#ffffc0;swimlaneFillColor=#ffffc0;dropTarget=0;fontSize=14;" value="Результат сформирован" vertex="1">
+          <mxGeometry height="86" width="270" x="665" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="done_text" parent="done" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;fontColor=#000000;fontSize=12;" value="entry / сохранить результат и подготовить отчёт" vertex="1">
+          <mxGeometry height="56" width="270" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="error" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;fontColor=#000000;collapsible=0;rounded=1;arcSize=30;strokeColor=#ff0000;fillColor=#ffffc0;swimlaneFillColor=#ffffc0;dropTarget=0;fontSize=14;" value="Ошибка сценария" vertex="1">
+          <mxGeometry height="86" width="270" x="160" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="error_text" parent="error" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;fontColor=#000000;fontSize=12;" value="entry / записать ошибку в журнал" vertex="1">
+          <mxGeometry height="56" width="270" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="1" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#ff0000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="785" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="e_start_wait" edge="1" parent="1" source="start" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;fontSize=12;" target="wait" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_wait_load" edge="1" parent="1" source="wait" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;fontSize=12;" target="load" value="выбор сценария [сценарий выбран]">
+          <mxGeometry relative="1" x="0.0909" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_load_run" edge="1" parent="1" source="load" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;fontSize=12;" target="run" value="запуск [условия загружены]">
+          <mxGeometry relative="1" x="0.0909" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_load_error" edge="1" parent="1" source="load" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;fontSize=12;" target="error" value="ошибка [данные недоступны]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_run_eval" edge="1" parent="1" source="run" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;fontSize=12;" target="eval" value="завершение [критерии выполнены]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_run_eval2" edge="1" parent="1" source="run" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;fontSize=12;" target="eval" value="истекло время [критерии не выполнены]">
+          <mxGeometry relative="1" x="0.0909" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_eval_done" edge="1" parent="1" source="eval" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;fontSize=12;" target="done" value="расчёт завершён [оценка сохранена]">
+          <mxGeometry relative="1" x="0.0909" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_done_end" edge="1" parent="1" source="done" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;fontSize=12;" target="end" value="показать результат [готово]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_error_wait" edge="1" parent="1" source="error" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;fontSize=12;" target="wait" value="повторить [ошибка исправлена]">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="290" y="163" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_error_end" edge="1" parent="1" source="error" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;fontSize=12;" target="end" value="отменить [готово]">
+          <mxGeometry relative="1" x="-0.5723" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="290" y="795" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,193 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT" compressed="false">
+  <diagram id="netseclab-scenario-communication-fixed" name="Страница-1">
+    <mxGraphModel dx="2023" dy="374" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1350" pageHeight="820" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="user" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value=":Пользователь" vertex="1">
+          <mxGeometry height="60" width="170" x="-30" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="ui" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value=":Интерфейс" vertex="1">
+          <mxGeometry height="60" width="180" x="330" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="mgr" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value=":Менеджер&lt;br&gt;сценариев" vertex="1">
+          <mxGeometry height="60" width="210" x="780" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="db" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value=":Хранилище&lt;br&gt;данных" vertex="1">
+          <mxGeometry height="60" width="190" x="1190" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="attack" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value=":Генератор&lt;br&gt;атак" vertex="1">
+          <mxGeometry height="60" width="190" x="325" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="def" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value=":Модуль&lt;br&gt;защиты" vertex="1">
+          <mxGeometry height="60" width="190" x="325" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="eval" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value=":Оценщик&lt;br&gt;результатов" vertex="1">
+          <mxGeometry height="60" width="170" x="1210" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="report" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value=":Журнал&lt;br&gt;и отчёт" vertex="1">
+          <mxGeometry height="60" width="190" x="790" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="c1" edge="1" parent="1" source="user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;" target="ui" value="1: Выбрать сценарий()">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="230" y="130" />
+              <mxPoint x="230" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2" edge="1" parent="1" source="ui" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;" target="mgr" value="2: Передать выбор сценария()">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="420" y="40" />
+              <mxPoint x="885" y="40" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c3" edge="1" parent="1" source="mgr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;" target="db" value="3: Загрузить условия&lt;div&gt;и критерии()&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1110" y="130" />
+              <mxPoint x="1110" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c4" edge="1" parent="1" source="db" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=13;strokeColor=#000000;dashed=1;dashPattern=6 6;endArrow=open;endFill=0;endSize=8;" target="mgr" value="4: Вернуть сценарий()">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1110" y="170" />
+              <mxPoint x="1110" y="170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c6" edge="1" parent="1" source="user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;" target="ui" value="6: Начать выполнение&lt;div&gt;сценария()&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="170" />
+              <mxPoint x="300" y="170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c7" edge="1" parent="1" source="ui" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;" target="mgr" value="7: Запустить сценарий()">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="130" />
+              <mxPoint x="650" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c8" edge="1" parent="1" source="mgr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;" target="attack" value="8: Запустить атаку по сценарию()">
+          <mxGeometry relative="1" x="0.1852" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="800" y="270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c9" edge="1" parent="1" source="mgr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;" target="def" value="10: Подготовить механизмы защиты()">
+          <mxGeometry relative="1" x="0.3945" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="820" y="390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c10" edge="1" parent="1" source="ui" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;" target="mgr" value="12: Передать действия&amp;nbsp;&lt;span style=&quot;background-color: light-dark(#ffffff, var(--ge-dark-color, #121212)); color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;пользователя()&lt;/span&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="670" y="170" />
+              <mxPoint x="670" y="170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c11" edge="1" parent="1" source="mgr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;" target="eval" value="13: Оценить действия и метрики()">
+          <mxGeometry relative="1" x="0.2929" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="980" y="280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c12" edge="1" parent="1" source="eval" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=13;strokeColor=#000000;dashed=1;dashPattern=6 6;endArrow=open;endFill=0;endSize=8;" target="mgr" value="14: Вернуть результат оценки()">
+          <mxGeometry relative="1" x="-0.2821" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="950" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c13" edge="1" parent="1" source="mgr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;" target="report" value="15: Сохранить события&lt;div&gt;и сформировать отчёт()&lt;/div&gt;">
+          <mxGeometry relative="1" x="0.3191" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="840" y="420" />
+              <mxPoint x="840" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c14" edge="1" parent="1" source="report" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=13;strokeColor=#000000;dashed=1;dashPattern=6 6;endArrow=open;endFill=0;endSize=8;" target="mgr" value="16: Вернуть отчёт()">
+          <mxGeometry relative="1" x="-0.7447" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="920" y="410" />
+              <mxPoint x="920" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4YWUenKfGzMCd9SAPAzS-1" edge="1" parent="1" source="mgr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=13;strokeColor=#000000;dashed=1;dashPattern=6 6;endArrow=open;endFill=0;endSize=8;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" target="ui" value="5: Показать условия и критерии()">
+          <mxGeometry relative="1" x="-0.0625" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="833" y="90" />
+              <mxPoint x="465" y="90" />
+            </Array>
+            <mxPoint x="770" y="130" as="sourcePoint" />
+            <mxPoint x="510" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4YWUenKfGzMCd9SAPAzS-3" edge="1" parent="1" source="ui" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=13;strokeColor=#000000;dashed=1;dashPattern=6 6;endArrow=open;endFill=0;endSize=8;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="user" value="18: Отобразить результат()">
+          <mxGeometry relative="1" x="-0.0593" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="375" y="220" />
+              <mxPoint x="55" y="220" />
+            </Array>
+            <mxPoint x="370" y="220" as="sourcePoint" />
+            <mxPoint x="100" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4YWUenKfGzMCd9SAPAzS-4" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=13;strokeColor=#000000;dashed=1;dashPattern=6 6;endArrow=open;endFill=0;endSize=8;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" value="17: Передать оценку&lt;div&gt;и рекомендации()&lt;/div&gt;">
+          <mxGeometry relative="1" x="-0.0593" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="790" y="220" />
+              <mxPoint x="470" y="220" />
+            </Array>
+            <mxPoint x="790" y="180" as="sourcePoint" />
+            <mxPoint x="470" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4YWUenKfGzMCd9SAPAzS-5" edge="1" parent="1" source="def" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=13;strokeColor=#000000;dashed=1;dashPattern=6 6;endArrow=open;endFill=0;endSize=8;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" value="11: Защита применена()">
+          <mxGeometry relative="1" x="-0.2821" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="830" y="425" />
+            </Array>
+            <mxPoint x="512" y="425" as="sourcePoint" />
+            <mxPoint x="829.5" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4YWUenKfGzMCd9SAPAzS-6" edge="1" parent="1" source="attack" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=13;strokeColor=#000000;dashed=1;dashPattern=6 6;endArrow=open;endFill=0;endSize=8;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" value="9: Атака запущена()">
+          <mxGeometry relative="1" x="-0.2143" y="5" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="810" y="305" />
+            </Array>
+            <mxPoint x="508" y="305" as="sourcePoint" />
+            <mxPoint x="809.96" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
