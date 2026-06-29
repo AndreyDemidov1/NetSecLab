@@ -20,5 +20,6 @@
     <ProjectReference Include="..\NetSecLab.Modules.Attacks\NetSecLab.Modules.Attacks.csproj" />
     <ProjectReference Include="..\NetSecLab.Modules.Defense\NetSecLab.Modules.Defense.csproj" />
     <ProjectReference Include="..\NetSecLab.Modules.Scenarios\NetSecLab.Modules.Scenarios.csproj" />
+    <ProjectReference Include="..\NetSecLab.Modules.Simulation\NetSecLab.Modules.Simulation.csproj" />
   </ItemGroup>
 </Project>

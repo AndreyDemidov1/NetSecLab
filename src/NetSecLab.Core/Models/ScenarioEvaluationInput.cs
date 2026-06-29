@@ -7,6 +7,7 @@ public sealed class ScenarioEvaluationInput
     public int AllowedPackets { get; init; }
     public int MitigatedPackets { get; init; }
     public int BlockedPackets { get; init; }
+    public bool AttackIsRunning { get; init; }
     public bool ProtectionEnabled { get; init; }
     public bool SynCookiesEnabled { get; init; }
     public bool RateLimitEnabled { get; init; }
@@ -20,4 +21,6 @@ public sealed class ScenarioEvaluationInput
     public DateTime? FirstCorrectDefenseEnabledAt { get; init; }
     public bool CorrectDefenseWasEnabledBeforeAttack { get; init; }
     public int DefenseConfigurationChangesAfterAttack { get; init; }
+    public int RandomEventsAfterAttack { get; init; }
+    public int DefenseConfigurationChangesAfterRandomEvents { get; init; }
 }

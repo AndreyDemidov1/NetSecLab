@@ -50,22 +50,6 @@ internal sealed class ScenarioService : IScenarioService
             },
             new()
             {
-                Id = "slowloris-behavior-whitelist",
-                ShortTitle = "Slowloris",
-                Title = "Slowloris: filter + whitelist",
-                GoalText = "Выявить медленную HTTP-атаку поведенческим фильтром и усилить режимом доверенных IP.",
-                VerificationText = "Условия: HTTP Slowloris, общая защита, поведенческий фильтр, включённый whitelist и хотя бы один доверенный IP.",
-                AttackType = AttackType.HttpSlowloris,
-                RequiredDefenses = new[] { ScenarioDefenseKind.BehaviorFilter, ScenarioDefenseKind.Whitelist },
-                RequiredDefenseName = "Поведенческий фильтр + Whitelist",
-                RequiresWhitelistEntry = true,
-                MinimumPackets = 50,
-                TargetEfficiencyPercent = 80,
-                ExcellentReactionSeconds = 12,
-                AcceptableReactionSeconds = 35
-            },
-            new()
-            {
                 Id = "icmp-flood-whitelist",
                 ShortTitle = "ICMP-flood",
                 Title = "ICMP-flood: whitelist",
@@ -79,6 +63,22 @@ internal sealed class ScenarioService : IScenarioService
                 TargetEfficiencyPercent = 70,
                 ExcellentReactionSeconds = 10,
                 AcceptableReactionSeconds = 30
+            },
+            new()
+            {
+                Id = "slowloris-behavior-whitelist",
+                ShortTitle = "Slowloris",
+                Title = "Slowloris: filter + whitelist",
+                GoalText = "Выявить медленную HTTP-атаку поведенческим фильтром и усилить режимом доверенных IP.",
+                VerificationText = "Условия: HTTP Slowloris, общая защита, поведенческий фильтр, включённый whitelist и хотя бы один доверенный IP.",
+                AttackType = AttackType.HttpSlowloris,
+                RequiredDefenses = new[] { ScenarioDefenseKind.BehaviorFilter, ScenarioDefenseKind.Whitelist },
+                RequiredDefenseName = "Поведенческий фильтр + Whitelist",
+                RequiresWhitelistEntry = true,
+                MinimumPackets = 50,
+                TargetEfficiencyPercent = 80,
+                ExcellentReactionSeconds = 12,
+                AcceptableReactionSeconds = 35
             }
         };
     }
@@ -145,9 +145,18 @@ internal sealed class ScenarioService : IScenarioService
                          minimumTrafficReached &&
                          targetEfficiencyReached;
 
+        bool failed = !completed &&
+                      input.AttackStartedAt is not null &&
+                      !input.AttackIsRunning &&
+                      input.ReceivedPackets > 0;
+
         if (completed)
         {
             Status = ScenarioStatus.Completed;
+        }
+        else if (failed)
+        {
+            Status = ScenarioStatus.Failed;
         }
 
         string statusText = CreateStatusText(
@@ -182,6 +191,17 @@ internal sealed class ScenarioService : IScenarioService
         if (Status == ScenarioStatus.Completed)
         {
             return "Сценарий пройден: атака распознана, защита подобрана и поток нейтрализован.";
+        }
+
+        if (Status == ScenarioStatus.Failed)
+        {
+            return CreateFailedStatusText(
+                input,
+                attackMatches,
+                requiredDefensesEnabled,
+                accessListRequirementsMet,
+                minimumTrafficReached,
+                targetEfficiencyReached);
         }
 
         if (!attackMatches)
@@ -226,6 +246,47 @@ internal sealed class ScenarioService : IScenarioService
         }
 
         return "Сценарий выполняется.";
+    }
+
+    private string CreateFailedStatusText(
+        ScenarioEvaluationInput input,
+        bool attackMatches,
+        bool requiredDefensesEnabled,
+        bool accessListRequirementsMet,
+        bool minimumTrafficReached,
+        bool targetEfficiencyReached)
+    {
+        if (!attackMatches)
+        {
+            return "Сценарий не пройден: была запущена не та атака. Нажмите «Сбросить» и повторите попытку.";
+        }
+
+        if (!input.ProtectionEnabled)
+        {
+            return "Сценарий не пройден: защита не была включена. Нажмите «Сбросить» и повторите попытку.";
+        }
+
+        if (!requiredDefensesEnabled || !accessListRequirementsMet)
+        {
+            return "Сценарий не пройден: выбран неполный набор защитных механизмов. Нажмите «Сбросить» и повторите попытку.";
+        }
+
+        if (input.CorrectDefenseWasEnabledBeforeAttack)
+        {
+            return "Сценарий не пройден: защита была включена заранее, поэтому реакция пользователя не засчитана.";
+        }
+
+        if (!minimumTrafficReached)
+        {
+            return "Сценарий не пройден: атака остановлена до накопления достаточной статистики.";
+        }
+
+        if (!targetEfficiencyReached)
+        {
+            return "Сценарий не пройден: эффективность нейтрализации ниже целевого значения.";
+        }
+
+        return "Сценарий не пройден. Нажмите «Сбросить» и повторите попытку.";
     }
 
     private ScenarioEvaluationResult CreateResult(
@@ -357,7 +418,17 @@ internal sealed class ScenarioService : IScenarioService
 
         if (input.DefenseConfigurationChangesAfterAttack > 0)
         {
-            score += Math.Min(4, input.DefenseConfigurationChangesAfterAttack * 2);
+            score += Math.Min(3, input.DefenseConfigurationChangesAfterAttack);
+        }
+
+        if (input.RandomEventsAfterAttack > 0)
+        {
+            score += 2;
+        }
+
+        if (input.DefenseConfigurationChangesAfterRandomEvents > 0)
+        {
+            score += Math.Min(5, input.DefenseConfigurationChangesAfterRandomEvents * 3);
         }
 
         return Math.Clamp(score, 0, AdaptivityMaxScore);

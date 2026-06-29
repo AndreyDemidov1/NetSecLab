@@ -4,5 +4,6 @@ public enum ScenarioStatus
 {
     NotStarted,
     InProgress,
-    Completed
+    Completed,
+    Failed
 }

@@ -7,4 +7,5 @@ public sealed class AttackRunOptions
     public int TargetPort { get; init; } = 80;
     public int IntensityPerSecond { get; init; } = 100;
     public bool IncludeBackgroundTraffic { get; init; } = true;
+    public SimulationDifficulty Difficulty { get; init; } = SimulationDifficulty.Medium;
 }

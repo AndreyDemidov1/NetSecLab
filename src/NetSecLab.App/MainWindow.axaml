@@ -177,6 +177,18 @@
                             <TextBox Text="{Binding IntensityText, Mode=TwoWay}"
                                      IsEnabled="{Binding AttackConfigurationEnabled}" />
 
+                            <TextBlock Text="Уровень стохастики" Foreground="#CBD5E1" />
+                            <ComboBox ItemsSource="{Binding SimulationDifficulties}"
+                                      SelectedItem="{Binding SelectedDifficulty}"
+                                      IsEnabled="{Binding AttackConfigurationEnabled}"
+                                      HorizontalAlignment="Stretch">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding DisplayName}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
                             <CheckBox Content="Добавлять фоновый трафик"
                                       IsChecked="{Binding IncludeBackgroundTraffic}"
                                       IsEnabled="{Binding AttackConfigurationEnabled}"
@@ -218,6 +230,22 @@
                                            Foreground="#94A3B8"
                                            FontSize="12" />
                                 <TextBlock Text="{Binding StatusText}"
+                                           Foreground="#E5E7EB"
+                                           TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border Background="#0F172A"
+                                BorderBrush="#334155"
+                                BorderThickness="1"
+                                CornerRadius="12"
+                                Padding="12"
+                                Margin="0,4,0,0">
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="События стохастики"
+                                           Foreground="#94A3B8"
+                                           FontSize="12" />
+                                <TextBlock Text="{Binding SimulationStatusText}"
                                            Foreground="#E5E7EB"
                                            TextWrapping="Wrap" />
                             </StackPanel>
