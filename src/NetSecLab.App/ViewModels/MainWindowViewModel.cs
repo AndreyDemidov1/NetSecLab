@@ -943,6 +943,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             StatusText = AttackModuleAvailable
                 ? "Генератор атак остановлен."
                 : "Генератор атак недоступен.";
+            UpdateScenarioState();
             UpdateCommandStates();
         });
     }
@@ -1048,6 +1049,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             AllowedPackets = Math.Max(0, _allowedPackets - _scenarioAllowedPacketsBaseline),
             MitigatedPackets = Math.Max(0, _mitigatedPackets - _scenarioMitigatedPacketsBaseline),
             BlockedPackets = Math.Max(0, _blockedPackets - _scenarioBlockedPacketsBaseline),
+            AttackIsRunning = _attackService.IsRunning,
             ProtectionEnabled = ProtectionEnabled,
             SynCookiesEnabled = SynCookiesEnabled,
             RateLimitEnabled = RateLimitEnabled,

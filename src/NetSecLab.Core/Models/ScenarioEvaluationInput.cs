@@ -7,6 +7,7 @@ public sealed class ScenarioEvaluationInput
     public int AllowedPackets { get; init; }
     public int MitigatedPackets { get; init; }
     public int BlockedPackets { get; init; }
+    public bool AttackIsRunning { get; init; }
     public bool ProtectionEnabled { get; init; }
     public bool SynCookiesEnabled { get; init; }
     public bool RateLimitEnabled { get; init; }
