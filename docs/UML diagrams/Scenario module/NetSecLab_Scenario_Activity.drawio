@@ -1,0 +1,172 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT" compressed="false">
+  <diagram id="netseclab-scenario-activity-fixed" name="Страница-1">
+    <mxGraphModel dx="1571" dy="872" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1420" pageHeight="1080" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="lane_user" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;strokeColor=#000000;fillColor=#ffffff;" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b&gt;Пользователь&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;" vertex="1">
+          <mxGeometry height="770" width="270" x="20" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_ui" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;strokeColor=#000000;fillColor=#ffffff;" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b&gt;Интерфейс&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;" vertex="1">
+          <mxGeometry height="770" width="270" x="290" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_scenario" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;strokeColor=#000000;fillColor=#ffffff;" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b&gt;Модуль сценариев&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;" vertex="1">
+          <mxGeometry height="770" width="270" x="560" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_engine" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;strokeColor=#000000;fillColor=#ffffff;" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b&gt;Атака и защита&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;" vertex="1">
+          <mxGeometry height="770" width="270" x="830" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_result" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;strokeColor=#000000;fillColor=#ffffff;" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b&gt;Оценка и отчёт&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;" vertex="1">
+          <mxGeometry height="770" width="270" x="1100" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="a_start" parent="1" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#ff0000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="140" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="a_select" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;fontSize=12;" value="Выбрать учебный сценарий" vertex="1">
+          <mxGeometry height="44" width="150" x="80" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="a_send" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;fontSize=12;" value="Передать выбранный сценарий" vertex="1">
+          <mxGeometry height="44" width="150" x="350" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="a_load" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;fontSize=12;" value="Загрузить условия и критерии" vertex="1">
+          <mxGeometry height="44" width="160" x="615" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="d_found" parent="1" style="rhombus;whiteSpace=wrap;html=1;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;fontSize=12;" value="" vertex="1">
+          <mxGeometry height="50" width="90" x="650" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_found" parent="1" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;strokeColor=none;fillColor=none;fontSize=12;" value="сценарий найден" vertex="1">
+          <mxGeometry height="24" width="120" x="570" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_notfound" parent="1" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;strokeColor=none;fillColor=default;fontSize=12;" value="сценарий не найден" vertex="1">
+          <mxGeometry height="24" width="130" x="520" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="a_error" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;fontSize=12;" value="Показать сообщение об ошибке" vertex="1">
+          <mxGeometry height="44" width="175" x="335" y="233" as="geometry" />
+        </mxCell>
+        <mxCell id="a_show" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;fontSize=12;" value="Показать условия и критерии успеха" vertex="1">
+          <mxGeometry height="50" width="175" x="340.5" y="314" as="geometry" />
+        </mxCell>
+        <mxCell id="a_start_run" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;fontSize=12;" value="Начать выполнение сценария" vertex="1">
+          <mxGeometry height="44" width="165" x="72.5" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="a_init" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;fontSize=12;" value="Инициализировать атаку и защиту" vertex="1">
+          <mxGeometry height="50" width="175" x="607.5" y="377" as="geometry" />
+        </mxCell>
+        <mxCell id="a_prepare" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;fontSize=12;" value="Подготовить параметры атаки и защиты" vertex="1">
+          <mxGeometry height="50" width="175" x="877.5" y="377" as="geometry" />
+        </mxCell>
+        <mxCell id="d_active" parent="1" style="rhombus;whiteSpace=wrap;html=1;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;fontSize=12;" value="" vertex="1">
+          <mxGeometry height="50" width="90" x="650" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_continue" parent="1" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;strokeColor=none;fillColor=default;fontSize=12;" value="продолжить выполнение" vertex="1">
+          <mxGeometry height="24" width="150" x="490" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_finish" parent="1" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;strokeColor=none;fillColor=default;fontSize=12;" value="завершить сценарий" vertex="1">
+          <mxGeometry height="24" width="140" x="710" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="a_actions" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;fontSize=12;" value="Зафиксировать действия пользователя" vertex="1">
+          <mxGeometry height="50" width="185" x="332.5" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="a_compare" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;fontSize=12;" value="Сравнить действия с критериями" vertex="1">
+          <mxGeometry height="50" width="185" x="602.5" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="a_progress" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;fontSize=12;" value="Обновить промежуточный прогресс" vertex="1">
+          <mxGeometry height="50" width="175" x="1147.5" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="a_score" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;fontSize=12;" value="Рассчитать итоговую оценку" vertex="1">
+          <mxGeometry height="44" width="175" x="1147.5" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="a_report" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;fontSize=12;" value="Сформировать отчёт по сценарию" vertex="1">
+          <mxGeometry height="44" width="175" x="1147.5" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="a_result" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;fontSize=12;" value="Показать оценку и рекомендации" vertex="1">
+          <mxGeometry height="50" width="185" x="340.5" y="717" as="geometry" />
+        </mxCell>
+        <mxCell id="a_end" parent="1" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#ff0000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="418" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="a_start" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="a_select" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="a_select" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="a_send" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="a_send" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="a_load" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="a_load" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="d_found" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="d_found" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="a_error" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="a_error" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="a_end" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="310" y="255" />
+              <mxPoint x="310" y="820" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="d_found" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="a_show" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="695" y="339" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="a_show" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="a_start_run" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="a_start_run" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="a_init" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="a_init" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="a_prepare" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="a_prepare" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="d_active" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="970" y="485" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="d_active" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="a_actions" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="1" source="a_actions" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="a_compare" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="a_compare" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="a_progress" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="1" source="a_progress" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="d_active" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1340" y="595" />
+              <mxPoint x="1340" y="485" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e16" edge="1" parent="1" source="d_active" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="a_score" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="695" y="540" />
+              <mxPoint x="960" y="540" />
+              <mxPoint x="960" y="670" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e17" edge="1" parent="1" source="a_score" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="a_report" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e18" edge="1" parent="1" source="a_report" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="a_result" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e19" edge="1" parent="1" source="a_result" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" target="a_end" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
