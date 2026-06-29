@@ -1,0 +1,189 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.5.2 Chrome/145 Safari/537.36">
+  <diagram name="Диаграмма вариантов использования" id="nsl-Диаграмма вариантов использования">
+    <mxGraphModel dx="1885" dy="1047" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="boundary" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=center;verticalAlign=top;spacingTop=14;fontStyle=1;fontSize=18;" value="NetSecLab — диаграмма вариантов использования" vertex="1">
+          <mxGeometry height="830" width="1290" x="260" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="user" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Пользователь&lt;/font&gt;" vertex="1">
+          <mxGeometry height="88" width="40" x="70" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="student" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;Студент&lt;/font&gt;" vertex="1">
+          <mxGeometry height="88" width="40" x="160" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="teacher" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Преподаватель&lt;/font&gt;" vertex="1">
+          <mxGeometry height="88" width="40" x="210" y="880" as="geometry" />
+        </mxCell>
+        <mxCell id="it" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;ИТ-специалист&lt;/font&gt;" vertex="1">
+          <mxGeometry height="88" width="40" x="730" y="910" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_start" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=14;" value="Запустить / остановить&lt;br&gt;симуляцию" vertex="1">
+          <mxGeometry height="70" width="230" x="270" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_scenario" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=14;" value="Выбрать учебный&lt;br&gt;сценарий" vertex="1">
+          <mxGeometry height="70" width="160" x="1380" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_attack_cfg" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=14;" value="Настроить параметры&lt;br&gt;атаки" vertex="1">
+          <mxGeometry height="70" width="190" x="290" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_attack" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=14;" value="Сгенерировать&lt;br&gt;атакующий трафик" vertex="1">
+          <mxGeometry height="70" width="170" x="550" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_capture" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=14;" value="Захватить пакеты&lt;br&gt;loopback" vertex="1">
+          <mxGeometry height="70" width="170" x="730" y="138" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_analyze" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=14;" value="Декодировать и&lt;br&gt;анализировать пакеты" vertex="1">
+          <mxGeometry height="70" width="190" x="1050" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_table" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=14;" value="Просмотреть таблицу&lt;br&gt;пакетов и фильтры" vertex="1">
+          <mxGeometry height="70" width="200" x="1170" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_visual" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=14;" value="Наблюдать графики&lt;br&gt;и анимацию" vertex="1">
+          <mxGeometry height="70" width="190" x="760" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_gui_def" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=14;" value="Включить защиту&lt;br&gt;через GUI" vertex="1">
+          <mxGeometry height="70" width="160" x="1020" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_console_def" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=14;" value="Управлять защитой&lt;br&gt;через консоль команд" vertex="1">
+          <mxGeometry height="70" width="190" x="450" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_combine_def" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=14;" value="Комбинировать&lt;br&gt;защитные механизмы" vertex="1">
+          <mxGeometry height="70" width="190" x="750" y="558" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_effect" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=14;" value="Оценить эффективность&lt;br&gt;защиты" vertex="1">
+          <mxGeometry height="70" width="210" x="550" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_score" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=14;" value="Получить итоговую&lt;br&gt;оценку" vertex="1">
+          <mxGeometry height="70" width="160" x="280" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_report" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=14;" value="Сформировать&lt;br&gt;PDF-отчёт" vertex="1">
+          <mxGeometry height="70" width="135" x="285" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_history" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=14;" value="Просмотреть историю&lt;br&gt;сессий и прогресс" vertex="1">
+          <mxGeometry height="70" width="190" x="970" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_settings" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=14;" value="Настроить интерфейс,&lt;br&gt;профиль и хранилище" vertex="1">
+          <mxGeometry height="70" width="210" x="1070" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_iface" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=14;" value="Выбрать сетевой&lt;br&gt;интерфейс" vertex="1">
+          <mxGeometry height="70" width="160" x="860" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_demo" parent="1" style="ellipse;whiteSpace=wrap;html=1;align=center;verticalAlign=middle;fontSize=14;" value="Провести учебную&lt;br&gt;демонстрацию" vertex="1">
+          <mxGeometry height="70" width="230" x="1280" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="gen-student-user" edge="1" parent="1" source="student" style="dashed=1;endArrow=block;endFill=0;endSize=16;html=1;rounded=0;" target="user" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gen-teacher-user" edge="1" parent="1" source="teacher" style="dashed=1;endArrow=block;endFill=0;endSize=16;html=1;rounded=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="90" y="924" />
+              <mxPoint x="90" y="780" />
+            </Array>
+            <mxPoint x="90" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gen-it-user" edge="1" parent="1" source="it" style="dashed=1;endArrow=block;endFill=0;endSize=16;html=1;rounded=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="90" y="1020" />
+            </Array>
+            <mxPoint x="90" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc-user-0" edge="1" parent="1" source="user" style="endArrow=none;html=1;rounded=0;" target="uc_start" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-user-1" edge="1" parent="1" source="user" style="endArrow=none;html=1;rounded=0;" target="uc_scenario" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-user-2" edge="1" parent="1" source="user" style="endArrow=none;html=1;rounded=0;" target="uc_attack_cfg" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-user-3" edge="1" parent="1" source="user" style="endArrow=none;html=1;rounded=0;" target="uc_table" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-user-4" edge="1" parent="1" source="user" style="endArrow=none;html=1;rounded=0;" target="uc_visual" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-user-5" edge="1" parent="1" source="user" style="endArrow=none;html=1;rounded=0;" target="uc_gui_def" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-user-6" edge="1" parent="1" source="user" style="endArrow=none;html=1;rounded=0;" target="uc_console_def" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-user-7" edge="1" parent="1" source="user" style="endArrow=none;html=1;rounded=0;" target="uc_combine_def" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-user-8" edge="1" parent="1" source="user" style="endArrow=none;html=1;rounded=0;" target="uc_effect" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-user-9" edge="1" parent="1" source="user" style="endArrow=none;html=1;rounded=0;" target="uc_score" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-user-10" edge="1" parent="1" source="user" style="endArrow=none;html=1;rounded=0;" target="uc_report" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-user-11" edge="1" parent="1" source="user" style="endArrow=none;html=1;rounded=0;" target="uc_history" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-user-12" edge="1" parent="1" source="user" style="endArrow=none;html=1;rounded=0;" target="uc_settings" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-user-13" edge="1" parent="1" source="user" style="endArrow=none;html=1;rounded=0;" target="uc_iface" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-student-scenario" edge="1" parent="1" source="student" style="endArrow=none;html=1;rounded=0;" target="uc_scenario" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-teacher-demo" edge="1" parent="1" source="teacher" style="endArrow=none;html=1;rounded=0;" target="uc_demo" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-teacher-report" edge="1" parent="1" source="teacher" style="endArrow=none;html=1;rounded=0;" target="uc_report" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-it-defense" edge="1" parent="1" source="it" style="endArrow=none;html=1;rounded=0;" target="uc_combine_def" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="assoc-it-effect" edge="1" parent="1" source="it" style="endArrow=none;html=1;rounded=0;" target="uc_effect" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc-start-attack" edge="1" parent="1" source="uc_start" style="dashed=1;endArrow=classic;endFill=1;html=1;rounded=0;fontSize=13;" target="uc_attack" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;include&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc-start-visual" edge="1" parent="1" source="uc_start" style="dashed=1;endArrow=classic;endFill=1;html=1;rounded=0;fontSize=13;" target="uc_visual" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;include&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc-attack-cfg" edge="1" parent="1" source="uc_attack" style="dashed=1;endArrow=classic;endFill=1;html=1;rounded=0;fontSize=13;" target="uc_attack_cfg" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;include&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc-capture-analyze" edge="1" parent="1" source="uc_capture" style="dashed=1;endArrow=classic;endFill=1;html=1;rounded=0;fontSize=13;" target="uc_analyze" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;include&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc-analyze-visual" edge="1" parent="1" source="uc_analyze" style="dashed=1;endArrow=classic;endFill=1;html=1;rounded=0;fontSize=13;" target="uc_visual" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;include&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc-gui-combine" edge="1" parent="1" source="uc_gui_def" style="dashed=1;endArrow=classic;endFill=1;html=1;rounded=0;fontSize=13;" target="uc_combine_def" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;include&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc-console-combine" edge="1" parent="1" source="uc_console_def" style="dashed=1;endArrow=classic;endFill=1;html=1;rounded=0;fontSize=13;" target="uc_combine_def" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;include&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc-effect-score" edge="1" parent="1" source="uc_effect" style="dashed=1;endArrow=classic;endFill=1;html=1;rounded=0;fontSize=13;" target="uc_score" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;include&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inc-score-report" edge="1" parent="1" source="uc_score" style="dashed=1;endArrow=classic;endFill=1;html=1;rounded=0;fontSize=13;" target="uc_report" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;include&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-capture-start" edge="1" parent="1" source="uc_capture" style="dashed=1;endArrow=classic;endFill=1;html=1;rounded=0;fontSize=13;" target="uc_start" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;extend&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-demo-scenario" edge="1" parent="1" source="uc_demo" style="dashed=1;endArrow=classic;endFill=1;html=1;rounded=0;fontSize=13;" target="uc_scenario" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;extend&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

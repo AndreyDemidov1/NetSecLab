@@ -1,0 +1,123 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.5.2 Chrome/145 Safari/537.36">
+  <diagram name="Диаграмма развертывания" id="nsl-Диаграмма развертывания">
+    <mxGraphModel dx="1768" dy="981" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title-deploy" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1" value="NetSecLab — диаграмма развертывания" vertex="1">
+          <mxGeometry height="40" width="560" x="320" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="node-pc" parent="1" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=8;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;whiteSpace=wrap;fontSize=14;" value="Рабочая станция пользователя&lt;br&gt;Windows 10/11, Linux, macOS" vertex="1">
+          <mxGeometry height="640" width="660" x="250" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="art-app" parent="1" style="shape=module;align=center;spacingLeft=20;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=12;" value="NetSecLab Desktop&lt;br&gt;.NET 8 / C# 12" vertex="1">
+          <mxGeometry height="60" width="160" x="260" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="art-ui" parent="1" style="shape=module;align=center;spacingLeft=20;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=12;" value="Avalonia UI 11.x&lt;br&gt;главное окно" vertex="1">
+          <mxGeometry height="60" width="170" x="260" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="art-core" parent="1" style="shape=module;align=center;spacingLeft=20;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=12;" value="Стохастическое ядро&lt;br&gt;и виртуальная жертва" vertex="1">
+          <mxGeometry height="60" width="170" x="710" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="art-attack" parent="1" style="shape=module;align=center;spacingLeft=20;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=12;" value="Генератор атак&lt;br&gt;SYN/UDP/ICMP/Slowloris" vertex="1">
+          <mxGeometry height="60" width="210" x="470" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="art-sniffer" parent="1" style="shape=module;align=center;spacingLeft=20;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=12;" value="Сниффер и анализатор&lt;br&gt;SharpPcap/PacketDotNet" vertex="1">
+          <mxGeometry height="60" width="210" x="530" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="art-defense" parent="1" style="shape=module;align=center;spacingLeft=20;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=12;" value="Модуль защит&lt;br&gt;GUI + консоль" vertex="1">
+          <mxGeometry height="60" width="190" x="260" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="art-visual" parent="1" style="shape=module;align=center;spacingLeft=20;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=12;" value="LiveCharts2&lt;br&gt;графики и диаграммы" vertex="1">
+          <mxGeometry height="60" width="170" x="290" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="art-report" parent="1" style="shape=module;align=center;spacingLeft=20;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=12;" value="QuestPDF&lt;br&gt;PDF-отчёты" vertex="1">
+          <mxGeometry height="60" width="130" x="500" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="art-sqlite" parent="1" style="shape=module;align=center;spacingLeft=20;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=12;" value="SQLite база&lt;br&gt;логи, сценарии, сессии" vertex="1">
+          <mxGeometry height="60" width="190" x="265" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="art-json" parent="1" style="shape=module;align=center;spacingLeft=20;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=12;" value="JSON настройки&lt;br&gt;профиль и тема" vertex="1">
+          <mxGeometry height="60" width="170" x="690" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="node-driver" parent="1" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=8;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;whiteSpace=wrap;fontSize=14;" value="Драйвер захвата пакетов" vertex="1">
+          <mxGeometry height="210" width="300" x="1030" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="art-npcap" parent="1" style="shape=module;align=center;spacingLeft=20;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=12;" value="Npcap / libpcap" vertex="1">
+          <mxGeometry height="60" width="190" x="1080" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="node-loopback" parent="1" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=8;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;whiteSpace=wrap;fontSize=14;" value="Loopback / виртуальный интерфейс&lt;br&gt;127.0.0.1 / ::1" vertex="1">
+          <mxGeometry height="180" width="300" x="1030" y="605" as="geometry" />
+        </mxCell>
+        <mxCell id="art-loopback" parent="1" style="shape=module;align=center;spacingLeft=20;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=12;" value="Демонстрационный&lt;br&gt;сетевой трафик" vertex="1">
+          <mxGeometry height="60" width="190" x="1080" y="675" as="geometry" />
+        </mxCell>
+        <mxCell id="node-fs" parent="1" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=8;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;whiteSpace=wrap;fontSize=14;" value="Локальная файловая система" vertex="1">
+          <mxGeometry height="210" width="300" x="360" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="art-dbfile" parent="1" style="shape=module;align=center;spacingLeft=20;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=12;" value="netseclab.db" vertex="1">
+          <mxGeometry height="50" width="110" x="400" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="art-pdffile" parent="1" style="shape=module;align=center;spacingLeft=20;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=12;" value="reports/*.pdf" vertex="1">
+          <mxGeometry height="50" width="110" x="530" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="art-config" parent="1" style="shape=module;align=center;spacingLeft=20;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=12;" value="settings.json" vertex="1">
+          <mxGeometry height="50" width="130" x="460" y="910" as="geometry" />
+        </mxCell>
+        <mxCell id="node-memory" parent="1" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=8;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;whiteSpace=wrap;fontSize=14;" value="Оперативная память процесса" vertex="1">
+          <mxGeometry height="280" width="270" x="1040" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="art-logical" parent="1" style="shape=module;align=center;spacingLeft=20;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=12;" value="Логические пакеты-объекты" vertex="1">
+          <mxGeometry height="55" width="190" x="1080" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="art-victim" parent="1" style="shape=module;align=center;spacingLeft=20;verticalAlign=middle;whiteSpace=wrap;html=1;fontSize=12;" value="Состояние виртуальной&lt;br&gt;жертвы" vertex="1">
+          <mxGeometry height="55" width="190" x="1080" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="conn-sniffer-driver" edge="1" parent="1" source="art-sniffer" style="endArrow=open;html=1;rounded=0;fontSize=12;" target="node-driver" value="API захвата">
+          <mxGeometry relative="1" x="-0.3759" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-driver-loopback" edge="1" parent="1" source="node-driver" style="endArrow=open;html=1;rounded=0;fontSize=12;" target="node-loopback" value="pcap / loopback">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn-app-memory" edge="1" parent="1" source="art-core" style="endArrow=open;html=1;rounded=0;fontSize=12;" target="node-memory" value="объекты модели">
+          <mxGeometry relative="1" x="0.1237" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-attack-memory" edge="1" parent="1" source="art-attack" style="endArrow=open;html=1;rounded=0;fontSize=12;" target="node-memory" value="генерация в памяти">
+          <mxGeometry relative="1" x="-0.3879" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-sqlite-file" edge="1" parent="1" source="art-sqlite" style="endArrow=open;html=1;rounded=0;fontSize=12;" target="node-fs" value="локальное хранение">
+          <mxGeometry relative="1" x="-0.4336" y="6" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-json-file" edge="1" parent="1" source="art-json" style="endArrow=open;html=1;rounded=0;fontSize=12;" target="node-fs" value="настройки">
+          <mxGeometry relative="1" x="-0.434" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-report-file" edge="1" parent="1" source="art-report" style="endArrow=open;html=1;rounded=0;fontSize=12;" target="node-fs" value="экспорт PDF">
+          <mxGeometry relative="1" x="-0.4237" y="-6" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-sniffer-loopback" edge="1" parent="1" source="art-sniffer" style="endArrow=open;html=1;rounded=0;fontSize=12;" target="node-loopback" value="опциональный демо-захват">
+          <mxGeometry relative="1" x="-0.3492" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-visual-core" edge="1" parent="1" source="art-core" style="endArrow=open;html=1;rounded=0;fontSize=12;" target="art-visual" value="события графиков">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-deploy" parent="1" style="shape=note;align=left;spacingLeft=10;spacingTop=10;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=11;" value="Особенность развертывания NetSecLab: система работает локально на одном ПК. Выделенный сервер, веб-сервер и внешняя сеть не требуются; основной поток трафика моделируется в памяти, а loopback используется только для демонстрационного захвата." vertex="1">
+          <mxGeometry height="110" width="650" x="710" y="850" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

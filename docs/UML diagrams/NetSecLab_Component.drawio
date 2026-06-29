@@ -1,0 +1,260 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.5.2 Chrome/145 Safari/537.36">
+  <diagram name="Диаграмма компонентов" id="nsl-Диаграмма компонентов">
+    <mxGraphModel dx="1768" dy="981" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title-comp" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1" value="NetSecLab — диаграмма компонентов" vertex="1">
+          <mxGeometry height="40" width="560" x="835" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-ui" parent="1" style="align=left;overflow=fill;html=1;dropTarget=0;whiteSpace=wrap;fontSize=14;" value="&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;Пользовательский интерфейс&lt;br&gt;Avalonia UI&lt;/p&gt;" vertex="1">
+          <mxGeometry height="90" width="230" x="1490" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-ui-icon" parent="comp-ui" style="shape=component;jettyWidth=8;jettyHeight=4;" value="" vertex="1">
+          <mxGeometry height="20" relative="1" width="20" x="1" as="geometry">
+            <mxPoint x="-24" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-vm" parent="1" style="align=left;overflow=fill;html=1;dropTarget=0;whiteSpace=wrap;fontSize=14;" value="&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;ViewModel слой&lt;br&gt;MVVM / Commands&lt;/p&gt;" vertex="1">
+          <mxGeometry height="90" width="230" x="1100" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-vm-icon" parent="comp-vm" style="shape=component;jettyWidth=8;jettyHeight=4;" value="" vertex="1">
+          <mxGeometry height="20" relative="1" width="20" x="1" as="geometry">
+            <mxPoint x="-24" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-settings" parent="1" style="align=left;overflow=fill;html=1;dropTarget=0;whiteSpace=wrap;fontSize=14;" value="&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;Настройки, профиль&lt;br&gt;и темы&lt;/p&gt;" vertex="1">
+          <mxGeometry height="90" width="230" x="1000" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-settings-icon" parent="comp-settings" style="shape=component;jettyWidth=8;jettyHeight=4;" value="" vertex="1">
+          <mxGeometry height="20" relative="1" width="20" x="1" as="geometry">
+            <mxPoint x="-24" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-attack" parent="1" style="align=left;overflow=fill;html=1;dropTarget=0;whiteSpace=wrap;fontSize=14;" value="&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;Генератор и&lt;br&gt;эмулятор атак&lt;/p&gt;" vertex="1">
+          <mxGeometry height="90" width="230" x="720" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-attack-icon" parent="comp-attack" style="shape=component;jettyWidth=8;jettyHeight=4;" value="" vertex="1">
+          <mxGeometry height="20" relative="1" width="20" x="1" as="geometry">
+            <mxPoint x="-24" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-sniffer" parent="1" style="align=left;overflow=fill;html=1;dropTarget=0;whiteSpace=wrap;fontSize=14;" value="&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;Сниффер и&lt;br&gt;анализатор трафика&lt;/p&gt;" vertex="1">
+          <mxGeometry height="90" width="230" x="340" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-sniffer-icon" parent="comp-sniffer" style="shape=component;jettyWidth=8;jettyHeight=4;" value="" vertex="1">
+          <mxGeometry height="20" relative="1" width="20" x="1" as="geometry">
+            <mxPoint x="-24" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-engine" parent="1" style="align=left;overflow=fill;html=1;dropTarget=0;whiteSpace=wrap;fontSize=14;" value="&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;Стохастическое&lt;br&gt;ядро симуляции&lt;/p&gt;" vertex="1">
+          <mxGeometry height="90" width="230" x="340" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-engine-icon" parent="comp-engine" style="shape=component;jettyWidth=8;jettyHeight=4;" value="" vertex="1">
+          <mxGeometry height="20" relative="1" width="20" x="1" as="geometry">
+            <mxPoint x="-24" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-defense" parent="1" style="align=left;overflow=fill;html=1;dropTarget=0;whiteSpace=wrap;fontSize=14;" value="&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;Защитные&lt;br&gt;механизмы&lt;/p&gt;" vertex="1">
+          <mxGeometry height="90" width="230" x="330" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-defense-icon" parent="comp-defense" style="shape=component;jettyWidth=8;jettyHeight=4;" value="" vertex="1">
+          <mxGeometry height="20" relative="1" width="20" x="1" as="geometry">
+            <mxPoint x="-24" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-eventbus" parent="1" style="align=left;overflow=fill;html=1;dropTarget=0;whiteSpace=wrap;fontSize=14;" value="&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;Единая шина&lt;br&gt;событий&lt;/p&gt;" vertex="1">
+          <mxGeometry height="90" width="230" x="850" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-eventbus-icon" parent="comp-eventbus" style="shape=component;jettyWidth=8;jettyHeight=4;" value="" vertex="1">
+          <mxGeometry height="20" relative="1" width="20" x="1" as="geometry">
+            <mxPoint x="-24" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-visual" parent="1" style="align=left;overflow=fill;html=1;dropTarget=0;whiteSpace=wrap;fontSize=14;" value="&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;Визуализация&lt;br&gt;LiveCharts2&lt;/p&gt;" vertex="1">
+          <mxGeometry height="90" width="230" x="1290" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-visual-icon" parent="comp-visual" style="shape=component;jettyWidth=8;jettyHeight=4;" value="" vertex="1">
+          <mxGeometry height="20" relative="1" width="20" x="1" as="geometry">
+            <mxPoint x="-24" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-scenarios" parent="1" style="align=left;overflow=fill;html=1;dropTarget=0;whiteSpace=wrap;fontSize=14;" value="&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;Сценарии, оценка&lt;br&gt;и подсказки&lt;/p&gt;" vertex="1">
+          <mxGeometry height="90" width="230" x="1100" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-scenarios-icon" parent="comp-scenarios" style="shape=component;jettyWidth=8;jettyHeight=4;" value="" vertex="1">
+          <mxGeometry height="20" relative="1" width="20" x="1" as="geometry">
+            <mxPoint x="-24" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-report" parent="1" style="align=left;overflow=fill;html=1;dropTarget=0;whiteSpace=wrap;fontSize=14;" value="&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;Генератор&lt;br&gt;PDF-отчётов&lt;/p&gt;" vertex="1">
+          <mxGeometry height="90" width="230" x="1640" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-report-icon" parent="comp-report" style="shape=component;jettyWidth=8;jettyHeight=4;" value="" vertex="1">
+          <mxGeometry height="20" relative="1" width="20" x="1" as="geometry">
+            <mxPoint x="-24" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-data" parent="1" style="align=left;overflow=fill;html=1;dropTarget=0;whiteSpace=wrap;fontSize=14;" value="&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;Слой данных&lt;br&gt;SQLite / JSON&lt;/p&gt;" vertex="1">
+          <mxGeometry height="90" width="230" x="1340" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-data-icon" parent="comp-data" style="shape=component;jettyWidth=8;jettyHeight=4;" value="" vertex="1">
+          <mxGeometry height="20" relative="1" width="20" x="1" as="geometry">
+            <mxPoint x="-24" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-pcap" parent="1" style="align=left;overflow=fill;html=1;dropTarget=0;whiteSpace=wrap;fontSize=14;" value="&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;Адаптер пакетов&lt;br&gt;SharpPcap / PacketDotNet&lt;/p&gt;" vertex="1">
+          <mxGeometry height="90" width="260" x="390" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-pcap-icon" parent="comp-pcap" style="shape=component;jettyWidth=8;jettyHeight=4;" value="" vertex="1">
+          <mxGeometry height="20" relative="1" width="20" x="1" as="geometry">
+            <mxPoint x="-24" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="comp-files" parent="1" style="align=left;overflow=fill;html=1;dropTarget=0;whiteSpace=wrap;fontSize=14;" value="&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-top:6px;text-align:center;&quot;&gt;Локальная файловая&lt;br&gt;система&lt;/p&gt;" vertex="1">
+          <mxGeometry height="90" width="230" x="1720" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="comp-files-icon" parent="comp-files" style="shape=component;jettyWidth=8;jettyHeight=4;" value="" vertex="1">
+          <mxGeometry height="20" relative="1" width="20" x="1" as="geometry">
+            <mxPoint x="-24" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dep-ui-vm" edge="1" parent="1" source="comp-ui" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-vm" value="команды и привязки">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-vm-settings" edge="1" parent="1" source="comp-vm" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-settings" value="профиль и темы">
+          <mxGeometry relative="1" x="-0.2195" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1195" y="650" />
+              <mxPoint x="1120" y="650" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dep-vm-attack" edge="1" parent="1" source="comp-vm" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-attack" value="параметры атаки">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-vm-defense" edge="1" parent="1" source="comp-vm" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-defense" value="переключатели защиты">
+          <mxGeometry relative="1" x="0.3091" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1070" y="520" />
+              <mxPoint x="1070" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dep-vm-scen" edge="1" parent="1" source="comp-vm" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-scenarios" value="запуск сценариев">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-attack-engine" edge="1" parent="1" source="comp-attack" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-engine" value="интенсивность">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="815" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dep-attack-pcap" edge="1" parent="1" source="comp-attack" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-pcap" value="демо-пакеты">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="840" y="720" />
+              <mxPoint x="400" y="720" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dep-sniffer-pcap" edge="1" parent="1" source="comp-sniffer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-pcap" value="захват/декодирование">
+          <mxGeometry relative="1" x="0.3816" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="280" y="135" />
+              <mxPoint x="280" y="725" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dep-sniffer-engine" edge="1" parent="1" source="comp-sniffer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-engine" value="классификация">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-engine-defense" edge="1" parent="1" source="comp-engine" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="comp-defense" value="эффективность">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="445" y="400" />
+              <mxPoint x="445" y="400" />
+            </Array>
+            <mxPoint x="530" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dep-engine-eventbus" edge="1" parent="1" source="comp-engine" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-eventbus" value="события модели">
+          <mxGeometry relative="1" x="-0.0435" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="640" y="260" />
+              <mxPoint x="640" y="190" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dep-attack-eventbus" edge="1" parent="1" source="comp-attack" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-eventbus" value="поток пакетов">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="930" y="330" />
+              <mxPoint x="930" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dep-sniffer-eventbus" edge="1" parent="1" source="comp-sniffer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-eventbus" value="пакеты">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="140" />
+              <mxPoint x="650" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dep-defense-eventbus" edge="1" parent="1" source="comp-defense" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-eventbus" value="статусы защиты">
+          <mxGeometry relative="1" x="-0.25" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="530" y="470" />
+              <mxPoint x="530" y="380" />
+              <mxPoint x="880" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dep-eventbus-visual" edge="1" parent="1" source="comp-eventbus" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-visual" value="обновления графиков">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-eventbus-scen" edge="1" parent="1" source="comp-eventbus" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-scenarios" value="оценка действий">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1020" y="250" />
+              <mxPoint x="1215" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dep-scen-report" edge="1" parent="1" source="comp-scenarios" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-report" value="результаты">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-report-data" edge="1" parent="1" source="comp-report" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-data" value="история">
+          <mxGeometry relative="1" x="0.1048" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1760" y="610" />
+              <mxPoint x="1460" y="610" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dep-settings-data" edge="1" parent="1" source="comp-settings" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-data" value="настройки">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-data-files" edge="1" parent="1" source="comp-data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-files" value="SQLite/JSON">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dep-report-files" edge="1" parent="1" source="comp-report" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;fontSize=12;" target="comp-files" value="PDF">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1840" y="520" />
+              <mxPoint x="1840" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
