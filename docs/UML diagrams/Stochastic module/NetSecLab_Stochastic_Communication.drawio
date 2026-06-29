@@ -1,0 +1,144 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT" compressed="false">
+  <diagram id="netseclab-stochastic-communication-correct" name="Страница-1">
+    <mxGraphModel dx="1414" dy="785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1320" pageHeight="760" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="attack" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value=":Генератор&lt;br&gt;атак" vertex="1">
+          <mxGeometry height="70" width="170" x="40" y="132" as="geometry" />
+        </mxCell>
+        <mxCell id="defense" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value=":Модуль&lt;br&gt;защиты" vertex="1">
+          <mxGeometry height="70" width="170" x="100" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="core" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value=":Стохастическое&lt;br&gt;ядро" vertex="1">
+          <mxGeometry height="75" width="200" x="555" y="127" as="geometry" />
+        </mxCell>
+        <mxCell id="dist" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value=":Модель&lt;br&gt;распределений" vertex="1">
+          <mxGeometry height="75" width="200" x="1000" y="129.5" as="geometry" />
+        </mxCell>
+        <mxCell id="events" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value=":Генератор&lt;br&gt;случайных событий" vertex="1">
+          <mxGeometry height="75" width="220" x="900" y="357" as="geometry" />
+        </mxCell>
+        <mxCell id="bus" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value=":Шина&lt;br&gt;событий" vertex="1">
+          <mxGeometry height="70" width="200" x="520" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="log" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value=":Журнал&lt;br&gt;и визуализация" vertex="1">
+          <mxGeometry height="70" width="200" x="910" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="ce1" edge="1" parent="1" source="attack" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;" target="core" value="1: Запросить параметры&lt;div&gt;потока&lt;/div&gt;">
+          <mxGeometry relative="1" x="0.0029" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="390" y="147" />
+              <mxPoint x="390" y="147" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ce2" edge="1" parent="1" source="core" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;" target="dist" value="2: Рассчитать фоновые&lt;div&gt;интервалы&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="655" y="37" />
+              <mxPoint x="1100" y="37" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ce3" edge="1" parent="1" source="dist" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;dashed=1;" target="core" value="3: Вернуть интервалы">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1050" y="87" />
+              <mxPoint x="710" y="87" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ce4" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;" value="4: Рассчитать шум атаки">
+          <mxGeometry relative="1" x="0.0204" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="755" y="150" />
+              <mxPoint x="1000" y="150" />
+            </Array>
+            <mxPoint x="755" y="137" as="sourcePoint" />
+            <mxPoint x="1000" y="137" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ce5" edge="1" parent="1" source="dist" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;dashed=1;" target="core" value="5: Вернуть шум">
+          <mxGeometry relative="1" x="-0.0051" as="geometry">
+            <mxPoint x="1" as="offset" />
+            <Array as="points">
+              <mxPoint x="870" y="180" />
+              <mxPoint x="870" y="180" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ce6" edge="1" parent="1" source="defense" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;" target="core" value="6: Запросить коэффициент&lt;div&gt;эффективности&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="570" y="270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ce7" edge="1" parent="1" source="core" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;" target="dist" value="7: Рассчитать влияние&lt;div&gt;нагрузки&lt;/div&gt;">
+          <mxGeometry relative="1" x="0.002" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="740" y="247" />
+              <mxPoint x="1020" y="247" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ce8" edge="1" parent="1" source="dist" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;dashed=1;" target="core" value="8: Вернуть коэффициент&lt;div&gt;эффективности&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1040" y="297" />
+              <mxPoint x="720" y="297" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ce9" edge="1" parent="1" source="core" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;" target="events" value="9: Проверить случайное&lt;div&gt;событие&lt;/div&gt;">
+          <mxGeometry relative="1" x="0.4022" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="700" y="370" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ce10" edge="1" parent="1" source="events" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;dashed=1;" target="core" value="10: Вернуть событие&lt;div&gt;симуляции&lt;/div&gt;">
+          <mxGeometry relative="1" x="-0.4977" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="680" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ce11" edge="1" parent="1" source="core" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;" target="bus" value="11: Опубликовать&lt;div&gt;параметры расчёта&lt;/div&gt;">
+          <mxGeometry relative="1" x="0.2537" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="610" y="340" />
+              <mxPoint x="610" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ce12" edge="1" parent="1" source="bus" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;" target="log" value="12: Обновить графики&lt;div&gt;и статистику&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ce13" edge="1" parent="1" source="core" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;dashed=1;" target="attack" value="13: Вернуть параметры&lt;div&gt;потока&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="380" y="187" />
+              <mxPoint x="380" y="187" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ce14" edge="1" parent="1" source="core" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=13;strokeColor=#000000;dashed=1;" target="defense" value="14: Вернуть коэффициент&lt;div&gt;эффективности&lt;/div&gt;">
+          <mxGeometry relative="1" x="0.2411" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="590" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
