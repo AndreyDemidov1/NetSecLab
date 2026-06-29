@@ -16,6 +16,7 @@ public static class InfrastructureServiceCollectionExtensions
 
         services.TryAddSingleton<IAttackService, DisabledAttackService>();
         services.TryAddSingleton<IDefenseService, DisabledDefenseService>();
+        services.TryAddSingleton<IScenarioService, DisabledScenarioService>();
 
         return services;
     }

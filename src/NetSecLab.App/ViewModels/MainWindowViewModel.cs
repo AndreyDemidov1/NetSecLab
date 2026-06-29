@@ -2,8 +2,8 @@ using System.Collections.ObjectModel;
 using System.Net;
 using System.Net.Sockets;
 using System.Windows.Input;
-using Avalonia.Threading;
 using Avalonia.Media;
+using Avalonia.Threading;
 using NetSecLab.App.Commands;
 using NetSecLab.App.Models;
 using NetSecLab.Core.Events;
@@ -17,10 +17,13 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
 {
     private readonly IAttackService _attackService;
     private readonly IDefenseService _defenseService;
+    private readonly IScenarioService _scenarioService;
     private readonly AppSettings _settings;
     private readonly List<IDisposable> _subscriptions = new();
 
     private AttackTypeOption _selectedAttackType;
+    private ScenarioOption? _selectedScenario;
+    private TrainingScenario? _activeScenario;
     private string _targetIp;
     private string _targetPortText;
     private string _intensityText;
@@ -40,6 +43,20 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     private string _blacklistSummaryText = "Пусто";
     private string _whitelistSummaryText = "Пусто";
     private string _defenseStatusText;
+    private string _scenarioGoalText;
+    private string _scenarioVerificationText;
+    private string _scenarioStatusText;
+    private string _scenarioScoreText = "Оценка: 0/100";
+    private string _scenarioBreakdownText = "Реакция 0/15 • Выбор 0/35 • Эффективность 0/35 • Адаптивность 0/15";
+    private string _scenarioReactionText = "Реакция: атака ещё не запущена.";
+    private DateTime? _attackStartedAt;
+    private DateTime? _firstCorrectDefenseEnabledAt;
+    private bool _correctDefenseWasActiveAtAttackStart;
+    private int _scenarioDefenseConfigurationChangesAfterAttack;
+    private int _scenarioReceivedPacketsBaseline;
+    private int _scenarioAllowedPacketsBaseline;
+    private int _scenarioMitigatedPacketsBaseline;
+    private int _scenarioBlockedPacketsBaseline;
     private int _receivedPackets;
     private int _allowedPackets;
     private int _mitigatedPackets;
@@ -57,11 +74,13 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     public MainWindowViewModel(
         IAttackService attackService,
         IDefenseService defenseService,
+        IScenarioService scenarioService,
         IEventBus eventBus,
         AppSettings settings)
     {
         _attackService = attackService;
         _defenseService = defenseService;
+        _scenarioService = scenarioService;
         _settings = settings;
         _targetIp = settings.TargetIp;
         _targetPortText = settings.TargetPort.ToString();
@@ -73,6 +92,13 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         _runStateText = attackService.IsAvailable ? "Остановлено" : "Недоступно";
         UpdateIpListSummaryTexts();
         _defenseStatusText = CreateDefenseStatusText();
+        _scenarioStatusText = scenarioService.IsAvailable
+            ? "Сценарий не запущен. Выберите учебную задачу и нажмите \"Начать\"."
+            : "Модуль сценариев недоступен.";
+        _scenarioGoalText = scenarioService.IsAvailable
+            ? "Выберите сценарий для проверки действий пользователя."
+            : "Подключите модуль сценариев.";
+        _scenarioVerificationText = string.Empty;
 
         AttackTypes = new ObservableCollection<AttackTypeOption>
         {
@@ -83,8 +109,14 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         };
 
         _selectedAttackType = AttackTypes[0];
+        Scenarios = new ObservableCollection<ScenarioOption>(
+            scenarioService.Scenarios.Select(scenario => new ScenarioOption(scenario)));
+        _selectedScenario = Scenarios.Count > 0 ? Scenarios[0] : null;
+        UpdateSelectedScenarioDetails();
         Packets = new ObservableCollection<PacketLogItem>();
 
+        StartScenarioCommand = new RelayCommand(StartScenario, () => CanStartScenario);
+        ResetScenarioCommand = new RelayCommand(ResetScenario, () => CanResetScenario);
         StartAttackCommand = new RelayCommand(StartAttack, () => AttackModuleAvailable && !_attackService.IsRunning);
         StopAttackCommand = new RelayCommand(StopAttack, () => AttackModuleAvailable && _attackService.IsRunning);
         ClearPacketsCommand = new RelayCommand(ClearPackets, () => AttackModuleAvailable && Packets.Count > 0);
@@ -102,7 +134,10 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     }
 
     public ObservableCollection<AttackTypeOption> AttackTypes { get; }
+    public ObservableCollection<ScenarioOption> Scenarios { get; }
     public ObservableCollection<PacketLogItem> Packets { get; }
+    public ICommand StartScenarioCommand { get; }
+    public ICommand ResetScenarioCommand { get; }
     public ICommand StartAttackCommand { get; }
     public ICommand StopAttackCommand { get; }
     public ICommand ClearPacketsCommand { get; }
@@ -115,7 +150,11 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
 
     public bool AttackModuleAvailable => _attackService.IsAvailable;
     public bool DefenseModuleAvailable => _defenseService.IsAvailable;
+    public bool ScenarioModuleAvailable => _scenarioService.IsAvailable;
     public bool AttackConfigurationEnabled => AttackModuleAvailable && !_attackService.IsRunning;
+    public bool ScenarioConfigurationEnabled => ScenarioModuleAvailable && !_attackService.IsRunning && _scenarioService.Status == ScenarioStatus.NotStarted;
+    public bool CanStartScenario => ScenarioConfigurationEnabled && SelectedScenario is not null;
+    public bool CanResetScenario => ScenarioModuleAvailable && _scenarioService.Status != ScenarioStatus.NotStarted;
     public bool DefenseConfigurationEnabled => DefenseModuleAvailable;
     public bool DefenseOptionsEnabled => DefenseConfigurationEnabled && ProtectionEnabled;
     public bool RateLimitInputEnabled => DefenseOptionsEnabled && RateLimitEnabled;
@@ -137,7 +176,26 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     public AttackTypeOption SelectedAttackType
     {
         get => _selectedAttackType;
-        set => SetProperty(ref _selectedAttackType, value);
+        set
+        {
+            if (SetProperty(ref _selectedAttackType, value))
+            {
+                UpdateScenarioState();
+            }
+        }
+    }
+
+    public ScenarioOption? SelectedScenario
+    {
+        get => _selectedScenario;
+        set
+        {
+            if (SetProperty(ref _selectedScenario, value))
+            {
+                UpdateSelectedScenarioDetails();
+                UpdateCommandStates();
+            }
+        }
     }
 
     public string TargetIp
@@ -175,10 +233,14 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             }
 
             _defenseService.Settings.IsEnabled = value;
+            RecordScenarioDefenseChange();
             OnPropertyChanged();
             OnPropertyChanged(nameof(DefenseOptionsEnabled));
             OnPropertyChanged(nameof(RateLimitInputEnabled));
+            OnPropertyChanged(nameof(BlacklistControlsEnabled));
+            OnPropertyChanged(nameof(WhitelistControlsEnabled));
             UpdateDefenseStatusText();
+            UpdateScenarioState();
             UpdateCommandStates();
         }
     }
@@ -194,8 +256,10 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             }
 
             _defenseService.Settings.SynCookiesEnabled = value;
+            RecordScenarioDefenseChange();
             OnPropertyChanged();
             UpdateDefenseStatusText();
+            UpdateScenarioState();
         }
     }
 
@@ -210,9 +274,11 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             }
 
             _defenseService.Settings.RateLimitEnabled = value;
+            RecordScenarioDefenseChange();
             OnPropertyChanged();
             OnPropertyChanged(nameof(RateLimitInputEnabled));
             UpdateDefenseStatusText();
+            UpdateScenarioState();
         }
     }
 
@@ -227,8 +293,10 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             }
 
             _defenseService.Settings.BehaviorFilterEnabled = value;
+            RecordScenarioDefenseChange();
             OnPropertyChanged();
             UpdateDefenseStatusText();
+            UpdateScenarioState();
         }
     }
 
@@ -243,9 +311,11 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             }
 
             _defenseService.Settings.BlacklistEnabled = value;
+            RecordScenarioDefenseChange();
             OnPropertyChanged();
             OnPropertyChanged(nameof(BlacklistControlsEnabled));
             UpdateDefenseStatusText();
+            UpdateScenarioState();
             UpdateCommandStates();
         }
     }
@@ -261,9 +331,11 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             }
 
             _defenseService.Settings.WhitelistEnabled = value;
+            RecordScenarioDefenseChange();
             OnPropertyChanged();
             OnPropertyChanged(nameof(WhitelistControlsEnabled));
             UpdateDefenseStatusText();
+            UpdateScenarioState();
             UpdateCommandStates();
         }
     }
@@ -302,6 +374,42 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     {
         get => _whitelistSummaryText;
         private set => SetProperty(ref _whitelistSummaryText, value);
+    }
+
+    public string ScenarioGoalText
+    {
+        get => _scenarioGoalText;
+        private set => SetProperty(ref _scenarioGoalText, value);
+    }
+
+    public string ScenarioVerificationText
+    {
+        get => _scenarioVerificationText;
+        private set => SetProperty(ref _scenarioVerificationText, value);
+    }
+
+    public string ScenarioStatusText
+    {
+        get => _scenarioStatusText;
+        private set => SetProperty(ref _scenarioStatusText, value);
+    }
+
+    public string ScenarioScoreText
+    {
+        get => _scenarioScoreText;
+        private set => SetProperty(ref _scenarioScoreText, value);
+    }
+
+    public string ScenarioBreakdownText
+    {
+        get => _scenarioBreakdownText;
+        private set => SetProperty(ref _scenarioBreakdownText, value);
+    }
+
+    public string ScenarioReactionText
+    {
+        get => _scenarioReactionText;
+        private set => SetProperty(ref _scenarioReactionText, value);
     }
 
     public string RateLimitText
@@ -396,6 +504,48 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         private set => SetProperty(ref _currentRateText, value);
     }
 
+    private void StartScenario()
+    {
+        if (!ScenarioModuleAvailable || SelectedScenario is null)
+        {
+            StatusText = "Модуль сценариев недоступен или сценарий не выбран.";
+            return;
+        }
+
+        Packets.Clear();
+        ResetPacketCounters();
+        _defenseService.Reset();
+
+        TrainingScenario scenario = _scenarioService.Start(SelectedScenario.Id);
+        _activeScenario = scenario;
+        ResetScenarioAttemptState();
+        SetScenarioPacketBaselines();
+
+        ScenarioGoalText = scenario.GoalText;
+        ScenarioVerificationText = scenario.VerificationText;
+        ScenarioStatusText = "Сценарий запущен. Выберите нужный тип атаки и запустите генерацию.";
+        ScenarioScoreText = "Оценка: 0/100";
+        ScenarioBreakdownText = "Реакция 0/15 • Выбор 0/35 • Эффективность 0/35 • Адаптивность 0/15";
+        ScenarioReactionText = "Реакция: атака ещё не запущена.";
+        StatusText = "Учебный сценарий запущен: " + scenario.Title;
+        UpdateScenarioState();
+        UpdateCommandStates();
+    }
+
+    private void ResetScenario()
+    {
+        _scenarioService.Reset();
+        _activeScenario = null;
+        ResetScenarioAttemptState();
+        SetScenarioPacketBaselines();
+        ScenarioStatusText = "Сценарий сброшен.";
+        ScenarioScoreText = "Оценка: 0/100";
+        ScenarioBreakdownText = "Реакция 0/15 • Выбор 0/35 • Эффективность 0/35 • Адаптивность 0/15";
+        ScenarioReactionText = "Реакция: атака ещё не запущена.";
+        UpdateSelectedScenarioDetails();
+        UpdateCommandStates();
+    }
+
     private void StartAttack()
     {
         if (!AttackModuleAvailable)
@@ -437,6 +587,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         Packets.Clear();
         ResetPacketCounters();
         _defenseService.Reset();
+        UpdateScenarioState();
 
         AttackRunOptions options = new()
         {
@@ -461,6 +612,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
 
         _defenseService.Settings.BlacklistedIps.Add(ip);
         _defenseService.Settings.WhitelistedIps.Remove(ip);
+        RecordScenarioDefenseChange();
         BlacklistIpText = ip;
         UpdateIpListSummaryTexts();
         UpdateDefenseStatusText();
@@ -477,6 +629,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         }
 
         _defenseService.Settings.BlacklistedIps.Remove(ip);
+        RecordScenarioDefenseChange();
         BlacklistIpText = ip;
         UpdateIpListSummaryTexts();
         UpdateDefenseStatusText();
@@ -487,6 +640,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     private void ClearBlacklistIps()
     {
         _defenseService.Settings.BlacklistedIps.Clear();
+        RecordScenarioDefenseChange();
         UpdateIpListSummaryTexts();
         UpdateDefenseStatusText();
         StatusText = "Чёрный список очищен.";
@@ -503,6 +657,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
 
         _defenseService.Settings.WhitelistedIps.Add(ip);
         _defenseService.Settings.BlacklistedIps.Remove(ip);
+        RecordScenarioDefenseChange();
         WhitelistIpText = ip;
         UpdateIpListSummaryTexts();
         UpdateDefenseStatusText();
@@ -519,6 +674,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         }
 
         _defenseService.Settings.WhitelistedIps.Remove(ip);
+        RecordScenarioDefenseChange();
         WhitelistIpText = ip;
         UpdateIpListSummaryTexts();
         UpdateDefenseStatusText();
@@ -529,6 +685,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     private void ClearWhitelistIps()
     {
         _defenseService.Settings.WhitelistedIps.Clear();
+        RecordScenarioDefenseChange();
         UpdateIpListSummaryTexts();
         UpdateDefenseStatusText();
         StatusText = "Белый список очищен.";
@@ -537,9 +694,15 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
 
     private bool TryReadTargetPort(out int targetPort)
     {
-        if (!int.TryParse(TargetPortText, out targetPort) || targetPort <= 0 || targetPort > 65535)
+        if (!int.TryParse(TargetPortText, out targetPort))
         {
-            StatusText = "Порт должен быть числом от 1 до 65535.";
+            StatusText = "Целевой порт должен быть числом.";
+            return false;
+        }
+
+        if (targetPort < 1 || targetPort > 65535)
+        {
+            StatusText = "Целевой порт должен быть в диапазоне от 1 до 65535.";
             return false;
         }
 
@@ -550,7 +713,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     {
         if (!int.TryParse(IntensityText, out intensity))
         {
-            StatusText = "Введите корректную интенсивность атаки.";
+            StatusText = "Интенсивность должна быть числом.";
             return false;
         }
 
@@ -628,7 +791,6 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     private static bool IsAllowedAccessListIp(IPAddress address)
     {
         byte[] bytes = address.GetAddressBytes();
-
         bool lastOctetCanBeGenerated = bytes[3] >= 2 && bytes[3] <= 239;
 
         return lastOctetCanBeGenerated &&
@@ -655,6 +817,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         ResetPacketCounters();
         _defenseService.Reset();
         StatusText = "Журнал пакетов очищен.";
+        UpdateScenarioState();
         UpdateCommandStates();
     }
 
@@ -683,6 +846,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             }
 
             UpdatePacketCounterTexts();
+            UpdateScenarioState();
 
             while (Packets.Count > _settings.MaxPacketsInUi)
             {
@@ -721,11 +885,18 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
                 ? eventData.Options.TargetIp
                 : eventData.Options.TargetIp + ":" + eventData.Options.TargetPort;
 
+            if (_scenarioService.Status == ScenarioStatus.InProgress && _attackStartedAt is null)
+            {
+                _attackStartedAt = DateTime.Now;
+                _correctDefenseWasActiveAtAttackStart = IsScenarioDefenseReady();
+            }
+
             RunStateText = "Атака выполняется";
             StatusText =
                 "Запущен генератор: " + eventData.Options.AttackType +
                 ". Цель: " + targetText +
                 ". Для изменения параметров остановите генерацию и запустите её снова.";
+            UpdateScenarioState();
             UpdateCommandStates();
         });
     }
@@ -759,6 +930,180 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         _blockedPackets = 0;
 
         UpdatePacketCounterTexts();
+    }
+
+    private void UpdateSelectedScenarioDetails()
+    {
+        if (!ScenarioModuleAvailable)
+        {
+            ScenarioGoalText = "Модуль сценариев недоступен.";
+            ScenarioVerificationText = string.Empty;
+            ScenarioStatusText = "Модуль сценариев недоступен.";
+            return;
+        }
+
+        if (_scenarioService.Status != ScenarioStatus.NotStarted)
+        {
+            return;
+        }
+
+        if (SelectedScenario is null)
+        {
+            ScenarioGoalText = "Сценарий не выбран.";
+            ScenarioVerificationText = string.Empty;
+            ScenarioStatusText = "Сценарий не выбран.";
+            return;
+        }
+
+        ScenarioGoalText = SelectedScenario.GoalText;
+        ScenarioVerificationText = SelectedScenario.VerificationText;
+        ScenarioStatusText = "Сценарий не запущен. Нажмите \"Начать\", чтобы включить проверку.";
+        ScenarioScoreText = "Оценка: 0/100";
+        ScenarioBreakdownText = "Реакция 0/15 • Выбор 0/35 • Эффективность 0/35 • Адаптивность 0/15";
+        ScenarioReactionText = "Реакция: атака ещё не запущена.";
+    }
+
+    private void UpdateScenarioState()
+    {
+        if (!ScenarioModuleAvailable || SelectedScenario is null)
+        {
+            return;
+        }
+
+        TryRecordCorrectDefenseTime();
+
+        ScenarioEvaluationResult result = _scenarioService.Evaluate(CreateScenarioEvaluationInput());
+
+        if (_scenarioService.Status == ScenarioStatus.NotStarted)
+        {
+            UpdateSelectedScenarioDetails();
+            return;
+        }
+
+        ScenarioStatusText = result.StatusText;
+        ScenarioScoreText = "Оценка: " + result.Score + "/100";
+        ScenarioBreakdownText = result.ScoreBreakdownText;
+        ScenarioReactionText = result.ReactionTimeText;
+    }
+
+    private ScenarioEvaluationInput CreateScenarioEvaluationInput()
+    {
+        return new ScenarioEvaluationInput
+        {
+            AttackType = SelectedAttackType.Value,
+            ReceivedPackets = Math.Max(0, _receivedPackets - _scenarioReceivedPacketsBaseline),
+            AllowedPackets = Math.Max(0, _allowedPackets - _scenarioAllowedPacketsBaseline),
+            MitigatedPackets = Math.Max(0, _mitigatedPackets - _scenarioMitigatedPacketsBaseline),
+            BlockedPackets = Math.Max(0, _blockedPackets - _scenarioBlockedPacketsBaseline),
+            ProtectionEnabled = ProtectionEnabled,
+            SynCookiesEnabled = SynCookiesEnabled,
+            RateLimitEnabled = RateLimitEnabled,
+            BehaviorFilterEnabled = BehaviorFilterEnabled,
+            BlacklistEnabled = BlacklistEnabled,
+            WhitelistEnabled = WhitelistEnabled,
+            AttackStartedAt = _attackStartedAt,
+            FirstCorrectDefenseEnabledAt = _firstCorrectDefenseEnabledAt,
+            BlacklistedIpCount = _defenseService.Settings.BlacklistedIps.Count,
+            WhitelistedIpCount = _defenseService.Settings.WhitelistedIps.Count,
+            EnabledDefenseMechanismCount = CountEnabledDefenseMechanisms(),
+            CorrectDefenseWasEnabledBeforeAttack = _correctDefenseWasActiveAtAttackStart,
+            DefenseConfigurationChangesAfterAttack = _scenarioDefenseConfigurationChangesAfterAttack
+        };
+    }
+
+    private void ResetScenarioAttemptState()
+    {
+        _attackStartedAt = null;
+        _firstCorrectDefenseEnabledAt = null;
+        _correctDefenseWasActiveAtAttackStart = false;
+        _scenarioDefenseConfigurationChangesAfterAttack = 0;
+    }
+
+    private void SetScenarioPacketBaselines()
+    {
+        _scenarioReceivedPacketsBaseline = _receivedPackets;
+        _scenarioAllowedPacketsBaseline = _allowedPackets;
+        _scenarioMitigatedPacketsBaseline = _mitigatedPackets;
+        _scenarioBlockedPacketsBaseline = _blockedPackets;
+    }
+
+    private void TryRecordCorrectDefenseTime()
+    {
+        if (_activeScenario is null ||
+            _scenarioService.Status != ScenarioStatus.InProgress ||
+            _attackStartedAt is null ||
+            _firstCorrectDefenseEnabledAt is not null ||
+            _correctDefenseWasActiveAtAttackStart ||
+            !IsScenarioDefenseReady())
+        {
+            return;
+        }
+
+        _firstCorrectDefenseEnabledAt = DateTime.Now;
+    }
+
+    private void RecordScenarioDefenseChange()
+    {
+        if (_scenarioService.Status != ScenarioStatus.InProgress)
+        {
+            return;
+        }
+
+        if (_attackStartedAt is not null)
+        {
+            _scenarioDefenseConfigurationChangesAfterAttack++;
+        }
+
+        TryRecordCorrectDefenseTime();
+    }
+
+    private bool IsScenarioDefenseReady()
+    {
+        if (_activeScenario is null || !ProtectionEnabled)
+        {
+            return false;
+        }
+
+        if (!_activeScenario.RequiredDefenses.All(IsDefenseActive))
+        {
+            return false;
+        }
+
+        if (_activeScenario.RequiresBlacklistEntry && _defenseService.Settings.BlacklistedIps.Count == 0)
+        {
+            return false;
+        }
+
+        if (_activeScenario.RequiresWhitelistEntry && _defenseService.Settings.WhitelistedIps.Count == 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool IsDefenseActive(ScenarioDefenseKind requiredDefense)
+    {
+        return requiredDefense switch
+        {
+            ScenarioDefenseKind.SynCookies => SynCookiesEnabled,
+            ScenarioDefenseKind.RateLimit => RateLimitEnabled,
+            ScenarioDefenseKind.BehaviorFilter => BehaviorFilterEnabled,
+            ScenarioDefenseKind.Blacklist => BlacklistEnabled,
+            ScenarioDefenseKind.Whitelist => WhitelistEnabled,
+            _ => false
+        };
+    }
+
+    private int CountEnabledDefenseMechanisms()
+    {
+        int count = 0;
+        if (SynCookiesEnabled) count++;
+        if (RateLimitEnabled) count++;
+        if (BehaviorFilterEnabled) count++;
+        if (BlacklistEnabled) count++;
+        if (WhitelistEnabled) count++;
+        return count;
     }
 
     private void UpdateDefenseStatusText()
@@ -804,6 +1149,9 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     private void UpdateCommandStates()
     {
         OnPropertyChanged(nameof(AttackConfigurationEnabled));
+        OnPropertyChanged(nameof(ScenarioConfigurationEnabled));
+        OnPropertyChanged(nameof(CanStartScenario));
+        OnPropertyChanged(nameof(CanResetScenario));
         OnPropertyChanged(nameof(DefenseConfigurationEnabled));
         OnPropertyChanged(nameof(DefenseOptionsEnabled));
         OnPropertyChanged(nameof(RateLimitInputEnabled));
@@ -821,6 +1169,16 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         OnPropertyChanged(nameof(WhitelistAddButtonBackground));
         OnPropertyChanged(nameof(WhitelistRemoveButtonBackground));
         OnPropertyChanged(nameof(WhitelistClearButtonBackground));
+
+        if (StartScenarioCommand is RelayCommand startScenarioCommand)
+        {
+            startScenarioCommand.RaiseCanExecuteChanged();
+        }
+
+        if (ResetScenarioCommand is RelayCommand resetScenarioCommand)
+        {
+            resetScenarioCommand.RaiseCanExecuteChanged();
+        }
 
         if (StartAttackCommand is RelayCommand startCommand)
         {
