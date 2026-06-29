@@ -18,10 +18,12 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     private readonly IAttackService _attackService;
     private readonly IDefenseService _defenseService;
     private readonly IScenarioService _scenarioService;
+    private readonly IStochasticSimulationService _stochasticSimulationService;
     private readonly AppSettings _settings;
     private readonly List<IDisposable> _subscriptions = new();
 
     private AttackTypeOption _selectedAttackType;
+    private SimulationDifficultyOption _selectedDifficulty;
     private ScenarioOption? _selectedScenario;
     private TrainingScenario? _activeScenario;
     private string _targetIp;
@@ -49,10 +51,14 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     private string _scenarioScoreText = "Оценка: 0/100";
     private string _scenarioBreakdownText = "Реакция 0/15 • Выбор 0/35 • Эффективность 0/35 • Адаптивность 0/15";
     private string _scenarioReactionText = "Реакция: атака ещё не запущена.";
+    private string _simulationStatusText = "Стохастическое ядро готово. Случайные события появятся во время генерации.";
     private DateTime? _attackStartedAt;
     private DateTime? _firstCorrectDefenseEnabledAt;
     private bool _correctDefenseWasActiveAtAttackStart;
     private int _scenarioDefenseConfigurationChangesAfterAttack;
+    private int _scenarioRandomEventsAfterAttack;
+    private int _scenarioDefenseConfigurationChangesAfterRandomEvents;
+    private DateTime? _lastStochasticEventAt;
     private int _scenarioReceivedPacketsBaseline;
     private int _scenarioAllowedPacketsBaseline;
     private int _scenarioMitigatedPacketsBaseline;
@@ -75,12 +81,14 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         IAttackService attackService,
         IDefenseService defenseService,
         IScenarioService scenarioService,
+        IStochasticSimulationService stochasticSimulationService,
         IEventBus eventBus,
         AppSettings settings)
     {
         _attackService = attackService;
         _defenseService = defenseService;
         _scenarioService = scenarioService;
+        _stochasticSimulationService = stochasticSimulationService;
         _settings = settings;
         _targetIp = settings.TargetIp;
         _targetPortText = settings.TargetPort.ToString();
@@ -108,7 +116,15 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             new(AttackType.HttpSlowloris, "HTTP Slowloris")
         };
 
+        SimulationDifficulties = new ObservableCollection<SimulationDifficultyOption>
+        {
+            new(SimulationDifficulty.Easy, "Лёгкий"),
+            new(SimulationDifficulty.Medium, "Средний"),
+            new(SimulationDifficulty.Hard, "Сложный")
+        };
+
         _selectedAttackType = AttackTypes[0];
+        _selectedDifficulty = SimulationDifficulties.First(item => item.Value == SimulationDifficulty.Medium);
         Scenarios = new ObservableCollection<ScenarioOption>(
             scenarioService.Scenarios.Select(scenario => new ScenarioOption(scenario)));
         _selectedScenario = Scenarios.Count > 0 ? Scenarios[0] : null;
@@ -131,9 +147,11 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         _subscriptions.Add(eventBus.Subscribe<AttackStartedEvent>(OnAttackStarted));
         _subscriptions.Add(eventBus.Subscribe<AttackStoppedEvent>(OnAttackStopped));
         _subscriptions.Add(eventBus.Subscribe<AttackStatisticsUpdatedEvent>(OnStatisticsUpdated));
+        _subscriptions.Add(eventBus.Subscribe<StochasticSimulationEventRaisedEvent>(OnStochasticSimulationEventRaised));
     }
 
     public ObservableCollection<AttackTypeOption> AttackTypes { get; }
+    public ObservableCollection<SimulationDifficultyOption> SimulationDifficulties { get; }
     public ObservableCollection<ScenarioOption> Scenarios { get; }
     public ObservableCollection<PacketLogItem> Packets { get; }
     public ICommand StartScenarioCommand { get; }
@@ -151,6 +169,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     public bool AttackModuleAvailable => _attackService.IsAvailable;
     public bool DefenseModuleAvailable => _defenseService.IsAvailable;
     public bool ScenarioModuleAvailable => _scenarioService.IsAvailable;
+    public bool StochasticSimulationAvailable => _stochasticSimulationService.IsAvailable;
     public bool AttackConfigurationEnabled => AttackModuleAvailable && !_attackService.IsRunning;
     public bool ScenarioConfigurationEnabled => ScenarioModuleAvailable && !_attackService.IsRunning && _scenarioService.Status == ScenarioStatus.NotStarted;
     public bool CanStartScenario => ScenarioConfigurationEnabled && SelectedScenario is not null;
@@ -183,6 +202,12 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
                 UpdateScenarioState();
             }
         }
+    }
+
+    public SimulationDifficultyOption SelectedDifficulty
+    {
+        get => _selectedDifficulty;
+        set => SetProperty(ref _selectedDifficulty, value);
     }
 
     public ScenarioOption? SelectedScenario
@@ -412,6 +437,12 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         private set => SetProperty(ref _scenarioReactionText, value);
     }
 
+    public string SimulationStatusText
+    {
+        get => _simulationStatusText;
+        private set => SetProperty(ref _simulationStatusText, value);
+    }
+
     public string RateLimitText
     {
         get => _rateLimitText;
@@ -595,7 +626,8 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             TargetIp = targetIp,
             TargetPort = targetPort,
             IntensityPerSecond = intensity,
-            IncludeBackgroundTraffic = IncludeBackgroundTraffic
+            IncludeBackgroundTraffic = IncludeBackgroundTraffic,
+            Difficulty = SelectedDifficulty.Value
         };
 
         _attackService.Start(options);
@@ -895,6 +927,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             StatusText =
                 "Запущен генератор: " + eventData.Options.AttackType +
                 ". Цель: " + targetText +
+                ". Сложность: " + SelectedDifficulty.DisplayName +
                 ". Для изменения параметров остановите генерацию и запустите её снова.";
             UpdateScenarioState();
             UpdateCommandStates();
@@ -919,6 +952,26 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         Dispatcher.UIThread.Post(() =>
         {
             CurrentRateText = eventData.PacketsPerSecond + " пакетов/сек";
+        });
+    }
+
+    private void OnStochasticSimulationEventRaised(StochasticSimulationEventRaisedEvent eventData)
+    {
+        Dispatcher.UIThread.Post(() =>
+        {
+            _lastStochasticEventAt = DateTime.Now;
+
+            if (_scenarioService.Status == ScenarioStatus.InProgress && _attackStartedAt is not null)
+            {
+                _scenarioRandomEventsAfterAttack++;
+            }
+
+            SimulationStatusText = eventData.SimulationEvent.OccurredAt.ToString("HH:mm:ss") +
+                                   " — " +
+                                   eventData.SimulationEvent.Title +
+                                   ": " +
+                                   eventData.SimulationEvent.Description;
+            UpdateScenarioState();
         });
     }
 
@@ -1007,7 +1060,9 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             WhitelistedIpCount = _defenseService.Settings.WhitelistedIps.Count,
             EnabledDefenseMechanismCount = CountEnabledDefenseMechanisms(),
             CorrectDefenseWasEnabledBeforeAttack = _correctDefenseWasActiveAtAttackStart,
-            DefenseConfigurationChangesAfterAttack = _scenarioDefenseConfigurationChangesAfterAttack
+            DefenseConfigurationChangesAfterAttack = _scenarioDefenseConfigurationChangesAfterAttack,
+            RandomEventsAfterAttack = _scenarioRandomEventsAfterAttack,
+            DefenseConfigurationChangesAfterRandomEvents = _scenarioDefenseConfigurationChangesAfterRandomEvents
         };
     }
 
@@ -1017,6 +1072,9 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         _firstCorrectDefenseEnabledAt = null;
         _correctDefenseWasActiveAtAttackStart = false;
         _scenarioDefenseConfigurationChangesAfterAttack = 0;
+        _scenarioRandomEventsAfterAttack = 0;
+        _scenarioDefenseConfigurationChangesAfterRandomEvents = 0;
+        _lastStochasticEventAt = null;
     }
 
     private void SetScenarioPacketBaselines()
@@ -1052,6 +1110,12 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         if (_attackStartedAt is not null)
         {
             _scenarioDefenseConfigurationChangesAfterAttack++;
+        }
+
+        if (_lastStochasticEventAt is not null &&
+            (DateTime.Now - _lastStochasticEventAt.Value).TotalSeconds <= 20)
+        {
+            _scenarioDefenseConfigurationChangesAfterRandomEvents++;
         }
 
         TryRecordCorrectDefenseTime();
@@ -1149,6 +1213,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     private void UpdateCommandStates()
     {
         OnPropertyChanged(nameof(AttackConfigurationEnabled));
+        OnPropertyChanged(nameof(StochasticSimulationAvailable));
         OnPropertyChanged(nameof(ScenarioConfigurationEnabled));
         OnPropertyChanged(nameof(CanStartScenario));
         OnPropertyChanged(nameof(CanResetScenario));

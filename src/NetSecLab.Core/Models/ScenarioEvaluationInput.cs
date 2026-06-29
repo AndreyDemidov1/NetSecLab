@@ -20,4 +20,6 @@ public sealed class ScenarioEvaluationInput
     public DateTime? FirstCorrectDefenseEnabledAt { get; init; }
     public bool CorrectDefenseWasEnabledBeforeAttack { get; init; }
     public int DefenseConfigurationChangesAfterAttack { get; init; }
+    public int RandomEventsAfterAttack { get; init; }
+    public int DefenseConfigurationChangesAfterRandomEvents { get; init; }
 }

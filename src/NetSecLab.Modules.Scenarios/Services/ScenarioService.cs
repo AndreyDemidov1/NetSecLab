@@ -357,7 +357,17 @@ internal sealed class ScenarioService : IScenarioService
 
         if (input.DefenseConfigurationChangesAfterAttack > 0)
         {
-            score += Math.Min(4, input.DefenseConfigurationChangesAfterAttack * 2);
+            score += Math.Min(3, input.DefenseConfigurationChangesAfterAttack);
+        }
+
+        if (input.RandomEventsAfterAttack > 0)
+        {
+            score += 2;
+        }
+
+        if (input.DefenseConfigurationChangesAfterRandomEvents > 0)
+        {
+            score += Math.Min(5, input.DefenseConfigurationChangesAfterRandomEvents * 3);
         }
 
         return Math.Clamp(score, 0, AdaptivityMaxScore);
