@@ -10,6 +10,7 @@ internal sealed class AttackService : IAttackService, IDisposable
     private readonly IEventBus _eventBus;
     private readonly IReadOnlyDictionary<AttackType, IAttackPacketGenerator> _generators;
     private readonly BackgroundPacketGenerator _backgroundPacketGenerator;
+    private readonly IStochasticSimulationService _stochasticSimulationService;
     private readonly Random _random = new();
     private CancellationTokenSource? _cancellationTokenSource;
     private int _generatedPackets;
@@ -17,11 +18,13 @@ internal sealed class AttackService : IAttackService, IDisposable
     public AttackService(
         IEventBus eventBus,
         IEnumerable<IAttackPacketGenerator> generators,
-        BackgroundPacketGenerator backgroundPacketGenerator)
+        BackgroundPacketGenerator backgroundPacketGenerator,
+        IStochasticSimulationService stochasticSimulationService)
     {
         _eventBus = eventBus;
         _generators = generators.ToDictionary(generator => generator.AttackType);
         _backgroundPacketGenerator = backgroundPacketGenerator;
+        _stochasticSimulationService = stochasticSimulationService;
     }
 
     public bool IsAvailable => true;
@@ -38,6 +41,7 @@ internal sealed class AttackService : IAttackService, IDisposable
         }
 
         _generatedPackets = 0;
+        _stochasticSimulationService.Reset();
         IsRunning = true;
         _cancellationTokenSource = new CancellationTokenSource();
         _eventBus.Publish(new AttackStartedEvent(options));
@@ -64,32 +68,44 @@ internal sealed class AttackService : IAttackService, IDisposable
         IAttackPacketGenerator generator,
         CancellationToken cancellationToken)
     {
-        const int ticksPerSecond = 4;
         TimeSpan delay = TimeSpan.FromMilliseconds(250);
+        int tickIndex = 0;
 
         while (!cancellationToken.IsCancellationRequested)
         {
-            int packetsInTick = CalculatePacketsForTick(options.IntensityPerSecond, ticksPerSecond);
+            StochasticTickResult tick = _stochasticSimulationService.NextTick(new StochasticTickInput
+            {
+                AttackType = options.AttackType,
+                BaseIntensityPerSecond = options.IntensityPerSecond,
+                IncludeBackgroundTraffic = options.IncludeBackgroundTraffic,
+                Difficulty = options.Difficulty,
+                TickDuration = delay,
+                TickIndex = tickIndex
+            });
 
-            for (int i = 0; i < packetsInTick; i++)
+            PublishStochasticEvents(tick.Events);
+
+            for (int i = 0; i < tick.AttackPacketCount; i++)
             {
                 LogicalPacket packet = generator.CreatePacket(options, _random);
+
+                if (!string.IsNullOrWhiteSpace(tick.AttackSourceOverrideIp))
+                {
+                    packet = ReplaceSourceIp(packet, tick.AttackSourceOverrideIp);
+                }
+
                 _generatedPackets++;
                 _eventBus.Publish(new PacketGeneratedEvent(packet));
             }
 
-            if (options.IncludeBackgroundTraffic)
+            for (int i = 0; i < tick.BackgroundPacketCount; i++)
             {
-                int backgroundCount = _random.Next(0, 3);
-
-                for (int i = 0; i < backgroundCount; i++)
-                {
-                    LogicalPacket packet = _backgroundPacketGenerator.CreatePacket(options, _random);
-                    _eventBus.Publish(new PacketGeneratedEvent(packet));
-                }
+                LogicalPacket packet = _backgroundPacketGenerator.CreatePacket(options, _random);
+                _eventBus.Publish(new PacketGeneratedEvent(packet));
             }
 
-            _eventBus.Publish(new AttackStatisticsUpdatedEvent(_generatedPackets, packetsInTick * ticksPerSecond));
+            _eventBus.Publish(new AttackStatisticsUpdatedEvent(_generatedPackets, tick.PacketsPerSecond));
+            tickIndex++;
 
             try
             {
@@ -102,11 +118,29 @@ internal sealed class AttackService : IAttackService, IDisposable
         }
     }
 
-    private int CalculatePacketsForTick(int intensityPerSecond, int ticksPerSecond)
+    private void PublishStochasticEvents(IReadOnlyList<StochasticSimulationEvent> events)
     {
-        int baseCount = Math.Max(1, intensityPerSecond / ticksPerSecond);
-        int jitter = _random.Next(-baseCount / 4, baseCount / 4 + 1);
-        return Math.Max(1, baseCount + jitter);
+        foreach (StochasticSimulationEvent simulationEvent in events)
+        {
+            _eventBus.Publish(new StochasticSimulationEventRaisedEvent(simulationEvent));
+        }
+    }
+
+    private static LogicalPacket ReplaceSourceIp(LogicalPacket packet, string sourceIp)
+    {
+        return new LogicalPacket
+        {
+            Timestamp = packet.Timestamp,
+            SourceIp = sourceIp,
+            SourcePort = packet.SourcePort,
+            DestinationIp = packet.DestinationIp,
+            DestinationPort = packet.DestinationPort,
+            Protocol = packet.Protocol,
+            Flags = packet.Flags,
+            Length = packet.Length,
+            Kind = packet.Kind,
+            AttackType = packet.AttackType
+        };
     }
 
     public void Dispose()

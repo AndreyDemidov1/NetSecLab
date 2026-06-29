@@ -8,12 +8,18 @@ namespace NetSecLab.Modules.Defense.Services;
 internal sealed class DefenseService : IDefenseService
 {
     private readonly Dictionary<string, RateCounter> _rateCounters = new();
+    private readonly IStochasticSimulationService _stochasticSimulationService;
     private readonly object _syncRoot = new();
 
     private DateTime _synWindowStartedAt = DateTime.Now;
     private int _synPacketsInWindow;
 
     private const int SynCookiesActivationThreshold = 20;
+
+    public DefenseService(IStochasticSimulationService stochasticSimulationService)
+    {
+        _stochasticSimulationService = stochasticSimulationService;
+    }
 
     public bool IsAvailable => true;
 
@@ -44,26 +50,41 @@ internal sealed class DefenseService : IDefenseService
 
         if (Settings.BehaviorFilterEnabled && IsSlowlorisLikePacket(packet))
         {
-            return Block(
-                packet,
-                "Поведенческий фильтр",
-                "Slowloris");
+            return _stochasticSimulationService.ShouldApplyDefense(ScenarioDefenseKind.BehaviorFilter)
+                ? Block(
+                    packet,
+                    "Поведенческий фильтр",
+                    "Slowloris")
+                : Allow(
+                    packet,
+                    "Поведенческий фильтр",
+                    "Фильтр не сработал из-за нагрузки.");
         }
 
         if (Settings.RateLimitEnabled && IsRateLimitExceeded(packet))
         {
-            return Block(
-                packet,
-                "Rate limiting",
-                "Превышен лимит.");
+            return _stochasticSimulationService.ShouldApplyDefense(ScenarioDefenseKind.RateLimit)
+                ? Block(
+                    packet,
+                    "Rate limiting",
+                    "Превышен лимит.")
+                : Allow(
+                    packet,
+                    "Rate limiting",
+                    "Пакет прошёл из-за перегрузки защиты.");
         }
 
         if (Settings.SynCookiesEnabled && IsSynFloodSuspicious(packet))
         {
-            return Mitigate(
-                packet,
-                "SYN cookies",
-                "Повышенная частота SYN.");
+            return _stochasticSimulationService.ShouldApplyDefense(ScenarioDefenseKind.SynCookies)
+                ? Mitigate(
+                    packet,
+                    "SYN cookies",
+                    "Повышенная частота SYN.")
+                : Allow(
+                    packet,
+                    "SYN cookies",
+                    "SYN cookies временно не справились с нагрузкой.");
         }
 
         return Allow(packet, "—", "Нарушений не обнаружено.");
