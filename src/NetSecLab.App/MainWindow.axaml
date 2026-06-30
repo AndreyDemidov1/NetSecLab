@@ -530,9 +530,6 @@
                                                Foreground="White"
                                                FontSize="16"
                                                FontWeight="SemiBold" />
-                                    <TextBlock Text="Распределение пакетов"
-                                               Foreground="#94A3B8"
-                                               FontSize="12" />
                                 </StackPanel>
 
                                 <ItemsControl Grid.Row="1" ItemsSource="{Binding ProtocolDistribution}">
@@ -564,6 +561,7 @@
                                                              Maximum="100"
                                                              Value="{Binding PercentValue}"
                                                              Height="8"
+                                                             Margin="2,0"
                                                              Background="#1F2937"
                                                              Foreground="#38BDF8"
                                                              HorizontalAlignment="Stretch" />
@@ -586,9 +584,6 @@
                                                Foreground="White"
                                                FontSize="16"
                                                FontWeight="SemiBold" />
-                                    <TextBlock Text="Пропущен / защищён / заблокирован"
-                                               Foreground="#94A3B8"
-                                               FontSize="12" />
                                 </StackPanel>
 
                                 <ItemsControl Grid.Row="1" ItemsSource="{Binding DecisionDistribution}">
@@ -620,6 +615,7 @@
                                                              Maximum="100"
                                                              Value="{Binding PercentValue}"
                                                              Height="8"
+                                                             Margin="2,0"
                                                              Background="#1F2937"
                                                              Foreground="#A78BFA"
                                                              HorizontalAlignment="Stretch" />
@@ -754,7 +750,7 @@
                                 <DataGridTextColumn Header="Длина" Binding="{Binding Length}" Width="1*" MinWidth="90" />
                                 <DataGridTextColumn Header="Тип пакета" Binding="{Binding Kind}" Width="1*" MinWidth="120" />
                                 <DataGridTextColumn Header="Решение" Binding="{Binding Decision}" Width="1*" MinWidth="125" />
-                                <DataGridTextColumn Header="Правило" Binding="{Binding DefenseRule}" Width="2*" MinWidth="155" />
+                                <DataGridTextColumn Header="Правило" Binding="{Binding DefenseRule}" Width="2*" MinWidth="190" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

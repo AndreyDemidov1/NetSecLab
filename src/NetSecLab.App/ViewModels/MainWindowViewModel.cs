@@ -555,8 +555,6 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             return;
         }
 
-        Packets.Clear();
-        ResetPacketCounters();
         _defenseService.Reset();
 
         TrainingScenario scenario = _scenarioService.Start(SelectedScenario.Id);
@@ -627,8 +625,6 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
             _defenseService.Settings.RateLimitPerSecond = rateLimit;
         }
 
-        Packets.Clear();
-        ResetPacketCounters();
         _defenseService.Reset();
         UpdateScenarioState();
 
