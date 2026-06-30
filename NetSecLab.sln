@@ -18,6 +18,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSecLab.Modules.Simulatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSecLab.Modules.Visualization", "src\NetSecLab.Modules.Visualization\NetSecLab.Modules.Visualization.csproj", "{88888888-8888-8888-8888-888888888888}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSecLab.Core.Tests", "tests\NetSecLab.Core.Tests\NetSecLab.Core.Tests.csproj", "{99999999-9999-9999-9999-999999999901}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSecLab.Infrastructure.Tests", "tests\NetSecLab.Infrastructure.Tests\NetSecLab.Infrastructure.Tests.csproj", "{99999999-9999-9999-9999-999999999902}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSecLab.Modules.Attacks.Tests", "tests\NetSecLab.Modules.Attacks.Tests\NetSecLab.Modules.Attacks.Tests.csproj", "{99999999-9999-9999-9999-999999999903}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSecLab.Modules.Defense.Tests", "tests\NetSecLab.Modules.Defense.Tests\NetSecLab.Modules.Defense.Tests.csproj", "{99999999-9999-9999-9999-999999999904}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSecLab.Modules.Scenarios.Tests", "tests\NetSecLab.Modules.Scenarios.Tests\NetSecLab.Modules.Scenarios.Tests.csproj", "{99999999-9999-9999-9999-999999999905}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSecLab.Modules.Simulation.Tests", "tests\NetSecLab.Modules.Simulation.Tests\NetSecLab.Modules.Simulation.Tests.csproj", "{99999999-9999-9999-9999-999999999906}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSecLab.Modules.Visualization.Tests", "tests\NetSecLab.Modules.Visualization.Tests\NetSecLab.Modules.Visualization.Tests.csproj", "{99999999-9999-9999-9999-999999999907}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +70,34 @@ Global
 		{88888888-8888-8888-8888-888888888888}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88888888-8888-8888-8888-888888888888}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88888888-8888-8888-8888-888888888888}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99999999-9999-9999-9999-999999999901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99999999-9999-9999-9999-999999999901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99999999-9999-9999-9999-999999999901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99999999-9999-9999-9999-999999999901}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99999999-9999-9999-9999-999999999902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99999999-9999-9999-9999-999999999902}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99999999-9999-9999-9999-999999999902}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99999999-9999-9999-9999-999999999902}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99999999-9999-9999-9999-999999999903}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99999999-9999-9999-9999-999999999903}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99999999-9999-9999-9999-999999999903}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99999999-9999-9999-9999-999999999903}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99999999-9999-9999-9999-999999999904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99999999-9999-9999-9999-999999999904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99999999-9999-9999-9999-999999999904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99999999-9999-9999-9999-999999999904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99999999-9999-9999-9999-999999999905}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99999999-9999-9999-9999-999999999905}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99999999-9999-9999-9999-999999999905}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99999999-9999-9999-9999-999999999905}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99999999-9999-9999-9999-999999999906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99999999-9999-9999-9999-999999999906}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99999999-9999-9999-9999-999999999906}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99999999-9999-9999-9999-999999999906}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99999999-9999-9999-9999-999999999907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99999999-9999-9999-9999-999999999907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99999999-9999-9999-9999-999999999907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99999999-9999-9999-9999-999999999907}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
