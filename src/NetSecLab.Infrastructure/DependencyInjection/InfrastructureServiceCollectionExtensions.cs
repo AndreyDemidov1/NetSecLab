@@ -18,6 +18,7 @@ public static class InfrastructureServiceCollectionExtensions
         services.TryAddSingleton<IDefenseService, DisabledDefenseService>();
         services.TryAddSingleton<IScenarioService, DisabledScenarioService>();
         services.TryAddSingleton<IStochasticSimulationService, DisabledStochasticSimulationService>();
+        services.TryAddSingleton<IRealtimeVisualizationService, DisabledRealtimeVisualizationService>();
 
         return services;
     }

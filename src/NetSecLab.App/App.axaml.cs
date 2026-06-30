@@ -8,6 +8,7 @@ using NetSecLab.Modules.Attacks.DependencyInjection;
 using NetSecLab.Modules.Defense.DependencyInjection;
 using NetSecLab.Modules.Scenarios.DependencyInjection;
 using NetSecLab.Modules.Simulation.DependencyInjection;
+using NetSecLab.Modules.Visualization.DependencyInjection;
 
 namespace NetSecLab.App;
 
@@ -46,6 +47,7 @@ public partial class App : Application
         services.AddDefenseModule();
         services.AddScenarioModule();
         services.AddSimulationModule();
+        services.AddVisualizationModule();
         services.AddSingleton<MainWindowViewModel>();
     }
 }
