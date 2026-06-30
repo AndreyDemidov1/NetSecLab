@@ -1,6 +1,7 @@
 using NetSecLab.Core.Interfaces;
 using NetSecLab.Core.Models;
 using NetSecLab.Modules.Defense.Services;
+using Xunit;
 
 namespace NetSecLab.Modules.Defense.Tests;
 

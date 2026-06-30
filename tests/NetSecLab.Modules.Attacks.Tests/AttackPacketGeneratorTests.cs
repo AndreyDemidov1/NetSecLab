@@ -1,5 +1,6 @@
 using NetSecLab.Core.Models;
 using NetSecLab.Modules.Attacks.Generators;
+using Xunit;
 
 namespace NetSecLab.Modules.Attacks.Tests;
 

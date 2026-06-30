@@ -1,5 +1,6 @@
 using NetSecLab.Core.Models;
 using NetSecLab.Modules.Simulation.Services;
+using Xunit;
 
 namespace NetSecLab.Modules.Simulation.Tests;
 

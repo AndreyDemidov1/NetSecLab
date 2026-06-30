@@ -1,3 +1,4 @@
+using System.Globalization;
 using NetSecLab.Core.Interfaces;
 using NetSecLab.Core.Models;
 
@@ -201,7 +202,7 @@ internal sealed class RealtimeVisualizationService : IRealtimeVisualizationServi
                 return new DistributionItem(
                     nameSelector(key),
                     count,
-                    percent.ToString("0.0") + "%",
+                    percent.ToString("0.0", CultureInfo.InvariantCulture) + "%",
                     Math.Clamp(percent, 0, 100));
             })
             .ToList();

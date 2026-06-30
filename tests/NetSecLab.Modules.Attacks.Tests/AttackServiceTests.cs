@@ -4,6 +4,7 @@ using NetSecLab.Core.Models;
 using NetSecLab.Infrastructure.Events;
 using NetSecLab.Modules.Attacks.Generators;
 using NetSecLab.Modules.Attacks.Services;
+using Xunit;
 
 namespace NetSecLab.Modules.Attacks.Tests;
 

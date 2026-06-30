@@ -1,4 +1,5 @@
 using NetSecLab.Core.Models;
+using Xunit;
 
 namespace NetSecLab.Core.Tests;
 
