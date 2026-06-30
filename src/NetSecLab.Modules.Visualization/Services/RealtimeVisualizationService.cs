@@ -10,18 +10,20 @@ internal sealed class RealtimeVisualizationService : IRealtimeVisualizationServi
     private const int InitialTrendScaleMaximum = 60;
 
     private readonly object _syncRoot = new();
-    private readonly Dictionary<DateTime, TrafficBucket> _trafficBuckets = new();
+    private readonly SortedDictionary<int, TrafficBucket> _trafficBuckets = new();
     private readonly Dictionary<PacketProtocol, int> _protocolCounters = new();
     private readonly Dictionary<PacketDecision, int> _decisionCounters = new();
 
     private int _trendScaleMaximum = InitialTrendScaleMaximum;
+    private int _currentBucketIndex;
+    private DateTime? _currentBucketSecond;
 
     public bool IsAvailable => true;
 
     public void Record(PacketInspectionResult inspection)
     {
         LogicalPacket packet = inspection.Packet;
-        DateTime bucketKey = new(
+        DateTime packetSecond = new(
             packet.Timestamp.Year,
             packet.Timestamp.Month,
             packet.Timestamp.Day,
@@ -31,10 +33,12 @@ internal sealed class RealtimeVisualizationService : IRealtimeVisualizationServi
 
         lock (_syncRoot)
         {
-            if (!_trafficBuckets.TryGetValue(bucketKey, out TrafficBucket? bucket))
+            int bucketIndex = GetBucketIndex(packetSecond);
+
+            if (!_trafficBuckets.TryGetValue(bucketIndex, out TrafficBucket? bucket))
             {
                 bucket = new TrafficBucket();
-                _trafficBuckets[bucketKey] = bucket;
+                _trafficBuckets[bucketIndex] = bucket;
             }
 
             if (packet.Kind == PacketKind.Attack)
@@ -48,7 +52,7 @@ internal sealed class RealtimeVisualizationService : IRealtimeVisualizationServi
 
             Increment(_protocolCounters, packet.Protocol);
             Increment(_decisionCounters, inspection.Decision);
-            RemoveOldBuckets(bucketKey);
+            RemoveOldBuckets(_currentBucketIndex);
         }
     }
 
@@ -56,22 +60,17 @@ internal sealed class RealtimeVisualizationService : IRealtimeVisualizationServi
     {
         lock (_syncRoot)
         {
-            DateTime now = DateTime.Now;
-            DateTime currentSecond = new(
-                now.Year,
-                now.Month,
-                now.Day,
-                now.Hour,
-                now.Minute,
-                now.Second);
+            int endIndex = _currentBucketSecond is null
+                ? TrendWindowSeconds - 1
+                : _currentBucketIndex;
 
-            List<DateTime> seconds = Enumerable
+            List<int> bucketIndexes = Enumerable
                 .Range(0, TrendWindowSeconds)
-                .Select(offset => currentSecond.AddSeconds(-(TrendWindowSeconds - 1 - offset)))
+                .Select(offset => endIndex - (TrendWindowSeconds - 1 - offset))
                 .ToList();
 
-            int currentWindowMaximum = seconds
-                .Select(second => _trafficBuckets.TryGetValue(second, out TrafficBucket? bucket) ? bucket.TotalCount : 0)
+            int currentWindowMaximum = bucketIndexes
+                .Select(index => _trafficBuckets.TryGetValue(index, out TrafficBucket? bucket) ? bucket.TotalCount : 0)
                 .DefaultIfEmpty(0)
                 .Max();
 
@@ -79,8 +78,8 @@ internal sealed class RealtimeVisualizationService : IRealtimeVisualizationServi
                 _trendScaleMaximum,
                 SelectStableTrendScaleMaximum(currentWindowMaximum));
 
-            List<TrafficTrendPoint> trend = seconds
-                .Select(second => CreateTrendPoint(second, _trendScaleMaximum))
+            List<TrafficTrendPoint> trend = bucketIndexes
+                .Select(index => CreateTrendPoint(index, _trendScaleMaximum))
                 .ToList();
 
             return new VisualizationSnapshot(
@@ -98,12 +97,31 @@ internal sealed class RealtimeVisualizationService : IRealtimeVisualizationServi
             _protocolCounters.Clear();
             _decisionCounters.Clear();
             _trendScaleMaximum = InitialTrendScaleMaximum;
+            _currentBucketIndex = 0;
+            _currentBucketSecond = null;
         }
     }
 
-    private TrafficTrendPoint CreateTrendPoint(DateTime second, int scaleMaximum)
+    private int GetBucketIndex(DateTime packetSecond)
     {
-        _trafficBuckets.TryGetValue(second, out TrafficBucket? bucket);
+        if (_currentBucketSecond is null)
+        {
+            _currentBucketSecond = packetSecond;
+            return _currentBucketIndex;
+        }
+
+        if (packetSecond > _currentBucketSecond.Value)
+        {
+            _currentBucketIndex++;
+            _currentBucketSecond = packetSecond;
+        }
+
+        return _currentBucketIndex;
+    }
+
+    private TrafficTrendPoint CreateTrendPoint(int bucketIndex, int scaleMaximum)
+    {
+        _trafficBuckets.TryGetValue(bucketIndex, out TrafficBucket? bucket);
 
         int attackCount = bucket?.AttackCount ?? 0;
         int backgroundCount = bucket?.BackgroundCount ?? 0;
@@ -121,7 +139,7 @@ internal sealed class RealtimeVisualizationService : IRealtimeVisualizationServi
         }
 
         return new TrafficTrendPoint(
-            second.ToString("HH:mm:ss"),
+            bucketIndex.ToString(),
             totalCount,
             attackCount,
             backgroundCount,
@@ -189,14 +207,14 @@ internal sealed class RealtimeVisualizationService : IRealtimeVisualizationServi
             .ToList();
     }
 
-    private void RemoveOldBuckets(DateTime currentSecond)
+    private void RemoveOldBuckets(int currentBucketIndex)
     {
-        DateTime minAllowed = currentSecond.AddSeconds(-(TrendWindowSeconds - 1));
-        List<DateTime> oldKeys = _trafficBuckets.Keys
+        int minAllowed = currentBucketIndex - (TrendWindowSeconds - 1);
+        List<int> oldKeys = _trafficBuckets.Keys
             .Where(key => key < minAllowed)
             .ToList();
 
-        foreach (DateTime oldKey in oldKeys)
+        foreach (int oldKey in oldKeys)
         {
             _trafficBuckets.Remove(oldKey);
         }
