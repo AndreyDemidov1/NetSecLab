@@ -19,6 +19,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     private readonly IDefenseService _defenseService;
     private readonly IScenarioService _scenarioService;
     private readonly IStochasticSimulationService _stochasticSimulationService;
+    private readonly IRealtimeVisualizationService _visualizationService;
     private readonly AppSettings _settings;
     private readonly List<IDisposable> _subscriptions = new();
 
@@ -67,6 +68,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     private int _allowedPackets;
     private int _mitigatedPackets;
     private int _blockedPackets;
+    private int _visualizationRefreshCounter;
 
     private const int MinPacketsPerSecond = 1;
     private const int MaxAttackPacketsPerSecond = 500;
@@ -82,6 +84,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         IDefenseService defenseService,
         IScenarioService scenarioService,
         IStochasticSimulationService stochasticSimulationService,
+        IRealtimeVisualizationService visualizationService,
         IEventBus eventBus,
         AppSettings settings)
     {
@@ -89,6 +92,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         _defenseService = defenseService;
         _scenarioService = scenarioService;
         _stochasticSimulationService = stochasticSimulationService;
+        _visualizationService = visualizationService;
         _settings = settings;
         _targetIp = settings.TargetIp;
         _targetPortText = settings.TargetPort.ToString();
@@ -130,6 +134,10 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         _selectedScenario = Scenarios.Count > 0 ? Scenarios[0] : null;
         UpdateSelectedScenarioDetails();
         Packets = new ObservableCollection<PacketLogItem>();
+        TrafficTrend = new ObservableCollection<TrafficTrendPoint>();
+        ProtocolDistribution = new ObservableCollection<DistributionItem>();
+        DecisionDistribution = new ObservableCollection<DistributionItem>();
+        UpdateVisualizationSnapshot();
 
         StartScenarioCommand = new RelayCommand(StartScenario, () => CanStartScenario);
         ResetScenarioCommand = new RelayCommand(ResetScenario, () => CanResetScenario);
@@ -154,6 +162,9 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     public ObservableCollection<SimulationDifficultyOption> SimulationDifficulties { get; }
     public ObservableCollection<ScenarioOption> Scenarios { get; }
     public ObservableCollection<PacketLogItem> Packets { get; }
+    public ObservableCollection<TrafficTrendPoint> TrafficTrend { get; }
+    public ObservableCollection<DistributionItem> ProtocolDistribution { get; }
+    public ObservableCollection<DistributionItem> DecisionDistribution { get; }
     public ICommand StartScenarioCommand { get; }
     public ICommand ResetScenarioCommand { get; }
     public ICommand StartAttackCommand { get; }
@@ -170,6 +181,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
     public bool DefenseModuleAvailable => _defenseService.IsAvailable;
     public bool ScenarioModuleAvailable => _scenarioService.IsAvailable;
     public bool StochasticSimulationAvailable => _stochasticSimulationService.IsAvailable;
+    public bool RealtimeVisualizationAvailable => _visualizationService.IsAvailable;
     public bool AttackConfigurationEnabled => AttackModuleAvailable && !_attackService.IsRunning;
     public bool ScenarioConfigurationEnabled => ScenarioModuleAvailable && !_attackService.IsRunning && _scenarioService.Status == ScenarioStatus.NotStarted;
     public bool CanStartScenario => ScenarioConfigurationEnabled && SelectedScenario is not null;
@@ -858,6 +870,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         Dispatcher.UIThread.Post(() =>
         {
             PacketInspectionResult inspection = _defenseService.Inspect(eventData.Packet);
+            _visualizationService.Record(inspection);
 
             Packets.Insert(0, new PacketLogItem(inspection));
             _receivedPackets++;
@@ -879,6 +892,12 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
 
             UpdatePacketCounterTexts();
             UpdateScenarioState();
+
+            _visualizationRefreshCounter++;
+            if (_visualizationRefreshCounter % 5 == 0)
+            {
+                UpdateVisualizationSnapshot();
+            }
 
             while (Packets.Count > _settings.MaxPacketsInUi)
             {
@@ -953,6 +972,7 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         Dispatcher.UIThread.Post(() =>
         {
             CurrentRateText = eventData.PacketsPerSecond + " пакетов/сек";
+            UpdateVisualizationSnapshot();
         });
     }
 
@@ -982,8 +1002,30 @@ public sealed class MainWindowViewModel : ViewModelBase, IDisposable
         _allowedPackets = 0;
         _mitigatedPackets = 0;
         _blockedPackets = 0;
+        _visualizationRefreshCounter = 0;
+        _visualizationService.Reset();
 
         UpdatePacketCounterTexts();
+        UpdateVisualizationSnapshot();
+    }
+
+    private void UpdateVisualizationSnapshot()
+    {
+        VisualizationSnapshot snapshot = _visualizationService.CreateSnapshot();
+
+        ReplaceCollection(TrafficTrend, snapshot.TrafficTrend);
+        ReplaceCollection(ProtocolDistribution, snapshot.ProtocolDistribution);
+        ReplaceCollection(DecisionDistribution, snapshot.DecisionDistribution);
+    }
+
+    private static void ReplaceCollection<T>(ObservableCollection<T> target, IEnumerable<T> items)
+    {
+        target.Clear();
+
+        foreach (T item in items)
+        {
+            target.Add(item);
+        }
     }
 
     private void UpdateSelectedScenarioDetails()
