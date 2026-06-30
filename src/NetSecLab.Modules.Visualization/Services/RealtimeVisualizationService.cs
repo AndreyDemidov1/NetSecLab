@@ -7,12 +7,14 @@ internal sealed class RealtimeVisualizationService : IRealtimeVisualizationServi
 {
     private const int TrendWindowSeconds = 12;
     private const double MaxTrendBarHeight = 88.0;
-    private const double MaxDistributionBarWidth = 150.0;
+    private const int InitialTrendScaleMaximum = 60;
 
     private readonly object _syncRoot = new();
     private readonly Dictionary<DateTime, TrafficBucket> _trafficBuckets = new();
     private readonly Dictionary<PacketProtocol, int> _protocolCounters = new();
     private readonly Dictionary<PacketDecision, int> _decisionCounters = new();
+
+    private int _trendScaleMaximum = InitialTrendScaleMaximum;
 
     public bool IsAvailable => true;
 
@@ -68,18 +70,17 @@ internal sealed class RealtimeVisualizationService : IRealtimeVisualizationServi
                 .Select(offset => currentSecond.AddSeconds(-(TrendWindowSeconds - 1 - offset)))
                 .ToList();
 
-            int maxBucketTotal = seconds
+            int currentWindowMaximum = seconds
                 .Select(second => _trafficBuckets.TryGetValue(second, out TrafficBucket? bucket) ? bucket.TotalCount : 0)
                 .DefaultIfEmpty(0)
                 .Max();
 
-            if (maxBucketTotal <= 0)
-            {
-                maxBucketTotal = 1;
-            }
+            _trendScaleMaximum = Math.Max(
+                _trendScaleMaximum,
+                SelectStableTrendScaleMaximum(currentWindowMaximum));
 
             List<TrafficTrendPoint> trend = seconds
-                .Select(second => CreateTrendPoint(second, maxBucketTotal))
+                .Select(second => CreateTrendPoint(second, _trendScaleMaximum))
                 .ToList();
 
             return new VisualizationSnapshot(
@@ -96,25 +97,36 @@ internal sealed class RealtimeVisualizationService : IRealtimeVisualizationServi
             _trafficBuckets.Clear();
             _protocolCounters.Clear();
             _decisionCounters.Clear();
+            _trendScaleMaximum = InitialTrendScaleMaximum;
         }
     }
 
-    private TrafficTrendPoint CreateTrendPoint(DateTime second, int maxBucketTotal)
+    private TrafficTrendPoint CreateTrendPoint(DateTime second, int scaleMaximum)
     {
         _trafficBuckets.TryGetValue(second, out TrafficBucket? bucket);
 
         int attackCount = bucket?.AttackCount ?? 0;
         int backgroundCount = bucket?.BackgroundCount ?? 0;
         int totalCount = attackCount + backgroundCount;
-        double scale = MaxTrendBarHeight / maxBucketTotal;
+        double scale = MaxTrendBarHeight / scaleMaximum;
+
+        double attackHeight = CalculateTrendHeight(attackCount, scale);
+        double backgroundHeight = CalculateTrendHeight(backgroundCount, scale);
+
+        if (attackHeight + backgroundHeight > MaxTrendBarHeight)
+        {
+            double overflowScale = MaxTrendBarHeight / (attackHeight + backgroundHeight);
+            attackHeight *= overflowScale;
+            backgroundHeight *= overflowScale;
+        }
 
         return new TrafficTrendPoint(
             second.ToString("HH:mm:ss"),
             totalCount,
             attackCount,
             backgroundCount,
-            Math.Max(0, attackCount * scale),
-            Math.Max(0, backgroundCount * scale));
+            attackHeight,
+            backgroundHeight);
     }
 
     private IReadOnlyList<DistributionItem> CreateProtocolDistribution()
@@ -161,20 +173,18 @@ internal sealed class RealtimeVisualizationService : IRealtimeVisualizationServi
         where T : notnull
     {
         int total = counters.Values.Sum();
-        int maxCount = counters.Values.DefaultIfEmpty(0).Max();
 
         return orderedKeys
             .Select(key =>
             {
                 counters.TryGetValue(key, out int count);
-                double share = total == 0 ? 0 : count * 100.0 / total;
-                double width = maxCount == 0 ? 0 : count * MaxDistributionBarWidth / maxCount;
+                double percent = total == 0 ? 0 : count * 100.0 / total;
 
                 return new DistributionItem(
                     nameSelector(key),
                     count,
-                    share.ToString("0.0") + "%",
-                    width);
+                    percent.ToString("0.0") + "%",
+                    Math.Clamp(percent, 0, 100));
             })
             .ToList();
     }
@@ -190,6 +200,29 @@ internal sealed class RealtimeVisualizationService : IRealtimeVisualizationServi
         {
             _trafficBuckets.Remove(oldKey);
         }
+    }
+
+    private static double CalculateTrendHeight(int count, double scale)
+    {
+        if (count <= 0)
+        {
+            return 0;
+        }
+
+        return Math.Max(3, count * scale);
+    }
+
+    private static int SelectStableTrendScaleMaximum(int currentWindowMaximum)
+    {
+        return currentWindowMaximum switch
+        {
+            <= 60 => 60,
+            <= 100 => 100,
+            <= 200 => 200,
+            <= 500 => 500,
+            <= 1000 => 1000,
+            _ => 1500
+        };
     }
 
     private static void Increment<TKey>(IDictionary<TKey, int> counters, TKey key)

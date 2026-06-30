@@ -477,7 +477,7 @@
                                                Foreground="White"
                                                FontSize="16"
                                                FontWeight="SemiBold" />
-                                    <TextBlock Text="Последние 12 секунд: атакующий и фоновый поток"
+                                    <TextBlock Text="Последние 12 секунд: стабильная шкала до очистки"
                                                Foreground="#94A3B8"
                                                FontSize="12" />
                                 </StackPanel>
@@ -545,16 +545,14 @@
                                                            Foreground="#CBD5E1"
                                                            FontSize="12"
                                                            VerticalAlignment="Center" />
-                                                <Border Grid.Column="1"
-                                                        Height="8"
-                                                        Background="#1F2937"
-                                                        CornerRadius="4"
-                                                        VerticalAlignment="Center">
-                                                    <Border Width="{Binding BarWidth}"
-                                                            HorizontalAlignment="Left"
-                                                            Background="#38BDF8"
-                                                            CornerRadius="4" />
-                                                </Border>
+                                                <ProgressBar Grid.Column="1"
+                                                             Minimum="0"
+                                                             Maximum="100"
+                                                             Value="{Binding PercentValue}"
+                                                             Height="8"
+                                                             Background="#1F2937"
+                                                             Foreground="#38BDF8"
+                                                             VerticalAlignment="Center" />
                                                 <TextBlock Grid.Column="2"
                                                            Text="{Binding ShareText}"
                                                            Foreground="White"
@@ -596,16 +594,14 @@
                                                            Foreground="#CBD5E1"
                                                            FontSize="12"
                                                            VerticalAlignment="Center" />
-                                                <Border Grid.Column="1"
-                                                        Height="8"
-                                                        Background="#1F2937"
-                                                        CornerRadius="4"
-                                                        VerticalAlignment="Center">
-                                                    <Border Width="{Binding BarWidth}"
-                                                            HorizontalAlignment="Left"
-                                                            Background="#A78BFA"
-                                                            CornerRadius="4" />
-                                                </Border>
+                                                <ProgressBar Grid.Column="1"
+                                                             Minimum="0"
+                                                             Maximum="100"
+                                                             Value="{Binding PercentValue}"
+                                                             Height="8"
+                                                             Background="#1F2937"
+                                                             Foreground="#A78BFA"
+                                                             VerticalAlignment="Center" />
                                                 <TextBlock Grid.Column="2"
                                                            Text="{Binding ShareText}"
                                                            Foreground="White"
