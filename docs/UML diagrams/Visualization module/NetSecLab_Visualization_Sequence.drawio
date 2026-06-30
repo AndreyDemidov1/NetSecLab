@@ -1,0 +1,158 @@
+<mxfile host="app.diagrams.net" agent="ChatGPT" compressed="false">
+  <diagram id="netseclab-visualization-sequence" name="Страница-1">
+    <mxGraphModel dx="975" dy="541" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1240" pageHeight="870" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="h_bus" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value="Шина&lt;br&gt;событий" vertex="1">
+          <mxGeometry height="50" width="110" x="25" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="life_bus" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#000000;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="80" y="120" as="sourcePoint" />
+            <mxPoint x="80" y="820" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="h_ctrl" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value="Контроллер&lt;br&gt;визуализации" vertex="1">
+          <mxGeometry height="50" width="110" x="205" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="life_ctrl" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#000000;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="260" y="120" as="sourcePoint" />
+            <mxPoint x="260" y="820" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="h_analyzer" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value="Анализатор&lt;br&gt;трафика" vertex="1">
+          <mxGeometry height="50" width="110" x="385" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="life_analyzer" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#000000;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="440" y="120" as="sourcePoint" />
+            <mxPoint x="440" y="820" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="h_buffer" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value="Буфер&lt;br&gt;статистики" vertex="1">
+          <mxGeometry height="50" width="110" x="565" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="life_buffer" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#000000;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="620" y="120" as="sourcePoint" />
+            <mxPoint x="620" y="820" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="h_charts" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value="Графики" vertex="1">
+          <mxGeometry height="50" width="110" x="745" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="life_charts" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#000000;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="800" y="120" as="sourcePoint" />
+            <mxPoint x="800" y="820" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="h_table" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value="Таблица&lt;br&gt;пакетов" vertex="1">
+          <mxGeometry height="50" width="110" x="925" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="life_table" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#000000;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="980" y="120" as="sourcePoint" />
+            <mxPoint x="980" y="820" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="h_ui" parent="1" style="whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;" value="Интерфейс&lt;br&gt;пользователя" vertex="1">
+          <mxGeometry height="50" width="110" x="1105" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="life_ui" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;dashed=1;strokeColor=#000000;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1160" y="120" as="sourcePoint" />
+            <mxPoint x="1160" y="820" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="act_ctrl" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="660" width="12" x="254" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="act_analyzer" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="80" width="12" x="434" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="act_buffer" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="80" width="12" x="614" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="act_charts" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="125" width="12" x="794" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="act_table" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="60" width="12" x="974" y="585" as="geometry" />
+        </mxCell>
+        <mxCell id="act_ui" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="160" width="12" x="1154" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="s1" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontSize=12;" value="1: Передать событие&lt;div&gt;визуализации()&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="80" y="160" as="sourcePoint" />
+            <mxPoint x="254" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s2" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontSize=12;exitX=0.974;exitY=0.164;exitDx=0;exitDy=0;exitPerimeter=0;" value="2: Получить признаки&lt;div&gt;пакета()&lt;/div&gt;">
+          <mxGeometry relative="1" x="0.0038" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="265.6879999999999" y="226.03999999999985" as="sourcePoint" />
+            <mxPoint x="434" y="226.0013768415256" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s3" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontSize=12;dashed=1;" value="3: Вернуть признаки&lt;div&gt;и категорию()&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="435" y="270" as="sourcePoint" />
+            <mxPoint x="265" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s4" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontSize=12;" value="4: Обновить агрегированные данные()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="267" y="340" as="sourcePoint" />
+            <mxPoint x="614" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s5" edge="1" parent="1" source="act_buffer" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontSize=12;dashed=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;" value="5: Вернуть точки графиков()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="606" y="390" as="sourcePoint" />
+            <mxPoint x="266" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s6" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontSize=12;" value="6: Обновить график пакетов()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="265" y="460" as="sourcePoint" />
+            <mxPoint x="795" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s7" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontSize=12;" value="7: Обновить диаграмму протоколов()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="265" y="525" as="sourcePoint" />
+            <mxPoint x="795" y="525" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s8" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontSize=12;" value="8: Обновить таблицу пакетов()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="265" y="595" as="sourcePoint" />
+            <mxPoint x="975" y="595" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s9" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontSize=12;" value="9: Отобразить обновление интерфейса()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="265" y="665" as="sourcePoint" />
+            <mxPoint x="1155" y="665" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s10" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontSize=12;" value="10: Изменить фильтр отображения()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1155" y="745" as="sourcePoint" />
+            <mxPoint x="265" y="745" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s11" edge="1" parent="1" source="act_ctrl" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontSize=12;dashed=1;exitX=1.204;exitY=0.977;exitDx=0;exitDy=0;exitPerimeter=0;" value="11: Вернуть отфильтрованные данные()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="275" y="795" as="sourcePoint" />
+            <mxPoint x="1155" y="795" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
