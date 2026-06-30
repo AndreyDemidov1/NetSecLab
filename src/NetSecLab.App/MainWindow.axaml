@@ -400,7 +400,7 @@
                 </ScrollViewer>
             </Border>
 
-            <Grid Grid.Column="1" RowDefinitions="Auto,*" RowSpacing="14">
+            <Grid Grid.Column="1" RowDefinitions="Auto,220,*" RowSpacing="14">
                 <Border Grid.Row="0"
                         Background="#1F2937"
                         CornerRadius="16"
@@ -460,6 +460,201 @@
                 </Border>
 
                 <Border Grid.Row="1"
+                        Background="#1F2937"
+                        CornerRadius="16"
+                        Padding="14"
+                        ClipToBounds="True">
+                    <Grid ColumnDefinitions="2*,*,*" ColumnSpacing="14" MinWidth="0">
+                        <Border Grid.Column="0"
+                                Background="#0F172A"
+                                BorderBrush="#334155"
+                                BorderThickness="1"
+                                CornerRadius="12"
+                                Padding="12"
+                                ClipToBounds="True">
+                            <Grid RowDefinitions="Auto,*" RowSpacing="8" MinWidth="0">
+                                <StackPanel Grid.Row="0" Spacing="2">
+                                    <TextBlock Text="Динамика трафика"
+                                               Foreground="White"
+                                               FontSize="16"
+                                               FontWeight="SemiBold" />
+                                    <TextBlock Text="Последние 12 активных секунд: стабильная шкала до очистки"
+                                               Foreground="#94A3B8"
+                                               FontSize="12"
+                                               TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+
+                                <ItemsControl Grid.Row="1"
+                                              ItemsSource="{Binding TrafficTrend}"
+                                              VerticalAlignment="Stretch"
+                                              HorizontalAlignment="Stretch"
+                                              ClipToBounds="True">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <UniformGrid Rows="1"
+                                                         Columns="12"
+                                                         HorizontalAlignment="Stretch"
+                                                         VerticalAlignment="Stretch" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Height="110"
+                                                  Margin="1,0"
+                                                  HorizontalAlignment="Stretch"
+                                                  VerticalAlignment="Bottom"
+                                                  ClipToBounds="True">
+                                                <StackPanel VerticalAlignment="Bottom"
+                                                            HorizontalAlignment="Center">
+                                                    <Border Width="16"
+                                                            Height="{Binding AttackHeight}"
+                                                            Background="#DC2626"
+                                                            CornerRadius="4,4,0,0" />
+                                                    <Border Width="16"
+                                                            Height="{Binding BackgroundHeight}"
+                                                            Background="#16A34A"
+                                                            CornerRadius="0,0,4,4" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Column="1"
+                                Background="#0F172A"
+                                BorderBrush="#334155"
+                                BorderThickness="1"
+                                CornerRadius="12"
+                                Padding="10"
+                                ClipToBounds="True">
+                            <Grid RowDefinitions="Auto,*" RowSpacing="8" MinWidth="0">
+                                <TextBlock Grid.Row="0"
+                                           Text="Протоколы"
+                                           Foreground="White"
+                                           FontSize="16"
+                                           FontWeight="SemiBold" />
+
+                                <ItemsControl Grid.Row="1"
+                                              ItemsSource="{Binding ProtocolDistribution}"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch"
+                                              ClipToBounds="False">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <UniformGrid Rows="4" Columns="1" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid RowDefinitions="Auto,8"
+                                                  RowSpacing="2"
+                                                  Margin="0,0,0,4"
+                                                  MinWidth="0"
+                                                  ClipToBounds="False">
+                                                <Grid Grid.Row="0"
+                                                      ColumnDefinitions="*,44"
+                                                      ColumnSpacing="6"
+                                                      MinWidth="0">
+                                                    <TextBlock Grid.Column="0"
+                                                               Text="{Binding Name}"
+                                                               Foreground="#CBD5E1"
+                                                               FontSize="11"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               VerticalAlignment="Center" />
+                                                    <TextBlock Grid.Column="1"
+                                                               Text="{Binding ShareText}"
+                                                               Foreground="White"
+                                                               FontSize="11"
+                                                               TextAlignment="Right"
+                                                               VerticalAlignment="Center" />
+                                                </Grid>
+                                                <ProgressBar Grid.Row="1"
+                                                             Minimum="0"
+                                                             Maximum="100"
+                                                             Value="{Binding PercentValue}"
+                                                             Height="8"
+                                                             MinWidth="0"
+                                                             Margin="0"
+                                                             Background="#1F2937"
+                                                             Foreground="#38BDF8"
+                                                             HorizontalAlignment="Stretch" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Column="2"
+                                Background="#0F172A"
+                                BorderBrush="#334155"
+                                BorderThickness="1"
+                                CornerRadius="12"
+                                Padding="10"
+                                ClipToBounds="True">
+                            <Grid RowDefinitions="Auto,*" RowSpacing="8" MinWidth="0">
+                                <TextBlock Grid.Row="0"
+                                           Text="Решения защиты"
+                                           Foreground="White"
+                                           FontSize="16"
+                                           FontWeight="SemiBold" />
+
+                                <ItemsControl Grid.Row="1"
+                                              ItemsSource="{Binding DecisionDistribution}"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch"
+                                              ClipToBounds="False">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <UniformGrid Rows="3" Columns="1" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid RowDefinitions="Auto,8"
+                                                  RowSpacing="2"
+                                                  Margin="0,0,0,6"
+                                                  MinWidth="0"
+                                                  ClipToBounds="False">
+                                                <Grid Grid.Row="0"
+                                                      ColumnDefinitions="*,44"
+                                                      ColumnSpacing="6"
+                                                      MinWidth="0">
+                                                    <TextBlock Grid.Column="0"
+                                                               Text="{Binding Name}"
+                                                               Foreground="#CBD5E1"
+                                                               FontSize="11"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               VerticalAlignment="Center" />
+                                                    <TextBlock Grid.Column="1"
+                                                               Text="{Binding ShareText}"
+                                                               Foreground="White"
+                                                               FontSize="11"
+                                                               TextAlignment="Right"
+                                                               VerticalAlignment="Center" />
+                                                </Grid>
+                                                <ProgressBar Grid.Row="1"
+                                                             Minimum="0"
+                                                             Maximum="100"
+                                                             Value="{Binding PercentValue}"
+                                                             Height="8"
+                                                             MinWidth="0"
+                                                             Margin="0"
+                                                             Background="#1F2937"
+                                                             Foreground="#A78BFA"
+                                                             HorizontalAlignment="Stretch" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="2"
                         Background="#1F2937"
                         CornerRadius="16"
                         Padding="14"
@@ -581,7 +776,7 @@
                                 <DataGridTextColumn Header="Длина" Binding="{Binding Length}" Width="1*" MinWidth="90" />
                                 <DataGridTextColumn Header="Тип пакета" Binding="{Binding Kind}" Width="1*" MinWidth="120" />
                                 <DataGridTextColumn Header="Решение" Binding="{Binding Decision}" Width="1*" MinWidth="125" />
-                                <DataGridTextColumn Header="Правило" Binding="{Binding DefenseRule}" Width="2*" MinWidth="155" />
+                                <DataGridTextColumn Header="Правило" Binding="{Binding DefenseRule}" Width="2*" MinWidth="190" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
