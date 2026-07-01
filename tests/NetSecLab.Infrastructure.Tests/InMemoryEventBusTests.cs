@@ -1,4 +1,5 @@
 using NetSecLab.Infrastructure.Events;
+using Xunit;
 
 namespace NetSecLab.Infrastructure.Tests;
 
