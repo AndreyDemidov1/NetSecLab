@@ -5,7 +5,8 @@
         Height="760"
         MinWidth="1250"
         MinHeight="700"
-        Title="NetSecLab">
+        Title="NetSecLab"
+        Icon="avares://NetSecLab.App/Assets/NetSecLab.ico">
     <Grid RowDefinitions="Auto,*" Background="#111827">
         <Border Grid.Row="0" Padding="24,18" Background="#0F172A">
             <Grid ColumnDefinitions="*,Auto">
